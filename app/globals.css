@@ -31,7 +31,9 @@
   /* ── Ink / text ───────────────────────────────────────────────────────── */
   --color-ink-900: #0B1F26;
   --color-ink-600: #42606B;
-  --color-ink-400: #7C97A0;
+  /* ink-400 darkened from #7C97A0 → #5A7882 to meet WCAG AA (4.5:1) for muted
+     text/labels on white. Still the clearly "muted" step below ink-600. */
+  --color-ink-400: #5A7882;
   --color-ink-200: #B8D0D6;
   --color-hairline: #DCEAEE;
 
@@ -198,6 +200,41 @@ input,
 select,
 textarea {
   touch-action: manipulation;
+}
+
+/* ─── Pointer affordance ────────────────────────────────────────────────────
+   Tailwind's preflight resets button cursor to default. Restore it for every
+   interactive element so clickable controls read as clickable.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+[role="menuitem"],
+[role="option"],
+label[for],
+summary {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────────
+   Respect the user's OS preference. Collapses CSS transitions/animations to a
+   near-instant fade; Framer Motion is handled separately via <MotionConfig>.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ─── Safe area support ───────────────────────────────────────────────────── */
