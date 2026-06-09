@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Avatar, StatusPill, Badge, Card, Skeleton, EmptyState,
+  Avatar, StatusPill, Badge, Card, Skeleton, EmptyState, Reveal,
 } from "@/components/ui";
 import { ClientDealRow } from "./ClientDealRow";
 import { fullName, formatCurrency, formatRelativeDate } from "@/lib/utils";
@@ -58,7 +58,7 @@ export function ClientProfile({ clientId }: { clientId: string }) {
       : null;
 
   return (
-    <div className="p-4 md:p-6 space-y-5 max-w-3xl mx-auto">
+    <Reveal className="p-4 md:p-6 space-y-5 max-w-3xl mx-auto">
       {/* Header */}
       <div className="flex items-start gap-4">
         <Avatar firstName={client.firstName} lastName={client.lastName} size="xl" />
@@ -161,6 +161,6 @@ export function ClientProfile({ clientId }: { clientId: string }) {
           </ul>
         )}
       </Card>
-    </div>
+    </Reveal>
   );
 }

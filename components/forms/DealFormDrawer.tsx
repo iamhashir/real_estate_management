@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { animate, motion, useMotionValue, useTransform } from "framer-motion";
-import { Drawer, Input, SegmentedToggle, Combobox, DatePicker, Textarea, Button, useToast } from "@/components/ui";
+import { motion } from "framer-motion";
+import { Drawer, Input, SegmentedToggle, Combobox, DatePicker, Textarea, Button, AnimatedNumber, useToast } from "@/components/ui";
 import { FormSection } from "./formHelpers";
 import { DEAL_TYPES, DEFAULT_COMMISSION_RATE } from "@/lib/constants";
 import { calcCommission, formatCurrency, fullName } from "@/lib/utils";
@@ -16,18 +16,6 @@ interface DealFormDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onCreated?: (id: string) => void;
-}
-
-// ─── Animated commission figure ─────────────────────────────────────────────────
-
-function AnimatedAED({ value }: { value: number }) {
-  const mv = useMotionValue(0);
-  const rounded = useTransform(mv, (v) => formatCurrency(Math.round(v)));
-  useEffect(() => {
-    const controls = animate(mv, value, { duration: 0.5, ease: [0.22, 1, 0.36, 1] });
-    return controls.stop;
-  }, [value, mv]);
-  return <motion.span>{rounded}</motion.span>;
 }
 
 const STEPS = ["Property", "Parties", "Terms"];
@@ -259,12 +247,14 @@ export function DealFormDrawer({ isOpen, onClose, onCreated }: DealFormDrawerPro
           />
 
           {/* Live commission preview */}
-          <div className="rounded-md bg-gradient-tide p-4 text-white shadow-card">
+          <div className="relative overflow-hidden rounded-md bg-gradient-tide p-4 text-white shadow-pop">
+            {/* subtle sheen */}
+            <div className="pointer-events-none absolute -top-8 -right-6 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
             <p className="text-[10px] font-medium tracking-wide uppercase text-aqua-100">
               Commission preview
             </p>
             <p className="text-display-xl font-display font-600 mt-1 text-money">
-              <AnimatedAED value={commission} />
+              <AnimatedNumber value={commission} currency />
             </p>
             <p className="text-xs text-aqua-100 mt-1">
               {commissionRate || 0}% of {formatCurrency(commissionBase)}

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
-import { Button } from "@/components/ui";
+import { Button, Reveal } from "@/components/ui";
 import { PropertyFilters, type PropertyFilterState } from "@/components/properties/PropertyFilters";
 import { PropertyTable } from "@/components/properties/PropertyTable";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
@@ -27,18 +27,20 @@ export default function PropertiesPage() {
   return (
     <PageShell>
       <div className="space-y-5">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h1 className="text-h1 text-ink-900">Properties</h1>
-            <p className="text-ink-600 mt-1">
-              {isLoading ? "Loading…" : `${properties.length} ${properties.length === 1 ? "listing" : "listings"}`}
-            </p>
+        <Reveal>
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h1 className="text-h1 text-ink-900">Properties</h1>
+              <p className="text-ink-600 mt-1">
+                {isLoading ? "Loading…" : `${properties.length} ${properties.length === 1 ? "listing" : "listings"}`}
+              </p>
+            </div>
+            <Button leftIcon={<Plus size={16} />} onClick={() => setAdding(true)}>
+              <span className="hidden sm:inline">New Property</span>
+              <span className="sm:hidden">New</span>
+            </Button>
           </div>
-          <Button leftIcon={<Plus size={16} />} onClick={() => setAdding(true)}>
-            <span className="hidden sm:inline">New Property</span>
-            <span className="sm:hidden">New</span>
-          </Button>
-        </div>
+        </Reveal>
 
         <div className="relative max-w-md">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none" />
@@ -53,11 +55,13 @@ export default function PropertiesPage() {
 
         <PropertyFilters value={filters} onChange={setFilters} />
 
-        <PropertyTable
-          properties={filtered}
-          isLoading={isLoading}
-          onCreate={() => setAdding(true)}
-        />
+        <Reveal delay={0.05}>
+          <PropertyTable
+            properties={filtered}
+            isLoading={isLoading}
+            onCreate={() => setAdding(true)}
+          />
+        </Reveal>
       </div>
 
       <PropertyFormDrawer isOpen={adding} onClose={() => setAdding(false)} />

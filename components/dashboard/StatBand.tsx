@@ -1,9 +1,9 @@
 "use client";
 
 import { StatCard } from "./StatCard";
-import { Skeleton } from "@/components/ui";
-import { formatCurrency } from "@/lib/utils";
+import { Skeleton, Stagger, StaggerItem } from "@/components/ui";
 import type { DashboardStats } from "@/lib/types";
+import { Building2, Users, CheckCircle2, Wallet } from "lucide-react";
 
 interface StatBandProps {
   overview?: DashboardStats["overview"];
@@ -22,32 +22,44 @@ export function StatBand({ overview, isLoading }: StatBandProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <StatCard
-        accent="aqua"
-        label="Active Listings"
-        value={overview.activeListings}
-        subtitle={`${overview.totalProperties} total properties`}
-      />
-      <StatCard
-        accent="sea"
-        label="Active Clients"
-        value={overview.activeClients}
-        subtitle={`${overview.totalClients} on the books`}
-      />
-      <StatCard
-        accent="success"
-        label="Closed This Month"
-        value={overview.closedDealsThisMonth}
-        subtitle={`${overview.closedDealsAllTime} all-time`}
-      />
-      <StatCard
-        accent="coral"
-        label="Commission (Month)"
-        value={overview.commissionThisMonth}
-        format={(n) => formatCurrency(n)}
-        subtitle={`${formatCurrency(overview.totalCommission)} all-time`}
-      />
-    </div>
+    <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <StaggerItem>
+        <StatCard
+          accent="aqua"
+          icon={<Building2 size={18} />}
+          label="Active Listings"
+          value={overview.activeListings}
+          subtitle={`${overview.totalProperties} total properties`}
+        />
+      </StaggerItem>
+      <StaggerItem>
+        <StatCard
+          accent="sea"
+          icon={<Users size={18} />}
+          label="Active Clients"
+          value={overview.activeClients}
+          subtitle={`${overview.totalClients} on the books`}
+        />
+      </StaggerItem>
+      <StaggerItem>
+        <StatCard
+          accent="success"
+          icon={<CheckCircle2 size={18} />}
+          label="Closed This Month"
+          value={overview.closedDealsThisMonth}
+          subtitle={`${overview.closedDealsAllTime} all-time`}
+        />
+      </StaggerItem>
+      <StaggerItem>
+        <StatCard
+          accent="coral"
+          icon={<Wallet size={18} />}
+          label="Commission (Month)"
+          value={overview.commissionThisMonth}
+          currency
+          subtitle={`all-time AED ${overview.totalCommission.toLocaleString("en-AE")}`}
+        />
+      </StaggerItem>
+    </Stagger>
   );
 }

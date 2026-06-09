@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import { LayoutDashboard, Building2, Users, Anchor } from "lucide-react";
 import { Avatar } from "@/components/ui";
 import { useCurrentAgent } from "@/hooks/useAgents";
@@ -59,13 +60,20 @@ export function Sidebar() {
                   : "text-aqua-100/70 hover:text-white hover:bg-white/5"
               )}
             >
-              {/* Active left bar */}
+              {/* Active left bar — shared element slides between items */}
               {active && (
-                <span className="absolute left-0 inset-y-2 w-1 rounded-r-full bg-gradient-foam shadow-[0_0_12px_rgba(25,199,194,0.6)]" />
+                <motion.span
+                  layoutId="sidebar-active"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  className="absolute left-0 inset-y-2 w-1 rounded-r-full bg-gradient-foam shadow-[0_0_12px_rgba(25,199,194,0.6)]"
+                />
               )}
               <Icon
                 size={19}
-                className={cn("shrink-0", active ? "text-aqua-300" : "text-current")}
+                className={cn(
+                  "shrink-0 transition-colors",
+                  active ? "text-aqua-300" : "text-current group-hover:text-aqua-300"
+                )}
               />
               <span className="hidden lg:block whitespace-nowrap">{label}</span>
             </Link>

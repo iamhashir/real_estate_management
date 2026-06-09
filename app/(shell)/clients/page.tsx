@@ -25,7 +25,7 @@ export default function ClientsPage() {
             onCreate={() => setAdding(true)}
           />
         }
-        detail={selectedId ? <ClientProfile clientId={selectedId} /> : null}
+        detail={selectedId ? <ClientProfile key={selectedId} clientId={selectedId} /> : null}
         placeholder={
           <div className="h-full grid place-items-center">
             <EmptyState

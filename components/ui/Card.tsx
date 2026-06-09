@@ -34,14 +34,14 @@ export function Card({
     <Tag
       onClick={onClick}
       className={cn(
-        "relative bg-surface-card rounded-md shadow-card overflow-hidden",
-        hover && "transition-all duration-150 hover:-translate-y-0.5 hover:shadow-float",
+        "surface-raised relative rounded-md overflow-hidden",
+        hover && "surface-raised-hover",
         onClick && "cursor-pointer",
         className
       )}
     >
       {accent && (
-        <div className={cn("absolute inset-x-0 top-0 h-0.5", accentMap[accent])} />
+        <div className={cn("absolute inset-x-0 top-0 h-0.5 z-10", accentMap[accent])} />
       )}
       {children}
     </Tag>

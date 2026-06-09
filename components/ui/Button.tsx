@@ -18,12 +18,15 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantMap: Record<ButtonVariant, string> = {
   primary:
-    "bg-gradient-tide text-white font-medium shadow-card " +
-    "hover:opacity-90 active:scale-[0.98] " +
-    "disabled:opacity-50 disabled:cursor-not-allowed",
+    "bg-gradient-tide text-white font-medium " +
+    "shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_2px_4px_-1px_rgba(14,107,134,0.35),0_8px_20px_-6px_rgba(14,107,134,0.45)] " +
+    "hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_4px_8px_-2px_rgba(14,107,134,0.40),0_14px_28px_-8px_rgba(14,107,134,0.50)] " +
+    "active:translate-y-0 active:scale-[0.98] " +
+    "disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none",
   secondary:
-    "bg-surface-card text-sea-700 border border-hairline font-medium " +
-    "hover:bg-aqua-100 hover:border-aqua-300 active:scale-[0.98] " +
+    "surface-raised text-sea-700 font-medium " +
+    "hover:-translate-y-px hover:text-sea-800 hover:bg-aqua-100/60 " +
+    "active:translate-y-0 active:scale-[0.98] " +
     "disabled:opacity-50 disabled:cursor-not-allowed",
   ghost:
     "bg-transparent text-aqua-500 font-medium " +
@@ -31,7 +34,8 @@ const variantMap: Record<ButtonVariant, string> = {
     "disabled:opacity-50 disabled:cursor-not-allowed",
   danger:
     "bg-surface-card text-danger border border-danger/40 font-medium " +
-    "hover:bg-danger/10 active:scale-[0.98] " +
+    "shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_1px_2px_rgba(229,72,77,0.12)] " +
+    "hover:bg-danger/10 hover:-translate-y-px active:translate-y-0 active:scale-[0.98] " +
     "disabled:opacity-50 disabled:cursor-not-allowed",
 };
 

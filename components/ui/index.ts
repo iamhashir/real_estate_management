@@ -1,3 +1,5 @@
+export { AnimatedNumber }  from "./AnimatedNumber";
+export { Reveal, Stagger, StaggerItem } from "./Motion";
 export { Avatar }          from "./Avatar";
 export { Badge }           from "./Badge";
 export { Button }          from "./Button";
