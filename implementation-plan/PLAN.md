@@ -48,25 +48,25 @@
 > Build these first. Every other component is composed from these.
 > Rules: pure components, no Convex calls, no domain logic.
 
-- ❌ `Button.tsx` — variants: primary (gradient-tide), secondary, ghost, danger. All min-h-[44px]. Loading spinner state. Disabled state.
-- ❌ `Input.tsx` — floating label, aqua focus ring (shadow-glow), error state with coral hint, always text-base on mobile (prevents iOS zoom)
-- ❌ `Textarea.tsx` — floating label, same focus/error behaviour as Input
-- ❌ `Select.tsx` — styled native select with floating label and aqua chevron
-- ❌ `StatusPill.tsx` — pill badge mapping status/stage value → color via constants. Pulsing dot for "active" states. Never inline badge styling anywhere else.
-- ❌ `Badge.tsx` — small label badge, separate from StatusPill (used for property type, listing type chips)
-- ❌ `Card.tsx` — frosted white surface, rounded-md, shadow-card. Hover: translateY(-2px) + shadow-float. Accepts `accent` prop for top color bar.
-- ❌ `Avatar.tsx` — deterministic initial avatar using avatarColor() from lib/utils. Sizes: sm / md / lg.
-- ❌ `Spinner.tsx` — aqua ring spinner, sizes: sm / md / lg
-- ❌ `Drawer.tsx` — RIGHT SIDE on tablet/desktop (480px), BOTTOM SHEET on mobile (90vh, swipe-down dismiss). Framer Motion animation. Backdrop dimming. Portal rendered.
-- ❌ `Modal.tsx` — centered on tablet/desktop, bottom sheet on mobile. For single-question confirmations only. Backdrop blur.
-- ❌ `Toast.tsx` — slide-up + fade notification. Success (aqua), error (coral), info (sea). Auto-dismiss 3s. Stack multiple toasts.
-- ❌ `SegmentedToggle.tsx` — pill-shaped tabs (e.g. Buy / Rent, Villa / Apartment). Aqua active fill with spring animation. Min touch target 44px.
-- ❌ `Combobox.tsx` — searchable dropdown. Recent items pinned at top. Inline "+ Create new" option. Keyboard navigable. Used for client, agent, location pickers.
-- ❌ `RangeSlider.tsx` — dual-handle price/size slider. Live value above thumb. Aqua track. Spring animation on drag. Accepts min/max/step.
-- ❌ `DataTable.tsx` — sticky uppercase headers, tabular-nums, aqua-100 row hover. Left status-color rail per row. Density toggle (comfortable/compact). **Renders `renderCard` prop below md breakpoint** — no raw `<table>` on mobile.
-- ❌ `EmptyState.tsx` — friendly empty state with icon, title, message, optional CTA button. Used when lists have no data.
-- ❌ `DatePicker.tsx` — calendar popover with quick chips: Today, +30 days, End of month.
-- ❌ `Skeleton.tsx` — reusable animated pulse block. Replace hardcoded `animate-pulse` divs in page stubs.
+- ✅ `Button.tsx` — variants: primary (gradient-tide), secondary, ghost, danger. All min-h-[44px]. Loading spinner state. Disabled state.
+- ✅ `Input.tsx` — floating label, aqua focus ring (shadow-glow), error state with coral hint, always text-base on mobile (prevents iOS zoom)
+- ✅ `Textarea.tsx` — floating label, same focus/error behaviour as Input
+- ✅ `Select.tsx` — styled native select with floating label and aqua chevron
+- ✅ `StatusPill.tsx` — pill badge mapping status/stage value → color via constants. Pulsing dot for "active" states. Never inline badge styling anywhere else.
+- ✅ `Badge.tsx` — small label badge, separate from StatusPill (used for property type, listing type chips)
+- ✅ `Card.tsx` — frosted white surface, rounded-md, shadow-card. Hover: translateY(-2px) + shadow-float. Accepts `accent` prop for top color bar.
+- ✅ `Avatar.tsx` — deterministic initial avatar using avatarColor() from lib/utils. Sizes: sm / md / lg.
+- ✅ `Spinner.tsx` — aqua ring spinner, sizes: sm / md / lg
+- ✅ `Drawer.tsx` — RIGHT SIDE on tablet/desktop (480px), BOTTOM SHEET on mobile (90vh, swipe-down dismiss). Framer Motion animation. Backdrop dimming. Portal rendered.
+- ✅ `Modal.tsx` — centered on tablet/desktop, bottom sheet on mobile. For single-question confirmations only. Backdrop blur.
+- ✅ `Toast.tsx` — slide-up + fade notification. Success (aqua), error (coral), info (sea). Auto-dismiss 3s. Stack multiple toasts.
+- ✅ `SegmentedToggle.tsx` — pill-shaped tabs (e.g. Buy / Rent, Villa / Apartment). Aqua active fill with spring animation. Min touch target 44px.
+- ✅ `Combobox.tsx` — searchable dropdown. Recent items pinned at top. Inline "+ Create new" option. Keyboard navigable. Used for client, agent, location pickers.
+- ✅ `RangeSlider.tsx` — dual-handle price/size slider. Live value above thumb. Aqua track. Spring animation on drag. Accepts min/max/step.
+- ✅ `DataTable.tsx` — sticky uppercase headers, tabular-nums, aqua-100 row hover. Left status-color rail per row. Density toggle (comfortable/compact). **Renders `renderCard` prop below md breakpoint** — no raw `<table>` on mobile.
+- ✅ `EmptyState.tsx` — friendly empty state with icon, title, message, optional CTA button. Used when lists have no data.
+- ✅ `DatePicker.tsx` — calendar popover with quick chips: Today, +30 days, End of month.
+- ✅ `Skeleton.tsx` — reusable animated pulse block. Replace hardcoded `animate-pulse` divs in page stubs.
 
 ---
 

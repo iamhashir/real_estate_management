@@ -1,17 +1,14 @@
 "use client";
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ToastProvider } from "@/components/ui/Toast";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
 
-// Instantiated once at module level — not inside a render function
 const convex = convexUrl ? new ConvexReactClient(convexUrl) : null;
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  if (!convex) {
-    // During local dev before `npx convex dev` has been run, render without
-    // the provider so the shell and static UI are still visible.
-    return <>{children}</>;
-  }
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+  const tree = <ToastProvider>{children}</ToastProvider>;
+  if (!convex) return tree;
+  return <ConvexProvider client={convex}>{tree}</ConvexProvider>;
 }
