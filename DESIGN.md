@@ -235,7 +235,116 @@ Respect `prefers-reduced-motion` — collapse to simple fades.
 
 ---
 
-## 10. Implementation Notes (Tailwind v4)
+## 10. Responsive Design
+
+The app works on all screen sizes. The design language stays consistent — aqua, ocean, glass — but the layout restructures at each tier. **Mobile is not an afterthought; it is designed first within each component.**
+
+### Breakpoints
+
+These map directly to Tailwind's default prefixes:
+
+| Prefix | Min-width | Context |
+|---|---|---|
+| _(none)_ | 0px | Mobile — all base styles are mobile-first |
+| `sm:` | 640px | Large phone / landscape phone |
+| `md:` | 768px | Tablet portrait |
+| `lg:` | 1024px | Tablet landscape / small desktop |
+| `xl:` | 1280px | Desktop |
+| `2xl:` | 1536px | Large desktop |
+
+### Navigation Shell
+
+The shell transforms completely across breakpoints — same pages, different chrome.
+
+| Breakpoint | Navigation |
+|---|---|
+| Mobile (<md) | **Bottom tab bar** — 4 tabs (Dashboard, Properties, Clients, + Add). Sidebar is hidden entirely. Fixed at bottom, 64px tall. Safe area inset respected. |
+| Tablet (md–lg) | **Icon sidebar** — 64px wide, icons only, no labels. Tap to expand to full 240px as an overlay. |
+| Desktop (≥lg) | **Full sidebar** — 240px, persistent, always visible with labels. |
+
+Top bar is always present on all breakpoints. On mobile it spans full width with a hamburger / context menu icon on the right.
+
+### Dashboard
+
+| Breakpoint | Layout |
+|---|---|
+| Mobile | Stat cards in 2×2 grid (2 cols). Pipeline list stacked full-width. No chart by default (adds weight). |
+| Tablet | Stat cards in 2×2 or 4×1 row. Pipeline and recent activity side by side (50/50). |
+| Desktop | Stat band full-width (4 cols). Content area: pipeline (65%) + recent activity sidebar (35%). |
+
+### Properties Page
+
+| Breakpoint | Layout |
+|---|---|
+| Mobile | **Card list** — no table. Each property is a stacked card: image placeholder + name + price + status pill + action button. Full-width. |
+| Tablet | **Table** with 5 columns: Name, Type, Price, Status, Actions. Scroll is horizontal if needed. |
+| Desktop | **Full table** with all columns. Inline status toggle on hover. |
+
+Filters collapse into a **filter chip bar** on mobile (horizontal scroll) instead of a sidebar panel.
+
+### Clients Page — Split Screen
+
+This page has the most dramatic responsive change:
+
+| Breakpoint | Layout |
+|---|---|
+| Mobile | **Single-pane list** — tap a client → full-screen profile view with a back button. No split. |
+| Tablet | **Single-pane list** — tap a client → detail panel slides in from the right at 100vw, back button dismisses. |
+| Desktop (≥lg) | **True split** — 380px fixed list + fluid detail panel side by side. Click a client, detail loads in place. |
+
+### Drawers → Bottom Sheets (Mobile)
+
+All data-entry drawers become **bottom sheets** on mobile — they slide up from the bottom edge, cover ~90vh, and are dismissable by swiping down.
+
+| Breakpoint | Drawer behavior |
+|---|---|
+| Mobile (<md) | Bottom sheet, slides up, 90vh, rounded top corners `--r-lg`, swipe-down to dismiss |
+| Tablet (md–lg) | Right-side drawer, 100% viewport width |
+| Desktop (≥lg) | Right-side drawer, 480px fixed width |
+
+The internal form layout inside the drawer also adapts: desktop uses 2-column field rows where it makes sense (e.g. bedrooms + bathrooms side by side); mobile is always single-column.
+
+### Modals
+
+| Breakpoint | Modal behavior |
+|---|---|
+| Mobile | Bottom sheet (same as drawer — consistent mental model) |
+| Tablet + Desktop | Centered overlay, max-width 480px, backdrop blur |
+
+### Data Tables → Card Lists (Mobile)
+
+Tables are unreadable on mobile. Components that render a `<DataTable>` must support a `cardView` mode that activates automatically below `md`. Each row becomes a card with:
+- Bold primary field (name/title) at top
+- 2–3 key fields as labeled rows
+- Status pill
+- Action menu (⋯) in top-right corner
+
+### Touch & Accessibility
+
+- **Minimum tap target:** 44×44px for all interactive elements on touch screens
+- **Swipe gestures:** swipe-down on bottom sheets to dismiss; swipe-left on mobile list rows to reveal a quick-action strip (Edit / Delete)
+- **Bottom bar safe area:** `padding-bottom: env(safe-area-inset-bottom)` on the bottom tab bar for notched phones
+- **Focus rings:** visible and aqua-colored on keyboard navigation — never removed
+- **Font sizes:** never below `14px` on any screen. Body text is `16px` on mobile to prevent iOS auto-zoom on inputs
+
+### Quick Responsive Reference Card
+
+```
+Component          Mobile          Tablet          Desktop
+─────────────────────────────────────────────────────────
+Shell nav          Bottom tabs     Icon sidebar    Full sidebar
+Stat cards         2×2 grid        4×1 row         4×1 wide row
+Properties         Card list       Table (5 col)   Table (all col)
+Clients            Single pane     Slide panel     Split screen
+Drawers            Bottom sheet    Full-width      480px right
+Modals             Bottom sheet    Centered        Centered
+Tables             Card list       Compact table   Full table
+Filters            Chip scroll     Inline bar      Inline bar
+```
+
+---
+
+## 11. Implementation Notes (Tailwind v4)
 
 Register the palette in `globals.css` under `@theme` so tokens become utilities (`bg-aqua-500`, `text-sea-800`, etc.):
 

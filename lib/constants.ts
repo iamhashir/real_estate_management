@@ -135,6 +135,32 @@ export const AREAS_BY_CITY: Record<string, string[]> = {
 export const PAGE_SIZE = 20;
 export const DRAWER_ANIMATION_MS = 280;
 
+// ─── Responsive breakpoints (px) ─────────────────────────────────────────────
+// Mirror of Tailwind defaults — keep in sync with hooks/useBreakpoint.ts
+
+export const BREAKPOINTS = {
+  sm:    640,
+  md:    768,   // tablet portrait — layout shifts here
+  lg:    1024,  // desktop sidebar appears, split-screen activates
+  xl:    1280,
+  "2xl": 1536,
+} as const;
+
+// Layout dimensions — used in CSS vars and JS calculations
+export const SIDEBAR_WIDTH_FULL      = 240; // px, desktop
+export const SIDEBAR_WIDTH_COLLAPSED = 64;  // px, tablet icon-only
+export const BOTTOM_TAB_HEIGHT       = 64;  // px, mobile bottom bar
+export const DRAWER_WIDTH_DESKTOP    = 480; // px, right-side drawer
+export const CLIENT_LIST_WIDTH       = 380; // px, split-screen left panel
+export const TOP_BAR_HEIGHT          = 56;  // px, all breakpoints
+
+// Navigation tabs shown in the mobile bottom bar
+export const BOTTOM_NAV_TABS = [
+  { href: "/",           label: "Dashboard",  icon: "layout-dashboard" },
+  { href: "/properties", label: "Properties", icon: "building-2" },
+  { href: "/clients",    label: "Clients",    icon: "users" },
+] as const;
+
 // ─── Derived type helpers ─────────────────────────────────────────────────────
 
 export type PropertyType      = typeof PROPERTY_TYPES[number]["value"];

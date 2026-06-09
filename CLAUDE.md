@@ -55,6 +55,51 @@ app/
 - All money values use `formatCurrency()` from `lib/utils.ts` — never raw `toLocaleString()`
 - Status pills always use the `StatusPill` component — never inline badge styling
 
+## Responsive Rules (MUST follow on every component)
+**Mobile-first always.** Base styles = mobile. Use `md:` `lg:` `xl:` to upgrade upward. Never write desktop-only code and then try to override down.
+
+| Breakpoint | Use for |
+|---|---|
+| _(base)_ | Mobile (<768px) |
+| `md:` | Tablet portrait (≥768px) |
+| `lg:` | Tablet landscape / desktop (≥1024px) |
+| `xl:` | Large desktop (≥1280px) |
+
+**Shell navigation:**
+- Mobile: `<BottomTabBar>` — import from `components/layout/BottomTabBar`
+- Tablet: `<Sidebar>` collapsed to icons (64px) — prop `collapsed={true}`
+- Desktop: `<Sidebar>` full (240px) — prop `collapsed={false}`
+- Never hardcode `w-[240px]` in page layouts — use the `<PageShell>` wrapper which handles sidebar offset automatically
+
+**Drawers / sheets:**
+- Always use `<Drawer>` from `components/ui/Drawer` — it handles the bottom-sheet transformation on mobile automatically
+- Never build a custom modal/drawer outside of this component
+
+**Tables:**
+- Every `<DataTable>` usage must pass a `renderCard` prop for the mobile card view
+- The table switches to card list automatically below `md` breakpoint
+- Never render a `<table>` element directly in a page — always use `<DataTable>`
+
+**Clients split-screen:**
+- Use the `<SplitPane>` component from `components/layout/SplitPane`
+- It handles: desktop=two-panel, tablet=slide-over, mobile=single-pane internally
+
+**Touch targets:**
+- All buttons and interactive elements must be at least `min-h-[44px] min-w-[44px]`
+- Use `touch-manipulation` on interactive elements to remove 300ms tap delay
+
+**Safe areas (mobile notches):**
+- Bottom tab bar: `pb-[env(safe-area-inset-bottom)]`
+- Never hardcode `pb-4` on elements that sit at the bottom of the screen on mobile
+
+**Font sizes:**
+- Never below `text-sm` (14px) on any screen
+- Inputs and textareas: always `text-base` (16px) on mobile to prevent iOS auto-zoom
+
+**Hooks:**
+- Use `useBreakpoint()` from `hooks/useBreakpoint` for JS-driven responsive logic
+- Never use `window.innerWidth` directly in components
+
 ## Git
 - Branch for this work: `claude/ui-ux-pro-max-plugin-wqv2rz`
 - Commit scope prefixes: `feat:` `fix:` `refactor:` `style:` `docs:` `chore:`
