@@ -156,7 +156,7 @@ export const TOP_BAR_HEIGHT          = 56;  // px, all breakpoints
 
 // Navigation tabs shown in the mobile bottom bar
 export const BOTTOM_NAV_TABS = [
-  { href: "/",           label: "Dashboard",  icon: "layout-dashboard" },
+  { href: "/dashboard",  label: "Dashboard",  icon: "layout-dashboard" },
   { href: "/properties", label: "Properties", icon: "building-2" },
   { href: "/clients",    label: "Clients",    icon: "users" },
 ] as const;
