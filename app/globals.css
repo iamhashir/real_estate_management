@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
+/* ─── Design tokens ───────────────────────────────────────────────────────────
+   All utilities (bg-sea-950, text-aqua-500, shadow-card, font-display, etc.)
+   are generated from this block. Never add ad-hoc color values in components.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Sea blues ────────────────────────────────────────────────────────── */
+  --color-sea-950: #04212B;
+  --color-sea-900: #063646;
+  --color-sea-800: #0A4D63;
+  --color-sea-700: #0E6B86;
+  --color-sea-600: #1390AE;
+
+  /* ── Aqua / primary accent ────────────────────────────────────────────── */
+  --color-aqua-500: #19C7C2;
+  --color-aqua-400: #3FDCD3;
+  --color-aqua-300: #7CEDE4;
+  --color-aqua-100: #D6FAF5;
+
+  /* ── Coral / action accent ────────────────────────────────────────────── */
+  --color-coral-500: #FF6B5E;
+  --color-coral-400: #FF8A7F;
+  --color-coral-100: #FFE8E6;
+
+  /* ── Surface ──────────────────────────────────────────────────────────── */
+  --color-surface-base: #F4FBFC;
+  --color-surface-card: #FFFFFF;
+
+  /* ── Ink / text ───────────────────────────────────────────────────────── */
+  --color-ink-900: #0B1F26;
+  --color-ink-600: #42606B;
+  --color-ink-400: #7C97A0;
+  --color-ink-200: #B8D0D6;
+  --color-hairline: #DCEAEE;
+
+  /* ── Semantic status ──────────────────────────────────────────────────── */
+  --color-success: #1FB888;
+  --color-warning: #F5B53D;
+  --color-danger:  #E5484D;
+  --color-info:    #1390AE;
+
+  /* ── Typography ───────────────────────────────────────────────────────── */
+  --font-display: var(--font-space-grotesk);
+  --font-sans:    var(--font-inter);
+
+  /* ── Radius ───────────────────────────────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ── Shadows (aqua-tinted, never gray) ────────────────────────────────── */
+  --shadow-card:  0 4px 20px -8px rgba(14, 107, 134, 0.18);
+  --shadow-float: 0 12px 40px -12px rgba(14, 107, 134, 0.30);
+  --shadow-glow:  0 0 0 3px rgba(25, 199, 194, 0.25);
+}
+
+/* ─── CSS custom properties (non-utility — used via var()) ───────────────────
+   Gradients can't be Tailwind utilities so they live here as raw CSS vars.
+   ─────────────────────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gradient-tide: linear-gradient(135deg, #0E6B86 0%, #1390AE 45%, #19C7C2 100%);
+  --gradient-foam: linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%);
+  --surface-glass: rgba(255, 255, 255, 0.65);
+  --surface-glass-border: rgba(25, 199, 194, 0.15);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  min-height: 100%;
+  background-color: #F4FBFC;
+  color: #0B1F26;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography utilities ────────────────────────────────────────────────── */
+
+.font-display {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+}
+
+.text-display-xl {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-h1 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-h2 {
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.text-h3 {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.text-label {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.text-money {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ─── Glass surface utility ───────────────────────────────────────────────── */
+
+.glass {
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-glass-border);
+}
+
+/* ─── Gradient utilities ──────────────────────────────────────────────────── */
+
+.bg-gradient-tide {
+  background: var(--gradient-tide);
+}
+
+.bg-gradient-foam {
+  background: var(--gradient-foam);
+}
+
+/* ─── Scrollbar (subtle aqua tint) ───────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B8D0D6;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7C97A0;
+}
+
+/* ─── Focus ring ──────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow);
+}
+
+/* ─── Touch ───────────────────────────────────────────────────────────────── */
+
+button,
+[role="button"],
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+/* ─── Safe area support ───────────────────────────────────────────────────── */
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top);
 }
