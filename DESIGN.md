@@ -4,6 +4,56 @@ The visual and interaction language for the Real Estate Management app. The goal
 
 ---
 
+## 0. Page Architecture
+
+### The Rule: 3 Pages + Drawers for Everything
+
+Navigation is a tax. Every time an agent leaves a page to fill out a form, they lose context and momentum. The architecture is built around one rule: **you never navigate away to enter data.**
+
+### The 3 Pages
+
+| Route | Name | Purpose |
+|---|---|---|
+| `/` | Dashboard | Stats bar, deal pipeline, recent transactions, quick-add entry point |
+| `/properties` | Properties | Full filterable property list with status management |
+| `/clients` | Clients | Split-screen client directory — list on left, full client profile on right |
+
+Deals do not get their own page. They surface in the Dashboard (pipeline) and inside each client's profile panel.
+
+### Client Detail — Split Screen, Not a New Page
+
+`/clients` renders as a **persistent split layout**:
+- **Left panel (380px):** Scrollable client list with search and filter chips
+- **Right panel (fluid):** Selected client's full profile — metadata, linked properties, deal history, notes, commission total
+
+Clicking a client loads their profile into the right panel without any navigation. Agents can flip between clients at full speed. On screens under 1024px, the right panel becomes a full-screen slide-over drawer triggered by tapping a client row.
+
+### All Data Entry = Right-Slide Glass Drawers
+
+Creating or editing any record opens a drawer from the right edge — it overlays the current screen without replacing it. The context behind stays visible (dimmed). Close the drawer, the list refreshes, you're exactly where you were.
+
+| Action | Trigger | Drawer |
+|---|---|---|
+| Add / Edit Property | `+ New Property` button or row action | 2-step: Details → Status & Pricing |
+| Add / Edit Client | `+ New Client` button or row action | 1-step: Profile + Contact |
+| Add / Edit Deal | `+ New Deal` button or client panel action | 3-step: Property → Parties → Terms & Commission |
+
+### Modals — Small Decisions Only
+
+Centered modals are reserved for single-question confirmations. They are never used for multi-field data entry.
+
+| Modal trigger | Content |
+|---|---|
+| Delete record | "Are you sure?" + confirm/cancel |
+| Change deal status | Status picker with current → new transition |
+| Assign/reassign agent | Agent picker only |
+
+### Why Not More Pages?
+
+A `/deals` page, a `/reports` page, a `/settings` page would each add navigation hops with no real gain at this scale. All deal data reads naturally from the dashboard pipeline and client profiles. Reports and settings can be drawers when the time comes.
+
+---
+
 ## 1. Design Principles
 
 1. **Vibrant, not loud.** Aqua and sea-blue carry the identity. Color guides the eye to what matters (status, actions, money) — it never shouts everywhere at once.
