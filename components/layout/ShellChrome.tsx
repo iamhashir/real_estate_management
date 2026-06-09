@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { TopBar, type QuickAddTarget } from "./TopBar";
 import { BottomTabBar } from "./BottomTabBar";
+import { BackgroundDecor } from "./BackgroundDecor";
 import { ClientFormDrawer } from "@/components/forms/ClientFormDrawer";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
 import { DealFormDrawer } from "@/components/forms/DealFormDrawer";
@@ -18,7 +19,8 @@ export function ShellChrome({ children }: { children: React.ReactNode }) {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="min-h-dvh bg-surface-base">
+    <div className="min-h-dvh">
+      <BackgroundDecor />
       <Sidebar />
 
       {/* Content column — offset for the fixed sidebar */}

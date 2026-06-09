@@ -109,15 +109,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Layered, faintly textured canvas so empty space never reads as flat:
-     two soft aqua light pools + a hairline dot grid at very low opacity. */
+  /* Fallback canvas colour; the rich textured backdrop is painted by
+     <BackgroundDecor /> so it sits behind the app shell content. */
   background-color: #F4FBFC;
-  background-image:
-    radial-gradient(900px circle at 12% -8%, rgba(25, 199, 194, 0.10), transparent 42%),
-    radial-gradient(1100px circle at 110% 0%, rgba(14, 107, 134, 0.08), transparent 46%),
-    radial-gradient(rgba(14, 107, 134, 0.05) 1px, transparent 1px);
-  background-size: auto, auto, 22px 22px;
-  background-attachment: fixed, fixed, fixed;
+}
+
+/* Slow ambient drift for the aurora background blobs. */
+@keyframes drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(3%, 4%, 0) scale(1.08); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
 }
 
 /* ─── Raised surface: outer hairline + inner highlight ring + depth shadow.
