@@ -1,36 +1,40 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import Sidebar from "./components/Sidebar";
+import { Space_Grotesk, Inter } from "next/font/google";
+import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Real Estate CRM",
-  description: "Control room for real estate agents",
+  title: {
+    default: "Real Estate Management",
+    template: "%s · Real Estate",
+  },
+  description:
+    "Manage properties, clients, and deals — replacing spreadsheets with a fast, purpose-built tool for real estate agents.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-slate-950 text-slate-50 flex">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
+      <body className="h-full bg-surface-base text-ink-900 font-sans">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
