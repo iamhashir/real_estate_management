@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Card, StatusPill, Badge, Skeleton, EmptyState } from "@/components/ui";
 import { formatCurrency, formatNumber } from "@/lib/utils";
+import { propertyImage } from "@/lib/propertyImage";
 import { PROPERTY_TYPES } from "@/lib/constants";
 import type { Property } from "@/lib/types";
 import { Building2, BedDouble, Maximize, ArrowRight, MapPin } from "lucide-react";
@@ -46,8 +47,16 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
               key={p._id}
               className="flex items-center gap-3 rounded-md bg-surface-base/70 border border-hairline px-3 py-2.5 transition-colors hover:border-aqua-300"
             >
-              <span className="grid place-items-center w-11 h-11 rounded-md bg-gradient-foam text-sea-900 shrink-0 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
-                <Building2 size={18} />
+              <span className="relative w-12 h-12 rounded-md overflow-hidden shrink-0 bg-gradient-foam">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={propertyImage(p, 200)}
+                  alt={p.name}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => { e.currentTarget.style.opacity = "0"; }}
+                />
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">

@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, Building2 } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
-import { Button, Reveal } from "@/components/ui";
+import { Button, Reveal, Stagger, StaggerItem, Skeleton, EmptyState } from "@/components/ui";
 import { PropertyFilters, type PropertyFilterState } from "@/components/properties/PropertyFilters";
-import { PropertyTable } from "@/components/properties/PropertyTable";
+import { PropertyCard } from "@/components/properties/PropertyCard";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
 import { useProperties } from "@/hooks/useProperties";
 
@@ -55,13 +55,32 @@ export default function PropertiesPage() {
 
         <PropertyFilters value={filters} onChange={setFilters} />
 
-        <Reveal delay={0.05}>
-          <PropertyTable
-            properties={filtered}
-            isLoading={isLoading}
-            onCreate={() => setAdding(true)}
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-72 rounded-md" />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            icon={<Building2 size={22} />}
+            title={search || Object.keys(filters).length ? "No matches" : "No properties yet"}
+            description={
+              search || Object.keys(filters).length
+                ? "Try a different search or clear the filters."
+                : "Add your first listing to start building your portfolio."
+            }
+            action={<Button onClick={() => setAdding(true)}>Add Property</Button>}
           />
-        </Reveal>
+        ) : (
+          <Stagger className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {filtered.map((p) => (
+              <StaggerItem key={p._id}>
+                <PropertyCard property={p} />
+              </StaggerItem>
+            ))}
+          </Stagger>
+        )}
       </div>
 
       <PropertyFormDrawer isOpen={adding} onClose={() => setAdding(false)} />
