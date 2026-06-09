@@ -39,7 +39,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-aqua-100 text-sm">{today}</p>
-            <h1 className="font-display font-600 text-2xl lg:text-3xl mt-1 tracking-tight">
+            <h1 className="font-serif text-3xl lg:text-4xl mt-1 tracking-tight">
               {greeting()}{firstName ? `, ${firstName}` : ""}
             </h1>
             <p className="text-aqua-100/90 text-sm mt-1.5 max-w-md">

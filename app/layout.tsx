@@ -1,18 +1,38 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Fraunces, Bricolage_Grotesque, Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+// Intentional multi-font system:
+//  • Fraunces (serif)        — editorial display: hero, page titles, names
+//  • Bricolage Grotesque     — characterful section/card headings + wordmark
+//  • Plus Jakarta Sans       — body / UI
+//  • Space Mono              — money, stats, tabular figures
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -31,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${bricolage.variable} ${jakarta.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="h-full bg-surface-base text-ink-900 font-sans">
         <Providers>{children}</Providers>
