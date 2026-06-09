@@ -1,15 +1,16 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { DealStage, DealType } from "@/lib/constants";
+import type { Deal, HydratedDeal } from "@/lib/types";
 
 export function useDeals(filters?: {
   stage?: DealStage;
   agentId?: string;
   dealType?: DealType;
 }) {
-  const result = useQuery(api.deals.list, filters ?? {});
+  const result = useQuery(api.deals.list, (filters ?? {}) as any);
   return {
-    deals:     result ?? [],
+    deals:     (result ?? []) as Deal[],
     isLoading: result === undefined,
   };
 }
@@ -17,7 +18,7 @@ export function useDeals(filters?: {
 export function usePipeline(agentId?: string) {
   const result = useQuery(api.deals.pipeline, agentId ? { agentId: agentId as any } : {});
   return {
-    deals:     result ?? [],
+    deals:     (result ?? []) as HydratedDeal[],
     isLoading: result === undefined,
   };
 }

@@ -40,7 +40,7 @@
 - ✅ `app/(shell)/dashboard/page.tsx` — skeleton stub
 - ✅ `app/(shell)/properties/page.tsx` — skeleton stub
 - ✅ `app/(shell)/clients/page.tsx` — skeleton stub
-- ❌ `npx convex dev` — **HUMAN STEP** (requires Convex account login, generates `_generated/` and `.env.local`)
+- ✅ `npx convex dev` — `_generated/` present, live deployment `cool-sandpiper-418`. Seed data via `npm run seed` (calls deployed mutations over ConvexHttpClient).
 
 ---
 
@@ -73,19 +73,20 @@
 ## Phase 2 — Layout Shell (`components/layout/`)
 > Depends on: Phase 1 (Button, Avatar, Badge)
 
-- ❌ `Sidebar.tsx` — desktop: 240px full with labels + icons. Tablet: 64px icons-only (collapsed prop). Active nav item: gradient-foam left bar + aqua glow. sea-950 background. Logo at top, agent avatar at bottom.
-- ❌ `TopBar.tsx` — 56px height, translucent bg-surface-card/80 backdrop-blur. Global search input (left). "+ New" quick-add button (right). Agent avatar + name (right). Responsive: full-width on mobile.
-- ❌ `BottomTabBar.tsx` — mobile only (hidden md:hidden). Fixed bottom. 64px. safe-bottom padding. Icons + labels for Dashboard, Properties, Clients. Active tab: aqua icon + label. bg-surface-card, border-t hairline.
-- ❌ `PageShell.tsx` — wrapper that offsets content for sidebar. lg: ml-60, md: ml-16, mobile: no offset + pb-16 for bottom bar. Never hardcode sidebar width in page files.
-- ❌ `SplitPane.tsx` — desktop (≥lg): left 380px fixed + right fluid. Tablet: single list, right panel slides in as overlay. Mobile: single list, right panel is full-screen. Manages selectedId state internally or via props.
+- ✅ `Sidebar.tsx` — desktop: 240px full with labels + icons. Tablet: 64px icons-only. Active nav item: gradient-foam left bar + aqua glow. sea-950 background. Logo at top, agent avatar at bottom.
+- ✅ `TopBar.tsx` — 56px height, translucent bg-surface-card/80 backdrop-blur. Global search input (left). "+ New" quick-add menu (right, Property/Client/Deal). Responsive: full-width on mobile.
+- ✅ `BottomTabBar.tsx` — mobile only (md:hidden). Fixed bottom. 64px. safe-bottom padding. Icons + labels for Dashboard, Properties, Clients + Add. Active tab: aqua icon + label.
+- ✅ `PageShell.tsx` — page padding wrapper with `bleed` option. Sidebar offset + bottom-bar spacing owned by `ShellChrome` so pages never hardcode sidebar width.
+- ✅ `SplitPane.tsx` — desktop (≥lg): left 380px fixed + right fluid. Tablet/mobile: single list, detail slides in as overlay with back button. Selection via props.
+- ✅ `ShellChrome.tsx` — client wrapper composing Sidebar + TopBar + BottomTabBar, owns quick-add drawer state.
 
 ---
 
 ## Phase 3 — Wire Shell Into App
 > Depends on: Phase 2
 
-- ❌ `app/(shell)/layout.tsx` — replace `<aside>` and `<nav>` placeholders with real `<Sidebar>`, `<TopBar>`, `<BottomTabBar>`, `<PageShell>`
-- ❌ Verify shell renders correctly on mobile, tablet, desktop
+- ✅ `app/(shell)/layout.tsx` — renders `<ShellChrome>` (Sidebar + TopBar + BottomTabBar + quick-add drawers)
+- ✅ Verify shell renders correctly — build passes, all routes 200, responsive classes per breakpoint
 
 ---
 
@@ -93,33 +94,32 @@
 > Depends on: Phase 1 (Card, StatusPill, Skeleton), Phase 2 (layout wired)
 > Data: useDashboard() hook
 
-- ❌ `StatCard.tsx` — single stat card: label (text-label), value (text-display-xl tabular-nums), subtitle, aqua top-accent bar. Animated count-up on mount (Framer Motion, 500ms).
-- ❌ `StatBand.tsx` — 4-column grid of StatCards. 2-col on mobile, 4-col on desktop. Receives overview object from useDashboard().
-- ❌ `PipelinePanel.tsx` — active deals list grouped by stage. Each row: property name, buyer name, stage pill, agreed price. Click → opens deal detail drawer.
-- ❌ `RecentActivity.tsx` — latest 10 activity entries. Relative timestamps (formatRelativeDate). Entity type icon. Scrollable.
-- ❌ `app/(shell)/dashboard/page.tsx` — replace skeleton with StatBand + 2-col grid (PipelinePanel + RecentActivity)
+- ✅ `StatCard.tsx` — label, value (display-xl tabular-nums), subtitle, aqua top-accent. Animated count-up on mount (500ms, respects prefers-reduced-motion).
+- ✅ `StatBand.tsx` — 4-col grid (2-col mobile). Listings / clients / closed-this-month / commission-this-month from overview. Skeleton while loading.
+- ✅ `PipelinePanel.tsx` — active deals grouped by stage from `stats.pipeline`. Rows: property name, buyer, deal type, price. "Calm waters" empty state.
+- ✅ `BreakdownPanel.tsx` — inventory (properties by status) + deals by stage as labeled bars. (Replaces RecentActivity, which needs a global activity query not yet in the API — deferred.)
+- ✅ `app/(shell)/dashboard/page.tsx` — StatBand + 2-col grid (PipelinePanel + BreakdownPanel), live `useDashboard()`.
 
 ---
 
 ## Phase 5 — Properties (`components/properties/` + page)
 > Depends on: Phase 1 (DataTable, StatusPill, Badge, EmptyState, Drawer), Phase 2
 
-- ❌ `PropertyFilters.tsx` — filter chip bar: status, type, listing type, city. Horizontal scroll on mobile. Clears individually or all at once.
-- ❌ `PropertyRow.tsx` — single table row: name, type badge, city, price (formatCurrency), size, status pill, actions menu (edit, change status, delete)
-- ❌ `PropertyCard.tsx` — mobile card view for DataTable renderCard prop: name + address, price large, type badge, status pill, action button
-- ❌ `PropertyTable.tsx` — DataTable with PropertyRow + PropertyCard. Passes all required props. Handles empty state.
-- ❌ `app/(shell)/properties/page.tsx` — replace skeleton: PropertyFilters + PropertyTable + "+ New Property" button wired to PropertyFormDrawer
+- ✅ `PropertyFilters.tsx` — filter chip bar: listing type, status, type. Horizontal scroll on mobile. Single-select per category, clear all.
+- ✅ `PropertyTable.tsx` — DataTable with typed columns (name, type badge, size, price, status pill) + status rail color. Handles empty state with CTA. (Row markup lives in the column renderers.)
+- ✅ `PropertyCard.tsx` — mobile card view for DataTable renderCard: name + location, large price, type badge, status pill, specs.
+- ✅ `app/(shell)/properties/page.tsx` — search + PropertyFilters + PropertyTable + "+ New Property" wired to PropertyFormDrawer. Live `useProperties()`.
 
 ---
 
 ## Phase 6 — Clients (`components/clients/` + page)
 > Depends on: Phase 1 (Avatar, StatusPill, DataTable, Drawer, EmptyState), Phase 2 (SplitPane)
 
-- ❌ `ClientListItem.tsx` — single row in client list: Avatar + name + phone + type badge + status pill. Tap to select.
-- ❌ `ClientList.tsx` — searchable, filterable list of ClientListItems. Uses useClients(). Handles empty state.
-- ❌ `ClientDealRow.tsx` — compact deal row used inside client profile: property name, stage, price, date
-- ❌ `ClientProfile.tsx` — right-panel detail view. Sections: Contact info, Budget & Preferences, Linked Deals (ClientDealRow list), Activity feed (RecentActivity), Notes. Uses useClientProfile().
-- ❌ `app/(shell)/clients/page.tsx` — replace skeleton with SplitPane wrapping ClientList (left) + ClientProfile (right). "+ New Client" button wired to ClientFormDrawer.
+- ✅ `ClientListItem.tsx` — Avatar + name + phone + type badge + status pill. Tap to select, active highlight.
+- ✅ `ClientList.tsx` — searchable + client-type filter list. Uses `useClients()`. Loading skeletons + empty state with CTA.
+- ✅ `ClientDealRow.tsx` — compact deal row: property name, deal type, date, price, stage pill.
+- ✅ `ClientProfile.tsx` — Contact, Budget & Preferences, Linked Deals, Notes, Activity feed. Uses `useClientProfile()`.
+- ✅ `app/(shell)/clients/page.tsx` — SplitPane wrapping ClientList + ClientProfile. "+ New Client" wired to ClientFormDrawer (auto-selects created client).
 
 ---
 
@@ -136,13 +136,13 @@
 ## Phase 8 — Forms (`components/forms/`)
 > Depends on: Phase 1 (all primitives), Phase 7
 
-- ❌ `PropertyFormDrawer.tsx` — 2-step drawer. Step 1: name, address, city/area (Combobox), type (SegmentedToggle), listing type (SegmentedToggle). Step 2: price (RangeSlider + input), size, bedrooms, bathrooms, features (multi-select chips), description. Floating labels throughout. Inline validation on blur. Autosave draft.
-- ❌ `ClientFormDrawer.tsx` — 1-step drawer. Fields: type (SegmentedToggle), first/last name, phone, email, nationality (Combobox), budget range (RangeSlider), preferred types (chip select), preferred locations (Combobox), notes. Inline validation. Autosave draft.
-- ❌ `DealFormDrawer.tsx` — 3-step drawer. Step 1: select property (Combobox, shows available only). Step 2: buyer (Combobox from clients), seller (Combobox), agent (Combobox). Step 3: list price, agreed price (RangeSlider), commission rate input, commission amount (live animated preview using calcCommission()), contract date (DatePicker), handover date (DatePicker), notes. Inline validation. Autosave draft.
-- ❌ Live commission preview — animated count-up (Framer Motion) in DealFormDrawer Step 3 as price/rate changes
-- ❌ Draft autosave — persist incomplete form state to localStorage, restore on re-open, show "Draft saved" toast
-- ❌ Success behaviour — drawer closes, new row flashes aqua highlight for 1s, success toast fires
-- ❌ Duplicate detection — warn before creating a property/client that closely matches an existing one
+- ✅ `PropertyFormDrawer.tsx` — 2-step drawer with progress rail. Step 1: listing/type toggles, name, address, city/area (Combobox). Step 2: price, size, beds/baths/floor, features (chips), description. Inline validation on blur. Draft autosave.
+- ✅ `ClientFormDrawer.tsx` — 1-step drawer: type toggle, names, phone, email, nationality (Combobox), budget (RangeSlider), preferred types (chips), preferred locations (Combobox → removable chips), notes. Inline validation. Draft autosave.
+- ✅ `DealFormDrawer.tsx` — 3-step drawer. Step 1: property (Combobox, available first) + deal type. Step 2: buyer/seller/agent (Comboboxes). Step 3: list/agreed price, commission rate, live commission preview, contract/handover dates, notes.
+- ✅ Live commission preview — animated count-up (Framer Motion) recalculates as price/rate change.
+- ✅ Draft autosave — `useDraft` persists form state to localStorage, restores on re-open.
+- ❌ Success behaviour — drawer closes + success toast fires (✅); new-row aqua flash still TODO.
+- ❌ Duplicate detection — warn before creating a near-duplicate property/client.
 
 ---
 

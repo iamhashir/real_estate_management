@@ -52,7 +52,7 @@ function getDealMeta(value: DealStage) {
 }
 
 export function StatusPill({ value, variant, pulse, className }: StatusPillProps) {
-  let label = value;
+  let label: string = value;
   let color: BadgeColor = "muted";
 
   if (variant === "property") {

@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { PropertyStatus, PropertyType, ListingType } from "@/lib/constants";
 import { PAGE_SIZE } from "@/lib/constants";
+import type { Property } from "@/lib/types";
 import { useState } from "react";
 
 export function useProperties(filters?: {
@@ -16,11 +17,11 @@ export function useProperties(filters?: {
   const result = useQuery(api.properties.list, {
     ...filters,
     paginationOpts: { cursor, numItems: PAGE_SIZE },
-  });
+  } as any);
 
   return {
-    properties:  result?.page ?? [],
-    totalCount:  result?.totalCount ?? 0,
+    properties:  (result?.page ?? []) as Property[],
+    totalCount:  (result?.totalCount ?? 0) as number,
     hasMore:     !!result?.nextCursor,
     loadMore:    () => result?.nextCursor && setCursor(result.nextCursor),
     isLoading:   result === undefined,

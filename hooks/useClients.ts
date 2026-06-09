@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { ClientType, ClientStatus } from "@/lib/constants";
+import type { Client, ClientProfile } from "@/lib/types";
 
 export function useClients(filters?: {
   clientType?: ClientType;
@@ -8,9 +9,9 @@ export function useClients(filters?: {
   agentId?: string;
   search?: string;
 }) {
-  const result = useQuery(api.clients.list, filters ?? {});
+  const result = useQuery(api.clients.list, (filters ?? {}) as any);
   return {
-    clients:   result ?? [],
+    clients:   (result ?? []) as Client[],
     isLoading: result === undefined,
   };
 }
@@ -20,7 +21,10 @@ export function useClient(id: string | null) {
 }
 
 export function useClientProfile(id: string | null) {
-  return useQuery(api.clients.getProfile, id ? { id: id as any } : "skip");
+  return useQuery(api.clients.getProfile, id ? { id: id as any } : "skip") as
+    | ClientProfile
+    | null
+    | undefined;
 }
 
 export function useCreateClient() {
