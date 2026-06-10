@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
-import { Fraunces, Bricolage_Grotesque, Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
+import { Crimson_Text, Syne, Inter, Space_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
 // Intentional multi-font system:
-//  • Fraunces (serif)        — editorial display: hero, page titles, names
-//  • Bricolage Grotesque     — characterful section/card headings + wordmark
-//  • Plus Jakarta Sans       — body / UI
+//  • Crimson Text (serif)    — editorial display: hero, page titles, premium moments
+//  • Syne (geometric)        — distinctive headings & display numbers, art deco precision
+//  • Inter                   — clean, refined body / UI
 //  • Space Mono              — money, stats, tabular figures
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const crimson = Crimson_Text({
+  variable: "--font-crimson",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${bricolage.variable} ${jakarta.variable} ${spaceMono.variable} h-full antialiased`}
+      className={`${crimson.variable} ${syne.variable} ${inter.variable} ${spaceMono.variable} h-full antialiased`}
     >
       <body className="h-full bg-surface-base text-ink-900 font-sans">
         <Providers>{children}</Providers>

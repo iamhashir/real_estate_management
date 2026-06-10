@@ -17,17 +17,17 @@ interface StatCardProps {
 }
 
 const iconTint: Record<Accent, string> = {
-  aqua: "bg-aqua-200/20 text-aqua-300 border border-aqua-200/30",
-  sea: "bg-sea-200/15 text-sea-300 border border-sea-200/25",
-  success: "bg-success/20 text-success border border-success/30",
-  coral: "bg-coral-200/20 text-coral-300 border border-coral-200/30",
+  aqua: "bg-emerald-500/20 text-emerald-600 border border-emerald-500/40",
+  sea: "bg-emerald-400/15 text-emerald-500 border border-emerald-400/30",
+  success: "bg-emerald-500/20 text-emerald-600 border border-emerald-500/40",
+  coral: "bg-brass-500/20 text-brass-500 border border-brass-500/40",
 };
 
 const accentColors: Record<Accent, string> = {
-  aqua: "text-aqua-100",
-  sea: "text-sea-100",
-  success: "text-success",
-  coral: "text-coral-100",
+  aqua: "text-emerald-600",
+  sea: "text-emerald-500",
+  success: "text-emerald-600",
+  coral: "text-brass-500",
 };
 
 export function StatCard({
@@ -49,25 +49,34 @@ export function StatCard({
       )}
     >
       <motion.div
-        className="flex items-start justify-between gap-4 mb-4"
+        className="flex items-start justify-between gap-4 mb-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Icon with more distinctive treatment */}
+        {/* Icon with geometric art deco frame */}
         {icon && (
           <motion.span
             className={cn(
-              "grid place-items-center shrink-0 rounded-xl p-3 lg:p-4",
+              "grid place-items-center shrink-0 rounded-sm p-3 lg:p-4 relative",
               iconTint[accent],
               large && "w-16 h-16 lg:w-20 lg:h-20"
             )}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.08, rotate: 2 }}
           >
             {icon}
+            <motion.div
+              className="absolute inset-0 rounded-sm border-2 pointer-events-none"
+              style={{
+                borderColor: "currentColor",
+                opacity: 0,
+              }}
+              whileHover={{ opacity: 0.3 }}
+              transition={{ duration: 0.3 }}
+            />
           </motion.span>
         )}
 
@@ -75,19 +84,31 @@ export function StatCard({
         <div className="flex-1" />
       </motion.div>
 
-      {/* Content */}
+      {/* Content with geometric structure */}
       <div className="min-w-0">
-        <p className={cn("text-xs lg:text-sm font-bold uppercase tracking-widest text-ink-400 mb-2", large && "lg:text-sm")}>
-          {label}
-        </p>
         <motion.p
           className={cn(
-            "font-display font-700 text-ink-900 leading-none tracking-tight",
+            "text-xs lg:text-sm font-bold uppercase tracking-[0.1em] text-ink-600 mb-3",
+            large && "lg:text-sm"
+          )}
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+        >
+          {label}
+        </motion.p>
+
+        {/* Decorative line accent */}
+        <div className="h-px bg-gradient-to-r from-brass-400/40 via-transparent to-transparent mb-4" />
+
+        <motion.p
+          className={cn(
+            "font-display font-800 text-ink-900 leading-none tracking-tight",
             large ? "text-4xl lg:text-5xl" : "text-2xl lg:text-3xl"
           )}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
         >
           <span className={accentColors[accent]}>
             <AnimatedNumber value={value} currency={currency} />
@@ -96,10 +117,13 @@ export function StatCard({
 
         {subtitle && (
           <motion.p
-            className={cn("text-ink-600 mt-3 leading-relaxed", large ? "text-sm lg:text-base" : "text-xs lg:text-sm")}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            className={cn(
+              "text-ink-600 mt-4 leading-relaxed border-l-2 border-brass-400/40 pl-3",
+              large ? "text-sm lg:text-base" : "text-xs lg:text-sm"
+            )}
+            initial={{ opacity: 0, x: -4 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.12 }}
           >
             {subtitle}
           </motion.p>

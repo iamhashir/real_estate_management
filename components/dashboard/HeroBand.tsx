@@ -27,90 +27,107 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
   const firstName = agent?.name?.split(" ")[0];
 
   return (
-    <div className="relative overflow-hidden rounded-lg bg-gradient-tide text-white shadow-pop">
-      {/* Geometric accent shapes (brutalist style, no blur) */}
+    <div className="relative overflow-hidden bg-gradient-deco rounded-lg text-cream-50 shadow-pop">
+      {/* Art deco geometric accent elements */}
       <motion.div
-        className="pointer-events-none absolute -top-24 -right-12 w-64 h-64 bg-aqua-300/8 rounded-full"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      />
-      <motion.div
-        className="pointer-events-none absolute -bottom-32 -left-16 w-80 h-80 bg-coral-500/5 rounded-full"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-      />
-      {/* Subtle geometric accent line */}
-      <div className="pointer-events-none absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-white/20 to-transparent" />
+        className="pointer-events-none absolute -top-32 -right-24 w-80 h-80 opacity-10"
+        initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
+        animate={{ opacity: 0.08, scale: 1, rotate: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
+        <div className="w-full h-full border-2 border-brass-400 rounded-full" />
+      </motion.div>
 
-      <div className="relative p-8 lg:p-10 min-h-60 lg:min-h-48">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+      <motion.div
+        className="pointer-events-none absolute -bottom-20 -left-20 w-60 h-60 opacity-5"
+        initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
+        animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+      >
+        <div className="w-full h-full border-2 border-emerald-400 rounded-full" />
+      </motion.div>
+
+      {/* Decorative top border line */}
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brass-400/30 to-transparent" />
+
+      <div className="relative p-8 lg:p-12 min-h-64 lg:min-h-56 flex flex-col justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12">
           {/* Left: Greeting and date */}
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
+            className="flex-1"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-aqua-100/70 text-xs lg:text-sm font-medium uppercase tracking-widest mb-3">
+            <p className="text-brass-300 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-6">
               {today}
             </p>
-            <h1 className="font-display text-4xl lg:text-5xl font-700 tracking-tight leading-tight">
+            <h1 className="font-serif text-5xl lg:text-6xl font-600 leading-tight text-cream-50">
               {greeting()}
               {firstName && (
                 <>
                   <br />
-                  <span className="bg-gradient-to-r from-aqua-200 to-sea-200 bg-clip-text text-transparent">
+                  <motion.span
+                    className="text-transparent bg-clip-text bg-gradient-brass inline-block"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                  >
                     {firstName}
-                  </span>
+                  </motion.span>
                 </>
               )}
             </h1>
           </motion.div>
 
-          {/* Right: Asymmetric metrics with variable sizes */}
+          {/* Right: Asymmetric metrics */}
           <motion.div
-            className="flex flex-col gap-6 lg:gap-8 lg:text-right"
-            initial={{ opacity: 0, x: 20 }}
+            className="flex flex-col gap-8 lg:gap-10 lg:text-right"
+            initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {/* Primary metric: Portfolio (largest) */}
-            <div className="flex flex-col lg:items-end">
-              <p className="text-aqua-100/60 text-xs lg:text-sm font-medium uppercase tracking-widest mb-2">
+            {/* Primary metric: Portfolio */}
+            <div className="flex flex-col lg:items-end group">
+              <p className="text-brass-400 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
                 Portfolio Value
               </p>
               {isLoading ? (
-                <Skeleton className="h-10 lg:h-12 w-40 bg-white/15" />
+                <Skeleton className="h-12 lg:h-14 w-48 bg-cream-50/10 rounded-sm" />
               ) : (
-                <p className="font-display font-700 text-3xl lg:text-4xl text-money tracking-tight">
+                <motion.p
+                  className="font-display font-800 text-3xl lg:text-4xl text-brass-300 tracking-tight leading-none"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
                   <AnimatedNumber value={portfolioValue} currency />
-                </p>
+                </motion.p>
               )}
             </div>
 
-            {/* Secondary metrics: staggered below */}
-            <div className="grid grid-cols-2 lg:flex lg:flex-col lg:gap-4 gap-4">
+            {/* Secondary metrics */}
+            <div className="grid grid-cols-2 lg:flex lg:flex-col lg:gap-6 gap-4">
               <div className="lg:text-right">
-                <p className="text-aqua-100/50 text-xs font-medium uppercase tracking-wide mb-1">
+                <p className="text-brass-400/80 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   In Pipeline
                 </p>
                 {isLoading ? (
-                  <Skeleton className="h-6 w-24 lg:w-32 lg:ml-auto bg-white/15" />
+                  <Skeleton className="h-8 w-28 bg-cream-50/10 rounded-sm lg:ml-auto" />
                 ) : (
-                  <p className="font-display font-600 text-lg lg:text-xl text-aqua-100">
+                  <p className="font-display font-700 text-xl lg:text-2xl text-cream-100">
                     <AnimatedNumber value={pipelineValue} currency />
                   </p>
                 )}
               </div>
               <div className="lg:text-right">
-                <p className="text-aqua-100/50 text-xs font-medium uppercase tracking-wide mb-1">
+                <p className="text-brass-400/80 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   Commission MTD
                 </p>
                 {isLoading ? (
-                  <Skeleton className="h-6 w-24 lg:w-32 lg:ml-auto bg-white/15" />
+                  <Skeleton className="h-8 w-28 bg-cream-50/10 rounded-sm lg:ml-auto" />
                 ) : (
-                  <p className="font-display font-600 text-lg lg:text-xl text-coral-200">
+                  <p className="font-display font-700 text-xl lg:text-2xl text-emerald-300">
                     <AnimatedNumber value={commissionThisMonth} currency />
                   </p>
                 )}

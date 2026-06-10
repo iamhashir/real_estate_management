@@ -105,16 +105,25 @@ html {
 body {
   height: 100%;
   min-height: 100%;
-  color: #0B1F26;
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  color: #1A1814;
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #F5F1E8 0%, #FDFAF5 100%);
+  position: relative;
+}
 
-  /* Fallback canvas colour; the rich textured backdrop is painted by
-     <BackgroundDecor /> so it sits behind the app shell content. */
-  background-color: #F4FBFC;
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(42, 107, 84, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Slow ambient drift for the aurora background blobs. */
@@ -134,89 +143,95 @@ body {
   animation: row-flash 1.8s ease-out forwards;
 }
 
-/* ─── Raised surface: outer hairline + inner highlight ring + depth shadow.
-   This "double edge" is what reads as crafted rather than flat/generic. ───── */
+/* ─── Raised surface: geometric precision with art deco accent ────────────── */
 
 .surface-raised {
   background-color: var(--color-surface-card);
-  border: 1px solid color-mix(in srgb, var(--color-hairline) 85%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
-    var(--shadow-card);
+  border: 1px solid var(--color-hairline);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.surface-raised::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
 }
 
 .surface-raised-hover {
-  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
 }
 .surface-raised-hover:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-    var(--shadow-float);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-float);
+  border-color: rgba(201, 169, 97, 0.3);
 }
 
-/* Double-ring accent for featured/elevated elements (stat cards, previews). */
+/* Double-line accent for featured elements (geometric art deco style). */
 .ring-double {
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4),
     0 0 0 1px var(--color-hairline),
-    0 0 0 5px color-mix(in srgb, var(--color-aqua-100) 60%, transparent),
+    0 0 0 3px rgba(201, 169, 97, 0.15),
     var(--shadow-card);
 }
 
 /* ─── Typography utilities ────────────────────────────────────────────────── */
 
-/* Display grotesque — characterful structure (section/card headings, wordmark) */
+/* Display geometric — distinctive, precise (section/card headings, numbers) */
 .font-display {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-family: var(--font-syne), system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
-/* Editorial serif — premium showcase moments (hero, page titles, names) */
+/* Editorial serif — premium moments (hero, page titles) */
 .font-serif {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-crimson), Georgia, serif;
+  font-weight: 600;
 }
 
 .text-display-xl {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-crimson), Georgia, serif;
   font-size: 2.5rem;
-  line-height: 1.05;
+  line-height: 1.1;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 .text-h1 {
-  font-family: var(--font-fraunces), Georgia, serif;
+  font-family: var(--font-crimson), Georgia, serif;
   font-size: 1.85rem;
-  line-height: 1.15;
+  line-height: 1.2;
   font-weight: 600;
   letter-spacing: -0.015em;
 }
 
 .text-h2 {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-family: var(--font-syne), system-ui, sans-serif;
   font-size: 1.25rem;
-  line-height: 1.35;
+  line-height: 1.3;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .text-h3 {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-family: var(--font-syne), system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   font-weight: 600;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.015em;
 }
 
 .text-label {
-  font-family: var(--font-bricolage), system-ui, sans-serif;
-  font-size: 0.75rem;
-  line-height: 1.5;
+  font-family: var(--font-syne), system-ui, sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.4;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -239,12 +254,12 @@ body {
 
 /* ─── Gradient utilities ──────────────────────────────────────────────────── */
 
-.bg-gradient-tide {
-  background: var(--gradient-tide);
+.bg-gradient-deco {
+  background: var(--gradient-deco);
 }
 
-.bg-gradient-foam {
-  background: var(--gradient-foam);
+.bg-gradient-brass {
+  background: var(--gradient-brass);
 }
 
 /* ─── Scrollbar (subtle aqua tint) ───────────────────────────────────────── */
