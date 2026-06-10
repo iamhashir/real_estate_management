@@ -4,7 +4,8 @@ import { StatCard } from "./StatCard";
 import { Skeleton, Stagger, StaggerItem } from "@/components/ui";
 import type { DashboardStats } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
-import { Building2, Users, CheckCircle2, Wallet } from "lucide-react";
+import { Home, Users2, CheckSquare, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface StatBandProps {
   overview?: DashboardStats["overview"];
@@ -14,38 +15,49 @@ interface StatBandProps {
 export function StatBand({ overview, isLoading }: StatBandProps) {
   if (isLoading || !overview) {
     return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-28 rounded-md" />
+          <Skeleton key={i} className="h-32 rounded-lg" />
         ))}
       </div>
     );
   }
 
   return (
-    <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-max">
+      {/* Primary metric: largest, top-left to bottom-right span on desktop */}
       <StaggerItem>
-        <StatCard
-          accent="aqua"
-          icon={<Building2 size={18} />}
-          label="Active Listings"
-          value={overview.activeListings}
-          subtitle={`${overview.totalProperties} total properties`}
-        />
+        <motion.div
+          className="lg:col-span-2 lg:row-span-2"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <StatCard
+            accent="aqua"
+            icon={<Home size={24} />}
+            label="Active Listings"
+            value={overview.activeListings}
+            subtitle={`${overview.totalProperties} total properties across all listings`}
+            large
+          />
+        </motion.div>
       </StaggerItem>
+
+      {/* Secondary metrics: smaller, staggered */}
       <StaggerItem>
         <StatCard
           accent="sea"
-          icon={<Users size={18} />}
+          icon={<Users2 size={20} />}
           label="Active Clients"
           value={overview.activeClients}
-          subtitle={`${overview.totalClients} on the books`}
+          subtitle={`${overview.totalClients} total`}
         />
       </StaggerItem>
       <StaggerItem>
         <StatCard
           accent="success"
-          icon={<CheckCircle2 size={18} />}
+          icon={<CheckSquare size={20} />}
           label="Closed This Month"
           value={overview.closedDealsThisMonth}
           subtitle={`${overview.closedDealsAllTime} all-time`}
@@ -54,11 +66,11 @@ export function StatBand({ overview, isLoading }: StatBandProps) {
       <StaggerItem>
         <StatCard
           accent="coral"
-          icon={<Wallet size={18} />}
-          label="Commission (Month)"
+          icon={<TrendingUp size={20} />}
+          label="Commission (MTD)"
           value={overview.commissionThisMonth}
           currency
-          subtitle={`all-time ${formatCurrency(overview.totalCommission)}`}
+          subtitle={`${formatCurrency(overview.totalCommission)} all-time`}
         />
       </StaggerItem>
     </Stagger>
