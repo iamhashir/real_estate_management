@@ -18,9 +18,15 @@ export function Skeleton({ className, rounded = "md", style }: SkeletonProps) {
     lg: "rounded-lg",
     full: "rounded-full",
   };
+
   return (
     <div
-      className={cn("bg-hairline", !prefersReducedMotion && "animate-pulse", roundMap[rounded], className)}
+      className={cn(
+        "relative overflow-hidden bg-gradient-to-r from-hairline via-cream-200 to-hairline",
+        !prefersReducedMotion && "skeleton-shimmer",
+        roundMap[rounded],
+        className
+      )}
       style={style}
       aria-hidden="true"
     />

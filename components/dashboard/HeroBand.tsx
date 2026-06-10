@@ -50,34 +50,31 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
       {/* Decorative top border line */}
       <div className="pointer-events-none absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brass-400/30 to-transparent" />
 
-      <div className="relative p-8 lg:p-12 min-h-64 lg:min-h-56 flex flex-col justify-between">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12">
+      <div className="relative p-8 lg:p-14 min-h-72 lg:min-h-64 flex flex-col justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-14">
           {/* Left: Greeting and date */}
           <motion.div
-            className="flex-1"
+            className="flex-1 max-w-lg"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-brass-300 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-6">
+            <p className="text-brass-400 text-xs lg:text-sm font-bold uppercase tracking-[0.12em] mb-8 block opacity-80">
               {today}
             </p>
-            <h1 className="font-serif text-5xl lg:text-6xl font-600 leading-tight text-cream-50">
+            <h1 className="font-serif text-6xl lg:text-7xl font-600 leading-none text-cream-50 mb-2">
               {greeting()}
-              {firstName && (
-                <>
-                  <br />
-                  <motion.span
-                    className="text-transparent bg-clip-text bg-gradient-brass inline-block"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                  >
-                    {firstName}
-                  </motion.span>
-                </>
-              )}
             </h1>
+            {firstName && (
+              <motion.h2
+                className="text-transparent bg-clip-text bg-gradient-brass font-serif text-5xl lg:text-6xl font-600"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+              >
+                {firstName}
+              </motion.h2>
+            )}
           </motion.div>
 
           {/* Right: Asymmetric metrics */}

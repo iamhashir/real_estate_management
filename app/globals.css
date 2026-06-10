@@ -120,10 +120,22 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(circle at 20% 80%, rgba(42, 107, 84, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.04) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(42, 107, 84, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
   pointer-events: none;
   z-index: -1;
+}
+
+/* Premium skeleton shimmer — smooth, directional loader animation */
+@keyframes skeleton-shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.skeleton-shimmer {
+  background-size: 1000px 100%;
+  animation: skeleton-shimmer 2s infinite;
 }
 
 /* Slow ambient drift for the aurora background blobs. */

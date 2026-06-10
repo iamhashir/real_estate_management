@@ -88,7 +88,7 @@ export function StatCard({
       <div className="min-w-0">
         <motion.p
           className={cn(
-            "text-xs lg:text-sm font-bold uppercase tracking-[0.1em] text-ink-600 mb-3",
+            "text-xs lg:text-sm font-bold uppercase tracking-[0.12em] text-ink-600 mb-4 opacity-85",
             large && "lg:text-sm"
           )}
           initial={{ opacity: 0, y: -4 }}
@@ -98,13 +98,13 @@ export function StatCard({
           {label}
         </motion.p>
 
-        {/* Decorative line accent */}
-        <div className="h-px bg-gradient-to-r from-brass-400/40 via-transparent to-transparent mb-4" />
+        {/* Decorative line accent — refined geometric detail */}
+        <div className="h-0.5 w-8 bg-gradient-to-r from-brass-400/60 to-transparent mb-5" />
 
         <motion.p
           className={cn(
-            "font-display font-800 text-ink-900 leading-none tracking-tight",
-            large ? "text-4xl lg:text-5xl" : "text-2xl lg:text-3xl"
+            "font-display font-800 text-ink-900 leading-none tracking-tight mb-4",
+            large ? "text-5xl lg:text-6xl" : "text-3xl lg:text-4xl"
           )}
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -118,7 +118,7 @@ export function StatCard({
         {subtitle && (
           <motion.p
             className={cn(
-              "text-ink-600 mt-4 leading-relaxed border-l-2 border-brass-400/40 pl-3",
+              "text-ink-600 leading-relaxed border-l-3 border-brass-400/50 pl-4",
               large ? "text-sm lg:text-base" : "text-xs lg:text-sm"
             )}
             initial={{ opacity: 0, x: -4 }}

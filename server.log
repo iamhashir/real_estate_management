@@ -1,0 +1,15 @@
+ΓÜá Port 3000 is in use by process 28040, using available port 3001 instead.
+Γû▓ Next.js 16.2.7 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.56.1:3001
+- Environments: .env.local
+Γ£ô Ready in 670ms
+Γ¿» Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          28040
+- Dir:          C:\Users\ihash\Desktop\real_estate_listing
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 28040 /F to stop it.
+[?25h
