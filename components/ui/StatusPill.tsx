@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   PROPERTY_STATUSES,
@@ -69,7 +70,11 @@ export function StatusPill({ value, variant, pulse, className }: StatusPillProps
   const showPulse = pulse ?? (value === "available" || value === "active");
 
   return (
-    <span
+    <motion.span
+      key={value}
+      initial={{ opacity: 0, scale: 0.88 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap",
         colorClasses[color],
@@ -88,6 +93,6 @@ export function StatusPill({ value, variant, pulse, className }: StatusPillProps
         </span>
       )}
       {label}
-    </span>
+    </motion.span>
   );
 }

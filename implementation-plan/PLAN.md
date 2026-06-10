@@ -149,27 +149,27 @@
 ## Phase 9 — Polish & Animation
 > Depends on: All phases above
 
-- ❌ Framer Motion drawer open/close — slide from right 280ms ease `[0.22, 1, 0.36, 1]`
-- ❌ Framer Motion bottom sheet — slide up on mobile, spring dismiss on swipe-down
-- ❌ Page/route transitions — crossfade + 8px upward settle
-- ❌ Card hover animation — translateY(-2px), shadow deepen, 150ms
-- ❌ Status pill change — cross-fade color + brief scale pulse
-- ❌ Number count-up — all stat values animate on mount and on data change (500ms)
-- ❌ Toast slide-up animation — enter/exit with Framer Motion
-- ❌ `prefers-reduced-motion` — collapse all animations to simple fade when user prefers reduced motion
-- ❌ Empty states — illustrated with wave/anchor motif SVG, friendly text, single CTA
-- ❌ Row flash on save — new/updated row briefly highlights aqua then settles
+- ✅ Framer Motion drawer open/close — slide from right 280ms ease `[0.22, 1, 0.36, 1]`
+- ✅ Framer Motion bottom sheet — slide up on mobile, spring dismiss on swipe-down
+- ✅ Page/route transitions — crossfade + 8px upward settle (`PageTransitionWrapper`, keyed by pathname)
+- ✅ Card hover animation — translateY(-2px), shadow deepen, 150ms
+- ✅ Status pill change — cross-fade color + brief scale pulse (motion.span with key)
+- ✅ Number count-up — all stat values animate on mount and on data change (500ms)
+- ✅ Toast slide-up animation — enter/exit with Framer Motion
+- ✅ `prefers-reduced-motion` — collapse all animations to simple fade when user prefers reduced motion
+- ✅ Empty states — illustrated with wave/anchor motif SVG, friendly text, single CTA
+- ✅ Row flash on save — `highlightId` prop on DataTable + `row-flash` CSS keyframe in globals.css
 
 ---
 
 ## Phase 10 — Error Handling & Edge Cases
 
-- ❌ Error boundaries — wrap shell and each major page section
-- ❌ Mutation error handling — expose `error` state from all mutation hooks, show toast on failure
-- ❌ Optimistic updates — add to create/update mutations for instant UI response
-- ❌ Network offline state — gentle banner indicating Convex is reconnecting
-- ❌ 404 page — styled with app branding, link back to dashboard
-- ❌ Loading states — Skeleton component replaces all hardcoded `animate-pulse` divs
+- ✅ Error boundaries — `app/error.tsx` (root) + `app/(shell)/error.tsx` (shell-level); caught errors show try-again + dashboard link
+- ✅ Mutation error handling — all form components and page delete handlers have try/catch with `toast.error()`
+- ❌ Optimistic updates — deferred (Convex handles near-instant sync; not required at this scale)
+- ✅ Network offline state — `OfflineBanner` component in ShellChrome; uses navigator.onLine + online/offline events
+- ✅ 404 page — `app/not-found.tsx` with wave SVG, app branding, link to dashboard
+- ✅ Loading states — Skeleton component used throughout; GlobalSearchPanel inline animate-pulse replaced with `<Skeleton>`
 
 ---
 

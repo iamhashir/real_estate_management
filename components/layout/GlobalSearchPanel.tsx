@@ -7,6 +7,7 @@ import { cn, formatCurrency } from "@/lib/utils";
 import { usePropertySearch, useClientSearch, useDealSearch } from "@/hooks/useSearch";
 import { shellNav } from "@/lib/shellNav";
 import { DEAL_STAGES, CLIENT_TYPES } from "@/lib/constants";
+import { Skeleton } from "@/components/ui";
 
 interface Props {
   query: string;
@@ -73,10 +74,10 @@ function SkeletonRows() {
     <div className="px-3 py-2 space-y-1">
       {[1, 2].map((i) => (
         <div key={i} className="flex items-center gap-3 py-2">
-          <div className="w-7 h-7 rounded-md bg-surface-base animate-pulse" />
+          <Skeleton className="w-7 h-7 rounded-md shrink-0" />
           <div className="flex-1 space-y-1.5">
-            <div className="h-3 rounded bg-surface-base animate-pulse w-3/4" />
-            <div className="h-2.5 rounded bg-surface-base animate-pulse w-1/2" />
+            <Skeleton className="h-3 rounded w-3/4" />
+            <Skeleton className="h-2.5 rounded w-1/2" />
           </div>
         </div>
       ))}

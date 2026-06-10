@@ -8,6 +8,8 @@ import { BackgroundDecor } from "./BackgroundDecor";
 import { ClientFormDrawer } from "@/components/forms/ClientFormDrawer";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
 import { DealFormDrawer } from "@/components/forms/DealFormDrawer";
+import { PageTransitionWrapper } from "./PageTransitionWrapper";
+import { OfflineBanner } from "./OfflineBanner";
 
 /**
  * The persistent app chrome. Renders the fixed sidebar + bottom bar, offsets
@@ -20,13 +22,16 @@ export function ShellChrome({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh">
+      <OfflineBanner />
       <BackgroundDecor />
       <Sidebar />
 
       {/* Content column — offset for the fixed sidebar */}
       <div className="md:ml-16 lg:ml-60 flex flex-col min-h-dvh">
         <TopBar onQuickAdd={setQuickAdd} search={search} onSearchChange={setSearch} />
-        <div className="flex-1 min-w-0 pb-16 md:pb-0">{children}</div>
+        <div className="flex-1 min-w-0 pb-16 md:pb-0">
+          <PageTransitionWrapper>{children}</PageTransitionWrapper>
+        </div>
       </div>
 
       <BottomTabBar onQuickAdd={setQuickAdd} />

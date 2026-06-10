@@ -26,6 +26,7 @@ interface DataTableProps<T> {
   emptyState?:  React.ReactNode;
   onRowClick?:  (row: T) => void;
   railColor?:   (row: T) => string;
+  highlightId?: string;
   className?:   string;
 }
 
@@ -45,6 +46,7 @@ export function DataTable<T>({
   emptyState,
   onRowClick,
   railColor,
+  highlightId,
   className,
 }: DataTableProps<T>) {
   const { isMobile } = useBreakpoint();
@@ -140,15 +142,18 @@ export function DataTable<T>({
               </tr>
             ) : (
               rows.map((row) => {
-                const rail = railColor?.(row);
+                const rail    = railColor?.(row);
+                const rowId   = getRowId(row);
+                const flashed = highlightId === rowId;
                 return (
                   <tr
-                    key={getRowId(row)}
+                    key={rowId}
                     onClick={() => onRowClick?.(row)}
                     className={cn(
                       "group relative transition-colors",
                       "hover:bg-aqua-100/40",
-                      onRowClick && "cursor-pointer"
+                      onRowClick && "cursor-pointer",
+                      flashed && "row-flash"
                     )}
                   >
                     {columns.map((col, ci) => (
