@@ -50,7 +50,7 @@ export function PropertyCard({
                 {onEdit && (
                   <button
                     onClick={(e) => { e.stopPropagation(); onEdit(); }}
-                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-sea-800 hover:bg-white shadow-card transition-colors touch-manipulation"
+                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-sea-800 hover:bg-white shadow-card transition-colors touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-700 focus-visible:ring-offset-1 md:focus-visible:ring-offset-0"
                     aria-label="Edit property"
                   >
                     <Pencil size={13} />
@@ -59,7 +59,7 @@ export function PropertyCard({
                 {onDelete && (
                   <button
                     onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-danger hover:bg-white shadow-card transition-colors touch-manipulation"
+                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-danger hover:bg-white shadow-card transition-colors touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-danger focus-visible:ring-offset-1 md:focus-visible:ring-offset-0"
                     aria-label="Delete property"
                   >
                     <Trash2 size={13} />

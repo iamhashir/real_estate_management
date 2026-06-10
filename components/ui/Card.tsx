@@ -36,9 +36,17 @@ export function Card({
       className={cn(
         "surface-raised relative rounded-md overflow-hidden",
         hover && "surface-raised-hover",
-        onClick && "cursor-pointer",
+        onClick && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2",
         className
       )}
+      tabIndex={onClick ? 0 : undefined}
+      role={onClick ? "button" : undefined}
+      onKeyDown={onClick ? (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      } : undefined}
     >
       {accent && (
         <div className={cn("absolute inset-x-0 top-0 h-0.5 z-10", accentMap[accent])} />

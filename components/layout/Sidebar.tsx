@@ -56,6 +56,7 @@ export function Sidebar() {
                 "group relative flex items-center gap-3 rounded-md h-11 px-3 lg:px-3.5",
                 "text-sm font-medium transition-colors",
                 "justify-center lg:justify-start",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
                 active
                   ? "bg-white/10 text-white"
                   : "text-aqua-100/70 hover:text-white hover:bg-white/5"

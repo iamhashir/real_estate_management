@@ -70,7 +70,18 @@ export function DataTable<T>({
           <div
             key={getRowId(row)}
             onClick={() => onRowClick?.(row)}
-            className={cn(onRowClick && "cursor-pointer")}
+            role={onRowClick ? "button" : undefined}
+            tabIndex={onRowClick ? 0 : undefined}
+            onKeyDown={(e) => {
+              if (onRowClick && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                onRowClick(row);
+              }
+            }}
+            className={cn(
+              "rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
+              onRowClick && "cursor-pointer"
+            )}
           >
             {renderCard(row)}
           </div>
@@ -86,7 +97,7 @@ export function DataTable<T>({
       <div className="flex items-center justify-end px-4 py-2 border-b border-hairline gap-2">
         <button
           onClick={() => setDensity(density === "comfortable" ? "compact" : "comfortable")}
-          className="flex items-center gap-1.5 text-xs text-ink-400 hover:text-ink-700 transition-colors"
+          className="flex items-center gap-1.5 text-xs text-ink-400 hover:text-ink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2 rounded-sm px-1.5 py-1"
           title={density === "comfortable" ? "Switch to compact" : "Switch to comfortable"}
         >
           {density === "comfortable"
@@ -152,9 +163,17 @@ export function DataTable<T>({
                     className={cn(
                       "group relative transition-colors",
                       "hover:bg-aqua-100/40",
-                      onRowClick && "cursor-pointer",
+                      onRowClick && "cursor-pointer focus-visible:bg-aqua-100/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-aqua-400",
                       flashed && "row-flash"
                     )}
+                    role={onRowClick ? "button" : undefined}
+                    tabIndex={onRowClick ? 0 : undefined}
+                    onKeyDown={(e) => {
+                      if (onRowClick && (e.key === "Enter" || e.key === " ")) {
+                        e.preventDefault();
+                        onRowClick(row);
+                      }
+                    }}
                   >
                     {columns.map((col, ci) => (
                       <td
