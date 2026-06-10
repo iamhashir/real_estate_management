@@ -6,14 +6,17 @@ import { ChipToggleGroup, FormSection, compactAED, useDraft } from "./formHelper
 import {
   CLIENT_TYPES, PROPERTY_TYPES, NATIONALITIES, CITIES, AREAS_BY_CITY,
 } from "@/lib/constants";
-import { useCreateClient } from "@/hooks/useClients";
+import { useCreateClient, useUpdateClient } from "@/hooks/useClients";
 import { useCurrentAgent } from "@/hooks/useAgents";
 import { X } from "lucide-react";
+import type { Client } from "@/lib/types";
+import { useEffect } from "react";
 
 interface ClientFormDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onCreated?: (id: string) => void;
+  initialData?: Client;
 }
 
 const BUDGET_MAX = 50_000_000;
@@ -52,14 +55,33 @@ const ALL_AREAS = CITIES.flatMap((city) =>
   }))
 );
 
-export function ClientFormDrawer({ isOpen, onClose, onCreated }: ClientFormDrawerProps) {
+export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: ClientFormDrawerProps) {
+  const isEdit = !!initialData;
   const toast = useToast();
   const createClient = useCreateClient();
+  const updateClient = useUpdateClient();
   const { agent } = useCurrentAgent();
 
-  const [form, setForm, clearDraft] = useDraft<Draft>("draft:client", EMPTY, isOpen);
+  const [form, setForm, clearDraft] = useDraft<Draft>("draft:client", EMPTY, isOpen && !isEdit);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!initialData || !isOpen) return;
+    setForm({
+      clientType: initialData.clientType,
+      firstName: initialData.firstName,
+      lastName: initialData.lastName,
+      phone: initialData.phone,
+      email: initialData.email ?? "",
+      nationality: initialData.nationality ?? "",
+      budget: [initialData.budgetMin ?? 500_000, initialData.budgetMax ?? 5_000_000],
+      preferredPropertyTypes: initialData.preferredPropertyTypes ?? [],
+      preferredLocations: initialData.preferredLocations ?? [],
+      notes: initialData.notes ?? "",
+    });
+    setErrors({});
+  }, [initialData?._id, isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = <K extends keyof Draft>(key: K, value: Draft[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -85,26 +107,45 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated }: ClientFormDrawe
     if (!validate()) return;
     setSaving(true);
     try {
-      const id = await createClient({
-        clientType: form.clientType as "buyer" | "seller" | "both",
-        firstName: form.firstName.trim(),
-        lastName: form.lastName.trim(),
-        phone: form.phone.trim(),
-        email: form.email.trim() || undefined,
-        nationality: form.nationality || undefined,
-        budgetMin: form.budget[0],
-        budgetMax: form.budget[1],
-        preferredPropertyTypes: form.preferredPropertyTypes.length ? form.preferredPropertyTypes : undefined,
-        preferredLocations: form.preferredLocations.length ? form.preferredLocations : undefined,
-        notes: form.notes.trim() || undefined,
-        agentId: (agent?._id as never) ?? undefined,
-      });
-      toast.success(`${form.firstName} ${form.lastName} added`);
-      reset();
-      onClose();
-      onCreated?.(id as string);
+      if (isEdit && initialData) {
+        await updateClient({
+          id: initialData._id as never,
+          clientType: form.clientType as "buyer" | "seller" | "both",
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim() || undefined,
+          nationality: form.nationality || undefined,
+          budgetMin: form.budget[0],
+          budgetMax: form.budget[1],
+          preferredPropertyTypes: form.preferredPropertyTypes.length ? form.preferredPropertyTypes : undefined,
+          preferredLocations: form.preferredLocations.length ? form.preferredLocations : undefined,
+          notes: form.notes.trim() || undefined,
+        });
+        toast.success(`${form.firstName} ${form.lastName} updated`);
+        onClose();
+      } else {
+        const id = await createClient({
+          clientType: form.clientType as "buyer" | "seller" | "both",
+          firstName: form.firstName.trim(),
+          lastName: form.lastName.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim() || undefined,
+          nationality: form.nationality || undefined,
+          budgetMin: form.budget[0],
+          budgetMax: form.budget[1],
+          preferredPropertyTypes: form.preferredPropertyTypes.length ? form.preferredPropertyTypes : undefined,
+          preferredLocations: form.preferredLocations.length ? form.preferredLocations : undefined,
+          notes: form.notes.trim() || undefined,
+          agentId: (agent?._id as never) ?? undefined,
+        });
+        toast.success(`${form.firstName} ${form.lastName} added`);
+        reset();
+        onClose();
+        onCreated?.(id as string);
+      }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not add client");
+      toast.error(err instanceof Error ? err.message : isEdit ? "Could not update client" : "Could not add client");
     } finally {
       setSaving(false);
     }
@@ -114,12 +155,14 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated }: ClientFormDrawe
     <Drawer
       isOpen={isOpen}
       onClose={onClose}
-      title="New Client"
-      description="Add a buyer or seller to your book"
+      title={isEdit ? "Edit Client" : "New Client"}
+      description={isEdit ? "Update contact details and preferences" : "Add a buyer or seller to your book"}
       footer={
         <div className="flex gap-2">
           <Button variant="secondary" fullWidth onClick={onClose}>Cancel</Button>
-          <Button fullWidth loading={saving} onClick={handleSubmit}>Add Client</Button>
+          <Button fullWidth loading={saving} onClick={handleSubmit}>
+            {isEdit ? "Save Changes" : "Add Client"}
+          </Button>
         </div>
       }
     >

@@ -42,9 +42,6 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             <h1 className="font-serif text-3xl lg:text-4xl mt-1 tracking-tight">
               {greeting()}{firstName ? `, ${firstName}` : ""}
             </h1>
-            <p className="text-aqua-100/90 text-sm mt-1.5 max-w-md">
-              Here&rsquo;s your control room — portfolio, pipeline, and this month&rsquo;s earnings at a glance.
-            </p>
           </div>
 
           {/* Headline metrics */}
@@ -62,7 +59,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
 function HeroMetric({ label, value, loading }: { label: string; value: number; loading?: boolean }) {
   return (
     <div className="min-w-0">
-      <p className="text-[10px] font-medium uppercase tracking-wide text-aqua-100/80 whitespace-nowrap">{label}</p>
+      <p className="text-[11px] font-medium uppercase tracking-wide text-aqua-100/80 whitespace-nowrap">{label}</p>
       {loading ? (
         <Skeleton className="h-7 w-24 mt-1.5 bg-white/20" />
       ) : (

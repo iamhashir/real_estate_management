@@ -3,7 +3,9 @@
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
 import { Search, Plus, Building2, Users, FileSignature, ChevronDown } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui";
+import { GlobalSearchPanel } from "./GlobalSearchPanel";
 
 export type QuickAddTarget = "property" | "client" | "deal";
 
@@ -19,14 +21,13 @@ const QUICK_ADD: { target: QuickAddTarget; label: string; icon: typeof Building2
   { target: "deal",     label: "New Deal",     icon: FileSignature },
 ];
 
-/**
- * Slim translucent top bar — global search (left) + quick-add menu (right).
- * Sticky across all breakpoints. On mobile the search collapses to fill the row.
- */
 export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [menuOpen, setMenuOpen]           = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const menuRef   = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
+  // Close quick-add menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: MouseEvent) => {
@@ -38,6 +39,20 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
+  // Close search panel on outside click
+  useEffect(() => {
+    if (!searchFocused) return;
+    const handler = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setSearchFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [searchFocused]);
+
+  const showPanel = searchFocused && search.trim().length >= 2;
+
   return (
     <header
       className={cn(
@@ -46,16 +61,23 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
         "flex items-center gap-3 px-4 md:px-6"
       )}
     >
-      {/* Search */}
-      <div className="relative flex-1 max-w-md">
+      {/* Search + floating panel */}
+      <div className="relative flex-1 max-w-md" ref={searchRef}>
         <Search
           size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none z-10"
         />
         <input
           type="search"
+          aria-label="Search"
+          aria-expanded={showPanel}
+          aria-haspopup="listbox"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
+          onFocus={() => setSearchFocused(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") { setSearchFocused(false); onSearchChange(""); }
+          }}
           placeholder="Search…"
           className={cn(
             "w-full h-9 pl-9 pr-3 rounded-md text-base md:text-sm",
@@ -63,6 +85,15 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
             "outline-none transition-all focus:border-aqua-400 focus:shadow-glow"
           )}
         />
+
+        <AnimatePresence>
+          {showPanel && (
+            <GlobalSearchPanel
+              query={search.trim()}
+              onClose={() => { setSearchFocused(false); onSearchChange(""); }}
+            />
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="flex-1" />

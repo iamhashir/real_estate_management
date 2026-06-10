@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Card, Skeleton } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { PROPERTY_STATUSES, DEAL_STAGES } from "@/lib/constants";
@@ -51,8 +52,14 @@ function BarRow({ label, count, total, color }: { label: string; count: number; 
         <span className="text-ink-600">{label}</span>
         <span className="text-ink-900 font-medium text-money">{count}</span>
       </div>
-      <div className="h-1.5 rounded-full bg-hairline overflow-hidden">
-        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: HEX[color] ?? "#19C7C2" }} />
+      <div className="h-2 rounded-full bg-hairline overflow-hidden">
+        <motion.div
+          className="h-full rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${pct}%` }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          style={{ backgroundColor: HEX[color] ?? "#19C7C2" }}
+        />
       </div>
     </div>
   );

@@ -124,6 +124,7 @@ export interface DashboardStats {
   dealsByStage: Record<string, number>;
   pipeline: {
     _id: string;
+    _creationTime: number;
     stage: DealStage;
     dealType: DealType;
     listPrice: number;

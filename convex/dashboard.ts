@@ -70,13 +70,14 @@ export const stats = query({
     const buyerMap = Object.fromEntries(hydratedBuyers.filter(Boolean).map((c) => [c!._id, c]));
 
     const pipeline = activeDeals.map((d) => ({
-      _id:          d._id,
-      stage:        d.stage,
-      dealType:     d.dealType,
-      listPrice:    d.listPrice,
-      agreedPrice:  d.agreedPrice,
-      propertyName: propMap[d.propertyId]?.name ?? "Unknown Property",
-      buyerName:    d.buyerId ? (() => { const b = buyerMap[d.buyerId]; return b ? `${b.firstName} ${b.lastName}` : null; })() : null,
+      _id:           d._id,
+      _creationTime: d._creationTime,
+      stage:         d.stage,
+      dealType:      d.dealType,
+      listPrice:     d.listPrice,
+      agreedPrice:   d.agreedPrice,
+      propertyName:  propMap[d.propertyId]?.name ?? "Unknown Property",
+      buyerName:     d.buyerId ? (() => { const b = buyerMap[d.buyerId]; return b ? `${b.firstName} ${b.lastName}` : null; })() : null,
     }));
 
     return {

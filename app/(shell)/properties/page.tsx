@@ -3,18 +3,38 @@
 import { useMemo, useState } from "react";
 import { Plus, Search, Building2 } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
-import { Button, Reveal, Stagger, StaggerItem, Skeleton, EmptyState } from "@/components/ui";
+import { Button, Reveal, Stagger, StaggerItem, Skeleton, EmptyState, Modal, useToast } from "@/components/ui";
 import { PropertyFilters, type PropertyFilterState } from "@/components/properties/PropertyFilters";
 import { PropertyCard } from "@/components/properties/PropertyCard";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
-import { useProperties } from "@/hooks/useProperties";
+import { useProperties, useDeleteProperty } from "@/hooks/useProperties";
+import type { Property } from "@/lib/types";
 
 export default function PropertiesPage() {
   const [filters, setFilters] = useState<PropertyFilterState>({});
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
+  const [editing, setEditing] = useState<Property | null>(null);
+  const [deleting, setDeleting] = useState<Property | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const { properties, isLoading } = useProperties(filters);
+  const deleteProperty = useDeleteProperty();
+  const toast = useToast();
+
+  const handleDelete = async () => {
+    if (!deleting) return;
+    setDeleteLoading(true);
+    try {
+      await deleteProperty({ id: deleting._id as never });
+      toast.success(`"${deleting.name}" removed`);
+      setDeleting(null);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not delete property");
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -76,7 +96,11 @@ export default function PropertiesPage() {
           <Stagger className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             {filtered.map((p) => (
               <StaggerItem key={p._id}>
-                <PropertyCard property={p} />
+                <PropertyCard
+                  property={p}
+                  onEdit={() => setEditing(p)}
+                  onDelete={() => setDeleting(p)}
+                />
               </StaggerItem>
             ))}
           </Stagger>
@@ -84,6 +108,21 @@ export default function PropertiesPage() {
       </div>
 
       <PropertyFormDrawer isOpen={adding} onClose={() => setAdding(false)} />
+      <PropertyFormDrawer
+        isOpen={!!editing}
+        onClose={() => setEditing(null)}
+        initialData={editing ?? undefined}
+      />
+      <Modal
+        isOpen={!!deleting}
+        onClose={() => setDeleting(null)}
+        title={`Delete "${deleting?.name}"?`}
+        description="This will permanently remove the listing. This cannot be undone."
+        confirmLabel="Delete Listing"
+        variant="danger"
+        loading={deleteLoading}
+        onConfirm={handleDelete}
+      />
     </PageShell>
   );
 }

@@ -3,6 +3,7 @@
 import { StatCard } from "./StatCard";
 import { Skeleton, Stagger, StaggerItem } from "@/components/ui";
 import type { DashboardStats } from "@/lib/types";
+import { formatCurrency } from "@/lib/utils";
 import { Building2, Users, CheckCircle2, Wallet } from "lucide-react";
 
 interface StatBandProps {
@@ -57,7 +58,7 @@ export function StatBand({ overview, isLoading }: StatBandProps) {
           label="Commission (Month)"
           value={overview.commissionThisMonth}
           currency
-          subtitle={`all-time AED ${overview.totalCommission.toLocaleString("en-AE")}`}
+          subtitle={`all-time ${formatCurrency(overview.totalCommission)}`}
         />
       </StaggerItem>
     </Stagger>

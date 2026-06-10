@@ -4,7 +4,7 @@ import { Card, Badge, StatusPill } from "@/components/ui";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { propertyImage } from "@/lib/propertyImage";
 import { PROPERTY_TYPES, LISTING_TYPES } from "@/lib/constants";
-import { MapPin, BedDouble, Bath, Maximize } from "lucide-react";
+import { MapPin, BedDouble, Bath, Maximize, Pencil, Trash2 } from "lucide-react";
 import type { Property } from "@/lib/types";
 
 function typeLabel(value: string) {
@@ -14,9 +14,16 @@ function listingLabel(value: string) {
   return LISTING_TYPES.find((t) => t.value === value)?.label ?? value;
 }
 
-export function PropertyCard({ property, onClick }: { property: Property; onClick?: () => void }) {
+export function PropertyCard({
+  property, onClick, onEdit, onDelete,
+}: {
+  property: Property;
+  onClick?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+}) {
   return (
-    <Card hover onClick={onClick} className="overflow-hidden">
+    <Card hover onClick={onClick} className="overflow-hidden group">
       {/* Image header */}
       <div className="relative aspect-[16/10] bg-gradient-tide overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -36,7 +43,32 @@ export function PropertyCard({ property, onClick }: { property: Property; onClic
           <span className="rounded-full bg-white/90 backdrop-blur px-2.5 py-0.5 text-xs font-medium text-sea-800 shadow-card">
             {listingLabel(property.listingType)}
           </span>
-          <StatusPill value={property.status} variant="property" className="bg-white/90 backdrop-blur shadow-card" />
+          <div className="flex items-center gap-1.5">
+            {/* Edit / delete actions — appear on hover */}
+            {(onEdit || onDelete) && (
+              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                {onEdit && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onEdit(); }}
+                    className="w-7 h-7 rounded-full bg-white/90 backdrop-blur grid place-items-center text-sea-800 hover:bg-white shadow-card transition-colors"
+                    aria-label="Edit property"
+                  >
+                    <Pencil size={13} />
+                  </button>
+                )}
+                {onDelete && (
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                    className="w-7 h-7 rounded-full bg-white/90 backdrop-blur grid place-items-center text-danger hover:bg-white shadow-card transition-colors"
+                    aria-label="Delete property"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                )}
+              </div>
+            )}
+            <StatusPill value={property.status} variant="property" className="bg-white/90 backdrop-blur shadow-card" />
+          </div>
         </div>
 
         {/* price */}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Card, StatusPill, Badge, Skeleton, EmptyState } from "@/components/ui";
-import { formatCurrency, formatNumber } from "@/lib/utils";
+import { formatCurrency, formatNumber, formatRelativeDate } from "@/lib/utils";
 import { propertyImage } from "@/lib/propertyImage";
 import { PROPERTY_TYPES } from "@/lib/constants";
 import type { Property } from "@/lib/types";
@@ -28,7 +28,7 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
         <h2 className="text-h3 text-ink-900">Recent Listings</h2>
         <Link
           href="/properties"
-          className="inline-flex items-center gap-1 text-sm font-medium text-aqua-600 hover:text-sea-700 transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-medium text-aqua-500 hover:text-sea-700 transition-colors"
         >
           View all <ArrowRight size={14} />
         </Link>
@@ -45,9 +45,9 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
           {recent.map((p) => (
             <div
               key={p._id}
-              className="flex items-center gap-3 rounded-md bg-surface-base/70 border border-hairline px-3 py-2.5 transition-colors hover:border-aqua-300"
+              className="flex items-center gap-3 rounded-md bg-surface-base/70 border border-hairline px-3 py-2.5 transition-colors hover:border-aqua-300 hover:bg-surface-card cursor-pointer"
             >
-              <span className="relative w-12 h-12 rounded-md overflow-hidden shrink-0 bg-gradient-foam">
+              <span className="relative w-14 h-14 rounded-md overflow-hidden shrink-0 bg-gradient-foam">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={propertyImage(p, 200)}
@@ -73,6 +73,7 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
                   <span className="font-medium text-sea-700 text-money">{formatCurrency(p.price)}</span>
                   {p.bedrooms != null && <span className="flex items-center gap-0.5"><BedDouble size={12} />{p.bedrooms}</span>}
                   <span className="flex items-center gap-0.5"><Maximize size={12} />{formatNumber(p.size)}m²</span>
+                  <span className="ml-auto text-ink-400 whitespace-nowrap">{formatRelativeDate(p._creationTime)}</span>
                 </div>
               </div>
             </div>

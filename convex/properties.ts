@@ -84,6 +84,19 @@ export const countByStatus = query({
   },
 });
 
+export const search = query({
+  args: { q: v.string() },
+  handler: async (ctx, { q }) => {
+    const all = await ctx.db.query("properties").collect();
+    const lower = q.toLowerCase();
+    return all
+      .filter((p) =>
+        [p.name, p.address, p.area, p.city].some((f) => f?.toLowerCase().includes(lower))
+      )
+      .slice(0, 5);
+  },
+});
+
 // ─── Mutations ────────────────────────────────────────────────────────────────
 
 export const create = mutation({

@@ -100,7 +100,7 @@ export function Sidebar() {
               {agent?.name ?? "No agent"}
             </p>
             <p className="text-xs text-aqua-100/50 truncate capitalize">
-              {agent?.role ?? "set up in Convex"}
+              {agent?.role ?? "—"}
             </p>
           </div>
         </div>

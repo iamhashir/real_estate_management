@@ -9,7 +9,7 @@ import { CLIENT_TYPES, PROPERTY_TYPES } from "@/lib/constants";
 import { useClientProfile } from "@/hooks/useClients";
 import {
   Mail, Phone, Globe, Wallet, FileSignature, Activity as ActivityIcon,
-  PlusCircle, Pencil, MessageSquare, Eye, FileText, RefreshCw,
+  PlusCircle, Pencil, MessageSquare, Eye, FileText, RefreshCw, Trash2,
 } from "lucide-react";
 import type { Property } from "@/lib/types";
 
@@ -30,7 +30,7 @@ const ACTIVITY_ICON: Record<string, React.ReactNode> = {
   status_change: <RefreshCw size={14} />,
 };
 
-export function ClientProfile({ clientId }: { clientId: string }) {
+export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string; onEdit?: () => void; onDelete?: () => void }) {
   const profile = useClientProfile(clientId);
 
   if (profile === undefined) {
@@ -64,8 +64,29 @@ export function ClientProfile({ clientId }: { clientId: string }) {
         <Avatar firstName={client.firstName} lastName={client.lastName} size="xl" />
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="text-h1 text-ink-900">{fullName(client.firstName, client.lastName)}</h1>
+            <h1 className="text-h1 text-ink-900 flex-1 min-w-0">{fullName(client.firstName, client.lastName)}</h1>
             <StatusPill value={client.status} variant="client" />
+            {/* Edit / Delete actions */}
+            <div className="flex items-center gap-1 ml-auto shrink-0">
+              {onEdit && (
+                <button
+                  onClick={onEdit}
+                  className="w-8 h-8 rounded-md grid place-items-center text-ink-400 hover:text-sea-700 hover:bg-aqua-100 transition-colors"
+                  aria-label="Edit client"
+                >
+                  <Pencil size={15} />
+                </button>
+              )}
+              {onDelete && (
+                <button
+                  onClick={onDelete}
+                  className="w-8 h-8 rounded-md grid place-items-center text-ink-400 hover:text-danger hover:bg-danger/10 transition-colors"
+                  aria-label="Delete client"
+                >
+                  <Trash2 size={15} />
+                </button>
+              )}
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-ink-600">
             <Badge color="sea">{typeLabel(client.clientType)}</Badge>

@@ -48,6 +48,24 @@ export const getById = query({
   handler: async (ctx, { id }) => ctx.db.get(id),
 });
 
+export const search = query({
+  args: { q: v.string() },
+  handler: async (ctx, { q }) => {
+    const all = await ctx.db.query("clients").collect();
+    const lower = q.toLowerCase();
+    return all
+      .filter((c) => {
+        const name = `${c.firstName} ${c.lastName}`.toLowerCase();
+        return (
+          name.includes(lower) ||
+          c.phone.includes(lower) ||
+          (c.email?.toLowerCase().includes(lower) ?? false)
+        );
+      })
+      .slice(0, 5);
+  },
+});
+
 // Full client profile: client + all their deals + linked properties
 export const getProfile = query({
   args: { id: v.id("clients") },

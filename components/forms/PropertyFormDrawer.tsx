@@ -7,14 +7,17 @@ import { ChipToggleGroup, FormSection, useDraft } from "./formHelpers";
 import {
   PROPERTY_TYPES, LISTING_TYPES, PROPERTY_FEATURES, CITIES, AREAS_BY_CITY,
 } from "@/lib/constants";
-import { useCreateProperty } from "@/hooks/useProperties";
+import { useCreateProperty, useUpdateProperty } from "@/hooks/useProperties";
 import { useCurrentAgent } from "@/hooks/useAgents";
 import { cn } from "@/lib/utils";
+import type { Property } from "@/lib/types";
+import { useEffect } from "react";
 
 interface PropertyFormDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   onCreated?: (id: string) => void;
+  initialData?: Property;
 }
 
 interface Draft {
@@ -40,15 +43,37 @@ const EMPTY: Draft = {
   features: [], description: "",
 };
 
-export function PropertyFormDrawer({ isOpen, onClose, onCreated }: PropertyFormDrawerProps) {
+function draftFromProperty(p: Property): Draft {
+  return {
+    name: p.name, address: p.address, city: p.city, area: p.area ?? "",
+    type: p.type, listingType: p.listingType,
+    price: String(p.price), size: String(p.size),
+    bedrooms: p.bedrooms != null ? String(p.bedrooms) : "",
+    bathrooms: p.bathrooms != null ? String(p.bathrooms) : "",
+    floor: p.floor != null ? String(p.floor) : "",
+    features: p.features ?? [], description: p.description ?? "",
+  };
+}
+
+export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: PropertyFormDrawerProps) {
+  const isEdit = !!initialData;
   const toast = useToast();
   const createProperty = useCreateProperty();
+  const updateProperty = useUpdateProperty();
   const { agent } = useCurrentAgent();
 
-  const [form, setForm, clearDraft] = useDraft<Draft>("draft:property", EMPTY, isOpen);
+  const [form, setForm, clearDraft] = useDraft<Draft>("draft:property", EMPTY, isOpen && !isEdit);
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
+
+  // Reset form to initialData whenever the edit drawer opens for a (possibly different) property
+  useEffect(() => {
+    if (!initialData || !isOpen) return;
+    setForm(draftFromProperty(initialData));
+    setStep(0);
+    setErrors({});
+  }, [initialData?._id, isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = <K extends keyof Draft>(key: K, value: Draft[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
@@ -85,28 +110,49 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated }: PropertyFormD
     if (!validateStep2()) return;
     setSaving(true);
     try {
-      const id = await createProperty({
-        name: form.name.trim(),
-        address: form.address.trim(),
-        city: form.city,
-        area: form.area || undefined,
-        type: form.type as "villa" | "apartment" | "office" | "land" | "commercial",
-        listingType: form.listingType as "sale" | "rent",
-        price: Number(form.price),
-        size: Number(form.size),
-        bedrooms: num(form.bedrooms),
-        bathrooms: num(form.bathrooms),
-        floor: num(form.floor),
-        features: form.features.length ? form.features : undefined,
-        description: form.description.trim() || undefined,
-        agentId: (agent?._id as never) ?? undefined,
-      });
-      toast.success(`"${form.name}" listed`);
-      reset();
-      onClose();
-      onCreated?.(id as string);
+      if (isEdit && initialData) {
+        await updateProperty({
+          id: initialData._id as never,
+          name: form.name.trim(),
+          address: form.address.trim(),
+          city: form.city,
+          area: form.area || undefined,
+          type: form.type as "villa" | "apartment" | "office" | "land" | "commercial",
+          listingType: form.listingType as "sale" | "rent",
+          price: Number(form.price),
+          size: Number(form.size),
+          bedrooms: num(form.bedrooms),
+          bathrooms: num(form.bathrooms),
+          floor: num(form.floor),
+          features: form.features.length ? form.features : undefined,
+          description: form.description.trim() || undefined,
+        });
+        toast.success(`"${form.name}" updated`);
+        onClose();
+      } else {
+        const id = await createProperty({
+          name: form.name.trim(),
+          address: form.address.trim(),
+          city: form.city,
+          area: form.area || undefined,
+          type: form.type as "villa" | "apartment" | "office" | "land" | "commercial",
+          listingType: form.listingType as "sale" | "rent",
+          price: Number(form.price),
+          size: Number(form.size),
+          bedrooms: num(form.bedrooms),
+          bathrooms: num(form.bathrooms),
+          floor: num(form.floor),
+          features: form.features.length ? form.features : undefined,
+          description: form.description.trim() || undefined,
+          agentId: (agent?._id as never) ?? undefined,
+        });
+        toast.success(`"${form.name}" listed`);
+        reset();
+        onClose();
+        onCreated?.(id as string);
+      }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not create listing");
+      toast.error(err instanceof Error ? err.message : isEdit ? "Could not update listing" : "Could not create listing");
     } finally {
       setSaving(false);
     }
@@ -116,7 +162,7 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated }: PropertyFormD
     <Drawer
       isOpen={isOpen}
       onClose={handleClose}
-      title="New Property"
+      title={isEdit ? "Edit Property" : "New Property"}
       description={step === 0 ? "Step 1 — Details" : "Step 2 — Pricing & specs"}
       footer={
         step === 0 ? (
@@ -127,7 +173,9 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated }: PropertyFormD
         ) : (
           <div className="flex gap-2">
             <Button variant="secondary" fullWidth onClick={back}>Back</Button>
-            <Button fullWidth loading={saving} onClick={handleSubmit}>Create Listing</Button>
+            <Button fullWidth loading={saving} onClick={handleSubmit}>
+              {isEdit ? "Save Changes" : "Create Listing"}
+            </Button>
           </div>
         )
       }

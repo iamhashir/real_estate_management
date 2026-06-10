@@ -93,6 +93,30 @@ export const getById = query({
   },
 });
 
+export const search = query({
+  args: { q: v.string() },
+  handler: async (ctx, { q }) => {
+    const all = await ctx.db.query("deals").collect();
+    const propertyIds = [...new Set(all.map((d) => d.propertyId))];
+    const properties = await Promise.all(propertyIds.map((id) => ctx.db.get(id)));
+    const propMap = Object.fromEntries(
+      properties.filter(Boolean).map((p) => [p!._id, p])
+    );
+    const lower = q.toLowerCase();
+    return all
+      .filter((d) => (propMap[d.propertyId]?.name ?? "").toLowerCase().includes(lower))
+      .slice(0, 5)
+      .map((d) => ({
+        _id: d._id,
+        stage: d.stage,
+        dealType: d.dealType,
+        listPrice: d.listPrice,
+        agreedPrice: d.agreedPrice,
+        propertyName: propMap[d.propertyId]?.name ?? "Unknown",
+      }));
+  },
+});
+
 // ─── Mutations ────────────────────────────────────────────────────────────────
 
 export const create = mutation({
