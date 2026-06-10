@@ -93,6 +93,54 @@ export const getById = query({
   },
 });
 
+export const listAll = query({
+  args: {
+    stage:    v.optional(stageV),
+    dealType: v.optional(dealTypeV),
+  },
+  handler: async (ctx, { stage, dealType }) => {
+    let base = ctx.db.query("deals");
+    if (stage) {
+      base = base.withIndex("by_stage", (q) => q.eq("stage", stage)) as any;
+    }
+    const all = await base.collect();
+    const filtered = all.filter((d) => !dealType || d.dealType === dealType);
+    if (!filtered.length) return [];
+
+    const propertyIds = [...new Set(filtered.map((d) => d.propertyId))];
+    const buyerIds    = [...new Set(filtered.filter((d) => d.buyerId).map((d) => d.buyerId!))];
+    const sellerIds   = [...new Set(filtered.filter((d) => d.sellerId).map((d) => d.sellerId!))];
+
+    const [properties, buyers, sellers] = await Promise.all([
+      Promise.all(propertyIds.map((id) => ctx.db.get(id))),
+      Promise.all(buyerIds.map((id) => ctx.db.get(id))),
+      Promise.all(sellerIds.map((id) => ctx.db.get(id))),
+    ]);
+
+    const propMap   = Object.fromEntries(properties.filter(Boolean).map((p) => [p!._id, p]));
+    const buyerMap  = Object.fromEntries(buyers.filter(Boolean).map((c) => [c!._id, c]));
+    const sellerMap = Object.fromEntries(sellers.filter(Boolean).map((c) => [c!._id, c]));
+
+    return filtered
+      .sort((a, b) => b._creationTime - a._creationTime)
+      .map((d) => ({
+        _id:             d._id,
+        _creationTime:   d._creationTime,
+        stage:           d.stage,
+        dealType:        d.dealType,
+        listPrice:       d.listPrice,
+        agreedPrice:     d.agreedPrice,
+        commissionRate:  d.commissionRate,
+        commissionAmount: d.commissionAmount,
+        propertyName:  propMap[d.propertyId]?.name ?? "Unknown Property",
+        buyerName:  d.buyerId  && buyerMap[d.buyerId]
+          ? `${buyerMap[d.buyerId]!.firstName} ${buyerMap[d.buyerId]!.lastName}` : null,
+        sellerName: d.sellerId && sellerMap[d.sellerId]
+          ? `${sellerMap[d.sellerId]!.firstName} ${sellerMap[d.sellerId]!.lastName}` : null,
+      }));
+  },
+});
+
 export const search = query({
   args: { q: v.string() },
   handler: async (ctx, { q }) => {

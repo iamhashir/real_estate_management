@@ -3,13 +3,14 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Users, Plus } from "lucide-react";
+import { LayoutDashboard, Building2, Users, FileSignature, Plus } from "lucide-react";
 import type { QuickAddTarget } from "./TopBar";
 
 const TABS = [
   { href: "/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
   { href: "/properties", label: "Properties", icon: Building2 },
   { href: "/clients",    label: "Clients",    icon: Users },
+  { href: "/deals",      label: "Deals",      icon: FileSignature },
 ] as const;
 
 interface BottomTabBarProps {

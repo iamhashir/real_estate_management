@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LayoutDashboard, Building2, Users, Anchor } from "lucide-react";
+import { LayoutDashboard, Building2, Users, FileSignature, Anchor } from "lucide-react";
 import { Avatar } from "@/components/ui";
 import { useCurrentAgent } from "@/hooks/useAgents";
 
@@ -12,6 +12,7 @@ const NAV = [
   { href: "/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
   { href: "/properties", label: "Properties", icon: Building2 },
   { href: "/clients",    label: "Clients",    icon: Users },
+  { href: "/deals",      label: "Deals",      icon: FileSignature },
 ] as const;
 
 /**

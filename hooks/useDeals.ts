@@ -27,6 +27,14 @@ export function useDeal(id: string | null) {
   return useQuery(api.deals.getById, id ? { id: id as any } : "skip");
 }
 
+export function useAllDeals(filters?: { stage?: DealStage; dealType?: DealType }) {
+  const result = useQuery(api.deals.listAll, (filters ?? {}) as any);
+  return {
+    deals:     (result ?? []) as any[],
+    isLoading: result === undefined,
+  };
+}
+
 export function useCreateDeal() {
   return useMutation(api.deals.create);
 }
