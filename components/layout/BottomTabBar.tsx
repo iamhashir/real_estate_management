@@ -44,7 +44,10 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
             className={cn(
               "flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px]",
               "text-[12px] font-medium transition-colors",
-              active ? "text-aqua-500" : "text-ink-400"
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 rounded-md",
+              active
+                ? "text-aqua-500 hover:bg-aqua-50"
+                : "text-ink-400 hover:text-ink-600 hover:bg-surface-base"
             )}
           >
             <Icon size={20} className={active ? "text-aqua-500" : "text-ink-400"} />
@@ -55,7 +58,7 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
 
       <button
         onClick={() => onQuickAdd("client")}
-        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium text-ink-400"
+        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium text-ink-400 transition-colors hover:text-ink-600 hover:bg-surface-base rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
       >
         <span className="grid place-items-center w-8 h-8 -mb-0.5 rounded-full bg-gradient-tide text-white shadow-card">
           <Plus size={18} />

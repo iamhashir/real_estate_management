@@ -1,0 +1,98 @@
+[
+  {
+    "viewport": "mobile",
+    "page": "Dashboard",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=734 | div[absolute -top-40 -left-32 h-[42rem] w-[42rem] rounded-full b] scrollW=672 | div[absolute top-1/4 -right-40 h-[46rem] w-[46rem] rounded-full ] scrollW=736 | div[absolute -bottom-48 left-1/3 h-[38rem] w-[38rem] rounded-ful] scrollW=608 | div[relative overflow-hidden rounded-md bg-gradient-tide text-wh] scrollW=383"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Dashboard",
+    "type": "TINY_TEXT",
+    "detail": "\"—\" (12px) | \"—\" (12px) | \"Portfolio\" (12px) | \"In Pipeline\" (12px) | \"Commission · MTD\" (12px) | \"Dashboard\" (12px) | \"Properties\" (12px) | \"Clients\" (12px)"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Properties",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=734 | div[absolute -top-40 -left-32 h-[42rem] w-[42rem] rounded-full b] scrollW=672 | div[absolute top-1/4 -right-40 h-[46rem] w-[46rem] rounded-full ] scrollW=736 | div[absolute -bottom-48 left-1/3 h-[38rem] w-[38rem] rounded-ful] scrollW=608 | div[flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1] scrollW=1038"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Properties",
+    "type": "TINY_TEXT",
+    "detail": "\"—\" (12px) | \"—\" (12px) | \"Dashboard\" (12px) | \"Properties\" (12px) | \"Clients\" (12px) | \"Deals\" (12px)"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Clients",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=734 | div[absolute -top-40 -left-32 h-[42rem] w-[42rem] rounded-full b] scrollW=672 | div[absolute top-1/4 -right-40 h-[46rem] w-[46rem] rounded-full ] scrollW=736 | div[absolute -bottom-48 left-1/3 h-[38rem] w-[38rem] rounded-ful] scrollW=608"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Clients",
+    "type": "TINY_TEXT",
+    "detail": "\"—\" (12px) | \"—\" (12px) | \"Dashboard\" (12px) | \"Properties\" (12px) | \"Clients\" (12px) | \"Deals\" (12px)"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Deals",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=734 | div[absolute -top-40 -left-32 h-[42rem] w-[42rem] rounded-full b] scrollW=672 | div[absolute top-1/4 -right-40 h-[46rem] w-[46rem] rounded-full ] scrollW=736 | div[absolute -bottom-48 left-1/3 h-[38rem] w-[38rem] rounded-ful] scrollW=608 | div[flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1] scrollW=555"
+  },
+  {
+    "viewport": "mobile",
+    "page": "Deals",
+    "type": "TINY_TEXT",
+    "detail": "\"—\" (12px) | \"—\" (12px) | \"Dashboard\" (12px) | \"Properties\" (12px) | \"Clients\" (12px) | \"Deals\" (12px)"
+  },
+  {
+    "viewport": "tablet",
+    "page": "Dashboard",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=929"
+  },
+  {
+    "viewport": "tablet",
+    "page": "Properties",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=929 | div[flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1] scrollW=1038"
+  },
+  {
+    "viewport": "tablet",
+    "page": "Clients",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=929"
+  },
+  {
+    "viewport": "tablet",
+    "page": "Deals",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=929"
+  },
+  {
+    "viewport": "desktop",
+    "page": "Dashboard",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=1441"
+  },
+  {
+    "viewport": "desktop",
+    "page": "Properties",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=1441"
+  },
+  {
+    "viewport": "desktop",
+    "page": "Clients",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=1441"
+  },
+  {
+    "viewport": "desktop",
+    "page": "Deals",
+    "type": "OVERFLOW",
+    "detail": "div[pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-s] scrollW=1441"
+  }
+]

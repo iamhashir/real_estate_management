@@ -82,7 +82,7 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
           className={cn(
             "w-full h-9 pl-9 pr-3 rounded-md text-base md:text-sm",
             "bg-surface-base border border-hairline text-ink-900 placeholder:text-ink-400",
-            "outline-none transition-all focus:border-aqua-400 focus:shadow-glow"
+            "outline-none transition-all focus:border-aqua-400 focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/30"
           )}
         />
 
@@ -124,7 +124,8 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
                 onClick={() => { setMenuOpen(false); onQuickAdd(target); }}
                 className={cn(
                   "flex items-center gap-3 w-full px-3.5 py-2.5 text-sm text-ink-900",
-                  "hover:bg-aqua-100 transition-colors text-left min-h-[44px]"
+                  "hover:bg-aqua-100 transition-colors text-left min-h-[44px]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-aqua-400"
                 )}
               >
                 <Icon size={16} className="text-aqua-500 shrink-0" />

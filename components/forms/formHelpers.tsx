@@ -36,10 +36,11 @@ export function ChipToggleGroup({ label, options, selected, onToggle }: ChipTogg
               type="button"
               onClick={() => onToggle(opt.value)}
               className={cn(
-                "px-3 py-1.5 rounded-full text-sm font-medium transition-colors min-h-[36px]",
+                "px-3 py-1.5 rounded-full text-sm font-medium transition-colors min-h-[36px] cursor-pointer",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2",
                 active
-                  ? "bg-aqua-100 text-sea-800 border border-aqua-300"
-                  : "bg-surface-base text-ink-600 border border-hairline hover:border-aqua-300"
+                  ? "bg-aqua-100 text-sea-800 border border-aqua-300 hover:bg-aqua-200"
+                  : "bg-surface-base text-ink-600 border border-hairline hover:border-aqua-300 hover:bg-aqua-50"
               )}
             >
               {opt.label}

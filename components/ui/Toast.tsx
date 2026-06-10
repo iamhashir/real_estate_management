@@ -121,7 +121,7 @@ function ToastItem({
       <p className="text-sm text-ink-900 flex-1 leading-snug">{item.message}</p>
       <button
         onClick={() => onDismiss(item.id)}
-        className="shrink-0 text-ink-400 hover:text-ink-600 transition-colors"
+        className="shrink-0 text-ink-400 hover:text-ink-600 transition-colors rounded p-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
         aria-label="Dismiss"
       >
         <X size={13} />

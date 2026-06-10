@@ -159,8 +159,9 @@ export function Combobox({
             <button
               type="button"
               onClick={clear}
-              className="text-ink-400 hover:text-ink-700 p-0.5 rounded"
+              className="text-ink-400 hover:text-ink-700 p-0.5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
               tabIndex={-1}
+              aria-label="Clear selection"
             >
               <X size={12} />
             </button>
