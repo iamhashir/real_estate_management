@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -27,12 +28,14 @@ export function Reveal({
   delay?: number;
   y?: number;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: 0, y: prefersReducedMotion ? 0 : y }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: EASE, delay }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.45, ease: EASE, delay: prefersReducedMotion ? 0 : delay }}
     >
       {children}
     </motion.div>

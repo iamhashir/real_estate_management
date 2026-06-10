@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface SpinnerProps {
   size?: "sm" | "md" | "lg";
@@ -14,10 +15,13 @@ const sizeMap = {
 };
 
 export function Spinner({ size = "md", className }: SpinnerProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <span
       className={cn(
-        "inline-block rounded-full border-current border-t-transparent animate-spin",
+        "inline-block rounded-full border-current border-t-transparent",
+        !prefersReducedMotion && "animate-spin",
         sizeMap[size],
         className
       )}

@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface SkeletonProps {
   className?: string;
@@ -7,6 +10,8 @@ interface SkeletonProps {
 }
 
 export function Skeleton({ className, rounded = "md", style }: SkeletonProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   const roundMap = {
     sm: "rounded-sm",
     md: "rounded-md",
@@ -15,7 +20,7 @@ export function Skeleton({ className, rounded = "md", style }: SkeletonProps) {
   };
   return (
     <div
-      className={cn("animate-pulse bg-hairline", roundMap[rounded], className)}
+      className={cn("bg-hairline", !prefersReducedMotion && "animate-pulse", roundMap[rounded], className)}
       style={style}
       aria-hidden="true"
     />
