@@ -89,7 +89,11 @@ export function Select({
         />
       </div>
 
-      {error && <p className="mt-1 text-xs text-danger">{error}</p>}
+      {error && (
+        <p className="mt-1 text-xs text-danger" role="alert" aria-live="polite">
+          {error}
+        </p>
+      )}
       {!error && hint && <p className="mt-1 text-xs text-ink-400">{hint}</p>}
     </div>
   );

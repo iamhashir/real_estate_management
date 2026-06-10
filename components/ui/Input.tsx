@@ -104,7 +104,12 @@ export function Input({
       </div>
 
       {error && (
-        <p id={`${id}-error`} className="mt-1 text-xs text-danger">
+        <p
+          id={`${id}-error`}
+          className="mt-1 text-xs text-danger"
+          role="alert"
+          aria-live="polite"
+        >
           {error}
         </p>
       )}

@@ -151,8 +151,8 @@ function DrawerInner({
           </div>
           <button
             onClick={onClose}
-            className="text-ink-400 hover:text-ink-700 transition-colors p-1 -mr-1 rounded min-h-[44px] min-w-[44px] flex items-center justify-center"
-            aria-label="Close"
+            className="text-ink-400 hover:text-ink-700 transition-colors p-1 -mr-1 rounded min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
+            aria-label="Close drawer"
           >
             <X size={18} />
           </button>
