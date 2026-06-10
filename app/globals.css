@@ -29,6 +29,26 @@
   --color-brass-400: #D4B876;
   --color-brass-300: #E0C896;
 
+  /* ── Sea (sidebar, nav shell) ──────────────────────────────────────── */
+  --color-sea-950: #04212B;
+  --color-sea-900: #063646;
+  --color-sea-800: #0A4D63;
+  --color-sea-700: #0E6B86;
+  --color-sea-600: #1390AE;
+
+  /* ── Aqua (interactive accents, focus rings, buttons) ─────────────── */
+  --color-aqua-500: #19C7C2;
+  --color-aqua-400: #3FDCD3;
+  --color-aqua-300: #7CEDE4;
+  --color-aqua-200: #AAF3EE;
+  --color-aqua-100: #D6FAF5;
+  --color-aqua-50:  #F0FDFC;
+
+  /* ── Coral (status accents) ─────────────────────────────────────────── */
+  --color-coral-500: #FF6B5E;
+  --color-coral-400: #FF8A7F;
+  --color-coral-100: #FFE8E6;
+
   /* ── Surface ──────────────────────────────────────────────────────────── */
   --color-surface-base: #F5F1E8;
   --color-surface-card: #FDFAF5;
@@ -80,6 +100,8 @@
 :root {
   --gradient-deco: linear-gradient(135deg, #1A1814 0%, #2B2622 50%, #1B4D3E 100%);
   --gradient-brass: linear-gradient(135deg, #C9A961 0%, #D4B876 100%);
+  --gradient-tide: linear-gradient(135deg, #0E6B86 0%, #1390AE 45%, #19C7C2 100%);
+  --gradient-foam: linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%);
   --surface-glass: rgba(245, 241, 232, 0.7);
   --surface-glass-border: rgba(201, 169, 97, 0.2);
   --shadow-pop:
@@ -272,6 +294,14 @@ body::before {
 
 .bg-gradient-brass {
   background: var(--gradient-brass);
+}
+
+.bg-gradient-tide {
+  background: var(--gradient-tide);
+}
+
+.bg-gradient-foam {
+  background: var(--gradient-foam);
 }
 
 /* ─── Scrollbar (subtle aqua tint) ───────────────────────────────────────── */

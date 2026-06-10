@@ -67,7 +67,14 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             </h1>
             {firstName && (
               <motion.h2
-                className="text-transparent bg-clip-text bg-gradient-brass font-serif text-5xl lg:text-6xl font-600"
+                className="font-serif text-5xl lg:text-6xl font-600 leading-none"
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #C9A961 0%, #D4B876 100%)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  color: "transparent",
+                }}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}

@@ -44,12 +44,12 @@ export function StatCard({
       accent={accent}
       hover
       className={cn(
-        "p-6 lg:p-8 h-full flex flex-col justify-between transition-all duration-300",
-        large && "lg:p-10"
+        "p-6 lg:p-8 h-full flex flex-col transition-all duration-300",
+        large ? "justify-start gap-6 lg:gap-8 lg:p-10" : "justify-between"
       )}
     >
       <motion.div
-        className="flex items-start justify-between gap-4 mb-6"
+        className={cn("flex items-start justify-between gap-4", !large && "mb-6")}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
