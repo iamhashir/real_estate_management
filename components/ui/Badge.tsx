@@ -23,7 +23,7 @@ const colorMap: Record<BadgeColor, string> = {
 };
 
 const sizeMap = {
-  sm: "px-1.5 py-0.5 text-[11px]",
+  sm: "px-1.5 py-0.5 text-[12px]",
   md: "px-2.5 py-0.5 text-xs",
 };
 

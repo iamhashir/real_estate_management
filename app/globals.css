@@ -202,7 +202,7 @@ body {
 
 .text-label {
   font-family: var(--font-bricolage), system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   font-weight: 600;
   letter-spacing: 0.06em;

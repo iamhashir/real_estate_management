@@ -46,11 +46,11 @@ export function PropertyCard({
           <div className="flex items-center gap-1.5">
             {/* Edit / delete actions — appear on hover */}
             {(onEdit || onDelete) && (
-              <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center gap-1 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                 {onEdit && (
                   <button
                     onClick={(e) => { e.stopPropagation(); onEdit(); }}
-                    className="w-7 h-7 rounded-full bg-white/90 backdrop-blur grid place-items-center text-sea-800 hover:bg-white shadow-card transition-colors"
+                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-sea-800 hover:bg-white shadow-card transition-colors touch-manipulation"
                     aria-label="Edit property"
                   >
                     <Pencil size={13} />
@@ -59,7 +59,7 @@ export function PropertyCard({
                 {onDelete && (
                   <button
                     onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                    className="w-7 h-7 rounded-full bg-white/90 backdrop-blur grid place-items-center text-danger hover:bg-white shadow-card transition-colors"
+                    className="w-7 h-7 min-w-[44px] min-h-[44px] md:min-w-0 md:min-h-0 rounded-full bg-white/90 backdrop-blur grid place-items-center text-danger hover:bg-white shadow-card transition-colors touch-manipulation"
                     aria-label="Delete property"
                   >
                     <Trash2 size={13} />

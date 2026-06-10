@@ -21,7 +21,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       type="button"
       onClick={onClick}
       className={cn(
-        "px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors min-h-[36px] shrink-0 border",
+        "px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors min-h-[44px] shrink-0 border",
         active
           ? "bg-aqua-100 text-sea-800 border-aqua-300"
           : "bg-surface-card text-ink-600 border-hairline hover:border-aqua-300"

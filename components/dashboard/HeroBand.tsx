@@ -59,7 +59,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
 function HeroMetric({ label, value, loading }: { label: string; value: number; loading?: boolean }) {
   return (
     <div className="min-w-0">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-aqua-100/80 whitespace-nowrap">{label}</p>
+      <p className="text-[12px] font-medium uppercase tracking-wide text-aqua-100/80 whitespace-nowrap">{label}</p>
       {loading ? (
         <Skeleton className="h-7 w-24 mt-1.5 bg-white/20" />
       ) : (

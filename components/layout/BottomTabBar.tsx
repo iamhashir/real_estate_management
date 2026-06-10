@@ -43,7 +43,7 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
             href={href}
             className={cn(
               "flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px]",
-              "text-[11px] font-medium transition-colors",
+              "text-[12px] font-medium transition-colors",
               active ? "text-aqua-500" : "text-ink-400"
             )}
           >
@@ -55,7 +55,7 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
 
       <button
         onClick={() => onQuickAdd("client")}
-        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[11px] font-medium text-ink-400"
+        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium text-ink-400"
       >
         <span className="grid place-items-center w-8 h-8 -mb-0.5 rounded-full bg-gradient-tide text-white shadow-card">
           <Plus size={18} />

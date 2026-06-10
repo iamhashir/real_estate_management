@@ -47,7 +47,7 @@ export function ClientList({ selectedId, onSelect, onCreate }: ClientListProps) 
               key={t.value}
               onClick={() => setType(type === t.value ? undefined : t.value)}
               className={cn(
-                "px-2.5 py-1 rounded-full text-xs font-medium transition-colors border",
+                "px-3 py-2 rounded-full text-sm font-medium transition-colors border min-h-[44px]",
                 type === t.value
                   ? "bg-aqua-100 text-sea-800 border-aqua-300"
                   : "bg-surface-card text-ink-600 border-hairline hover:border-aqua-300"

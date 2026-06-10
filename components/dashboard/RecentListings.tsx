@@ -28,7 +28,7 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
         <h2 className="text-h3 text-ink-900">Recent Listings</h2>
         <Link
           href="/properties"
-          className="inline-flex items-center gap-1 text-sm font-medium text-aqua-500 hover:text-sea-700 transition-colors"
+          className="inline-flex items-center gap-1 text-sm font-medium text-aqua-500 hover:text-sea-700 transition-colors min-h-[44px]"
         >
           View all <ArrowRight size={14} />
         </Link>
