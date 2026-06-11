@@ -12,10 +12,10 @@ import {
 type BadgeColor = "aqua" | "coral" | "sea" | "warning" | "success" | "danger" | "info" | "muted";
 
 const colorClasses: Record<BadgeColor, string> = {
-  aqua:    "bg-aqua-100 text-aqua-500",
+  aqua:    "bg-aqua-100 text-sea-800",
   coral:   "bg-coral-100 text-coral-500",
   sea:     "bg-sea-800/10 text-sea-700",
-  warning: "bg-warning/15 text-warning",
+  warning: "bg-warning/15 text-[#7A4F00]",
   success: "bg-success/15 text-success",
   danger:  "bg-danger/15 text-danger",
   info:    "bg-info/15 text-info",

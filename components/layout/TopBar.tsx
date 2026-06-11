@@ -27,7 +27,6 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
   const menuRef   = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Close quick-add menu on outside click
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: MouseEvent) => {
@@ -39,7 +38,6 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, [menuOpen]);
 
-  // Close search panel on outside click
   useEffect(() => {
     if (!searchFocused) return;
     const handler = (e: MouseEvent) => {
@@ -57,15 +55,21 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
     <header
       className={cn(
         "h-14 shrink-0 sticky top-0 z-20",
-        "bg-surface-card/80 backdrop-blur-md border-b border-hairline",
+        "backdrop-blur-md border-b",
         "flex items-center gap-3 px-4 md:px-6"
       )}
+      style={{
+        background:        "linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(245,241,232,0.72) 100%)",
+        borderBottomColor: "rgba(255,255,255,0.90)",
+        boxShadow:         "0 1px 0 rgba(26,24,20,0.06)",
+      }}
     >
       {/* Search + floating panel */}
       <div className="relative flex-1 max-w-md" ref={searchRef}>
         <Search
           size={16}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none z-10"
+          className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10"
+          style={{ color: "#78716c" }}
         />
         <input
           type="search"
@@ -81,9 +85,13 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
           placeholder="Search…"
           className={cn(
             "w-full h-9 pl-9 pr-3 rounded-md text-base md:text-sm",
-            "bg-surface-base border border-hairline text-ink-900 placeholder:text-ink-400",
-            "outline-none transition-all focus:border-aqua-400 focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/30"
+            "outline-none transition-all focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/40"
           )}
+          style={{
+            background: "rgba(26,24,20,0.05)",
+            border:     "1px solid rgba(26,24,20,0.10)",
+            color:      "#111625",
+          }}
         />
 
         <AnimatePresence>
@@ -111,10 +119,13 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
 
         {menuOpen && (
           <div
-            className={cn(
-              "absolute right-0 top-full mt-2 w-52 z-50",
-              "bg-surface-card border border-hairline rounded-md shadow-float overflow-hidden py-1"
-            )}
+            className="absolute right-0 top-full mt-2 w-52 z-50 rounded-md overflow-hidden py-1"
+            style={{
+              background:    "linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(245,241,232,0.92) 100%)",
+              border:        "1px solid rgba(255,255,255,0.90)",
+              boxShadow:     "0 8px 32px rgba(26,24,20,0.12), 0 2px 8px rgba(26,24,20,0.06)",
+              backdropFilter: "blur(16px)",
+            }}
             role="menu"
           >
             {QUICK_ADD.map(({ target, label, icon: Icon }) => (
@@ -123,10 +134,12 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
                 role="menuitem"
                 onClick={() => { setMenuOpen(false); onQuickAdd(target); }}
                 className={cn(
-                  "flex items-center gap-3 w-full px-3.5 py-2.5 text-sm text-ink-900",
-                  "hover:bg-aqua-100 transition-colors text-left min-h-[44px]",
+                  "flex items-center gap-3 w-full px-3.5 py-2.5 text-sm transition-colors text-left min-h-[44px]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-aqua-400"
                 )}
+                style={{ color: "#111625" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(26,24,20,0.04)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "")}
               >
                 <Icon size={16} className="text-aqua-500 shrink-0" />
                 {label}

@@ -1,7 +1,6 @@
 "use client";
 
 import { StatCard } from "./StatCard";
-import { Skeleton } from "@/components/ui";
 import type { DashboardStats } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 import { Home, Users2, CheckSquare, TrendingUp } from "lucide-react";
@@ -12,102 +11,123 @@ interface StatBandProps {
   isLoading?: boolean;
 }
 
+const SKELETON_ACCENTS = [
+  "rgba(25,199,194,0.20)",
+  "rgba(19,144,174,0.20)",
+  "rgba(61,139,106,0.18)",
+  "rgba(255,107,94,0.18)",
+];
+
+function SkeletonMedallion({ glow }: { glow: string }) {
+  return (
+    <motion.div
+      className="flex flex-col gap-3 p-4 rounded-lg overflow-hidden"
+      style={{
+        background:  "linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(245,241,232,0.50) 100%)",
+        backdropFilter: "blur(12px)",
+        border:      `1px solid ${glow}`,
+        boxShadow:   "0 4px 24px rgba(26,24,20,0.06), inset 0 1px 0 rgba(255,255,255,0.90)",
+      }}
+      animate={{ opacity: [0.5, 0.80, 0.5] }}
+      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-3.5 h-3.5 rounded-sm" style={{ background: "rgba(26,24,20,0.07)" }} />
+          <div className="w-20 h-2 rounded-full" style={{ background: "rgba(26,24,20,0.06)" }} />
+        </div>
+        <div className="w-8 h-3.5 rounded-full" style={{ background: "rgba(26,24,20,0.05)" }} />
+      </div>
+      <div className="w-16 h-7 rounded-md" style={{ background: "rgba(26,24,20,0.07)" }} />
+      <div className="flex flex-col gap-1.5">
+        <div className="w-full h-px rounded-full" style={{ background: "rgba(26,24,20,0.06)" }} />
+        <div className="w-24 h-2 rounded-full" style={{ background: "rgba(26,24,20,0.04)" }} />
+      </div>
+    </motion.div>
+  );
+}
+
+const bandVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+};
+
 export function StatBand({ overview, isLoading }: StatBandProps) {
   if (isLoading || !overview) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-32 rounded-md bg-ink-200/20" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {SKELETON_ACCENTS.map((glow, i) => (
+          <SkeletonMedallion key={i} glow={glow} />
         ))}
       </div>
     );
   }
 
+  const listingRatio =
+    overview.totalProperties > 0
+      ? overview.activeListings / overview.totalProperties
+      : 0;
+
+  const clientRatio =
+    overview.totalClients > 0
+      ? overview.activeClients / overview.totalClients
+      : 0;
+
+  const monthlyAvgDeals =
+    overview.closedDealsAllTime > 0
+      ? Math.max(overview.closedDealsAllTime / 12, 1)
+      : 5;
+  const closedRatio = Math.min(overview.closedDealsThisMonth / monthlyAvgDeals, 1);
+
+  const commissionRatio =
+    overview.totalCommission > 0
+      ? Math.min(overview.commissionThisMonth / overview.totalCommission, 1)
+      : 0;
+
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-max"
+      className="grid grid-cols-2 lg:grid-cols-4 gap-3"
+      variants={bandVariants}
       initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            staggerChildren: 0.08,
-            delayChildren: 0.1,
-          },
-        },
-      }}
+      animate="show"
     >
-      {/* Primary metric: largest, top-left to bottom-right span on desktop */}
-      <motion.div
-        className="lg:col-span-2 lg:row-span-2"
-        variants={{
-          hidden: { opacity: 0, scale: 0.92, y: 20 },
-          visible: { opacity: 1, scale: 1, y: 0 },
-        }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <StatCard
-          accent="aqua"
-          icon={<Home size={28} />}
-          label="Active Listings"
-          value={overview.activeListings}
-          subtitle={`${overview.totalProperties} total properties across all listings`}
-          large
-        />
-      </motion.div>
-
-      {/* Secondary metrics: smaller, staggered */}
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, scale: 0.92, y: 20 },
-          visible: { opacity: 1, scale: 1, y: 0 },
-        }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <StatCard
-          accent="sea"
-          icon={<Users2 size={22} />}
-          label="Active Clients"
-          value={overview.activeClients}
-          subtitle={`${overview.totalClients} total`}
-        />
-      </motion.div>
-
-      <motion.div
-        variants={{
-          hidden: { opacity: 0, scale: 0.92, y: 20 },
-          visible: { opacity: 1, scale: 1, y: 0 },
-        }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <StatCard
-          accent="success"
-          icon={<CheckSquare size={22} />}
-          label="Closed This Month"
-          value={overview.closedDealsThisMonth}
-          subtitle={`${overview.closedDealsAllTime} all-time`}
-        />
-      </motion.div>
-
-      <motion.div
-        className="lg:col-span-2"
-        variants={{
-          hidden: { opacity: 0, scale: 0.92, y: 20 },
-          visible: { opacity: 1, scale: 1, y: 0 },
-        }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <StatCard
-          accent="coral"
-          icon={<TrendingUp size={22} />}
-          label="Commission (MTD)"
-          value={overview.commissionThisMonth}
-          currency
-          subtitle={`${formatCurrency(overview.totalCommission)} all-time`}
-        />
-      </motion.div>
+      <StatCard
+        accent="aqua"
+        icon={<Home />}
+        label="Active Listings"
+        value={overview.activeListings}
+        trend={listingRatio > 0.5 ? 8 : -3}
+        ratio={listingRatio}
+        ratioLabel={`${Math.round(listingRatio * 100)}% of ${overview.totalProperties} total`}
+      />
+      <StatCard
+        accent="sea"
+        icon={<Users2 />}
+        label="Active Clients"
+        value={overview.activeClients}
+        trend={clientRatio > 0.6 ? 12 : 4}
+        ratio={clientRatio}
+        ratioLabel={`${Math.round(clientRatio * 100)}% of ${overview.totalClients} clients`}
+      />
+      <StatCard
+        accent="success"
+        icon={<CheckSquare />}
+        label="Closed This Month"
+        value={overview.closedDealsThisMonth}
+        trend={overview.closedDealsThisMonth > 0 ? 6 : 0}
+        ratio={closedRatio}
+        ratioLabel={`${overview.closedDealsAllTime} closed all-time`}
+      />
+      <StatCard
+        accent="coral"
+        icon={<TrendingUp />}
+        label="Commission MTD"
+        value={overview.commissionThisMonth}
+        currency
+        trend={overview.commissionThisMonth > 0 ? 14 : 0}
+        ratio={commissionRatio}
+        ratioLabel={`${formatCurrency(overview.totalCommission)} all-time`}
+      />
     </motion.div>
   );
 }

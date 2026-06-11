@@ -53,7 +53,7 @@ export default function RootLayout({
       lang="en"
       className={`${crimson.variable} ${syne.variable} ${inter.variable} ${spaceMono.variable} h-full antialiased`}
     >
-      <body className="h-full bg-surface-base text-ink-900 font-sans">
+      <body className="h-full font-sans">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Card, Skeleton } from "@/components/ui";
-import { cn } from "@/lib/utils";
 import { PROPERTY_STATUSES, DEAL_STAGES } from "@/lib/constants";
 import type { DashboardStats } from "@/lib/types";
 
@@ -13,8 +12,13 @@ interface BreakdownPanelProps {
 }
 
 const HEX: Record<string, string> = {
-  aqua: "#19C7C2", warning: "#F5B53D", coral: "#FF6B5E",
-  info: "#1390AE", sea: "#1390AE", success: "#1FB888", danger: "#E5484D",
+  aqua:    "#19C7C2",
+  warning: "#D4A95F",
+  coral:   "#FF6B5E",
+  info:    "#1390AE",
+  sea:     "#1390AE",
+  success: "#2A6B54",
+  danger:  "#A75049",
 };
 
 function Donut({ segments, total }: { segments: { color: string; count: number }[]; total: number }) {
@@ -29,15 +33,21 @@ function Donut({ segments, total }: { segments: { color: string; count: number }
           return `${HEX[s.color] ?? "#19C7C2"} ${start}deg ${end}deg`;
         })
         .join(", ")
-    : "#DCEAEE 0deg 360deg";
+    : "rgba(26,24,20,0.08) 0deg 360deg";
 
   return (
     <div className="relative w-32 h-32 shrink-0">
       <div className="w-full h-full rounded-full" style={{ background: `conic-gradient(${stops})` }} />
-      <div className="absolute inset-[13px] rounded-full bg-surface-card grid place-items-center shadow-[inset_0_0_0_1px_rgba(11,31,38,0.06)]">
+      <div
+        className="absolute inset-[13px] rounded-full grid place-items-center"
+        style={{
+          background: "rgba(249,248,245,0.96)",
+          boxShadow:  "inset 0 0 0 1px rgba(26,24,20,0.06)",
+        }}
+      >
         <div className="text-center leading-none">
-          <p className="text-2xl font-display font-600 text-ink-900 text-money">{total}</p>
-          <p className="text-[10px] uppercase tracking-wide text-ink-400 mt-1">listings</p>
+          <p className="text-2xl font-display font-600 text-money" style={{ color: "#111625" }}>{total}</p>
+          <p className="text-[10px] uppercase tracking-wide mt-1" style={{ color: "#6B6560" }}>listings</p>
         </div>
       </div>
     </div>
@@ -49,10 +59,10 @@ function BarRow({ label, count, total, color }: { label: string; count: number; 
   return (
     <div>
       <div className="flex items-center justify-between text-sm mb-1">
-        <span className="text-ink-600">{label}</span>
-        <span className="text-ink-900 font-medium text-money">{count}</span>
+        <span style={{ color: "#78716c" }}>{label}</span>
+        <span className="font-medium text-money" style={{ color: "#111625" }}>{count}</span>
       </div>
-      <div className="h-2 rounded-full bg-hairline overflow-hidden">
+      <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(26,24,20,0.07)" }}>
         <motion.div
           className="h-full rounded-full"
           initial={{ width: 0 }}
@@ -78,7 +88,7 @@ export function BreakdownPanel({ propertiesByStatus, dealsByStage, isLoading }: 
   return (
     <Card className="p-5 h-full space-y-6">
       <div>
-        <h2 className="text-h3 text-ink-900 mb-4">Inventory</h2>
+        <h2 className="text-h3 mb-4" style={{ color: "#111625" }}>Inventory</h2>
         <div className="flex items-center gap-5">
           <Donut segments={donutSegments} total={propTotal} />
           <ul className="flex-1 space-y-2 min-w-0">
@@ -86,17 +96,19 @@ export function BreakdownPanel({ propertiesByStatus, dealsByStage, isLoading }: 
               <li key={s.value} className="flex items-center justify-between gap-2 text-sm">
                 <span className="flex items-center gap-2 min-w-0">
                   <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: HEX[s.color] }} />
-                  <span className="text-ink-600 truncate">{s.label}</span>
+                  <span className="truncate" style={{ color: "#78716c" }}>{s.label}</span>
                 </span>
-                <span className="text-ink-900 font-medium text-money shrink-0">{propertiesByStatus[s.value] ?? 0}</span>
+                <span className="font-medium text-money shrink-0" style={{ color: "#111625" }}>
+                  {propertiesByStatus[s.value] ?? 0}
+                </span>
               </li>
             ))}
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-hairline pt-5">
-        <h2 className="text-h3 text-ink-900 mb-3">Deals by Stage</h2>
+      <div className="border-t pt-5" style={{ borderTopColor: "rgba(26,24,20,0.07)" }}>
+        <h2 className="text-h3 mb-3" style={{ color: "#111625" }}>Deals by Stage</h2>
         <div className="space-y-3">
           {DEAL_STAGES.filter((s) => s.value !== "cancelled").map((s) => (
             <BarRow key={s.value} label={s.label} count={dealsByStage[s.value] ?? 0} total={dealTotal} color={s.color} />

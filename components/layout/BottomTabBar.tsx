@@ -17,11 +17,6 @@ interface BottomTabBarProps {
   onQuickAdd: (target: QuickAddTarget) => void;
 }
 
-/**
- * Mobile-only bottom navigation. Hidden at md+. Respects iOS safe area.
- * The "+" tab opens the quick-add (defaults to New Client — the most common
- * mobile entry); long flows still route through the page CTAs.
- */
 export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
   const pathname = usePathname();
 
@@ -29,10 +24,15 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
     <nav
       className={cn(
         "md:hidden fixed bottom-0 inset-x-0 z-30",
-        "h-16 bg-surface-card border-t border-hairline",
+        "h-16 backdrop-blur-md border-t",
         "flex items-stretch justify-around px-1",
         "pb-[env(safe-area-inset-bottom)]"
       )}
+      style={{
+        background:    "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(245,241,232,0.80) 100%)",
+        borderTopColor:"rgba(255,255,255,0.90)",
+        boxShadow:     "0 -1px 0 rgba(26,24,20,0.06), 0 -4px 16px rgba(26,24,20,0.05)",
+      }}
       aria-label="Primary"
     >
       {TABS.map(({ href, label, icon: Icon }) => {
@@ -43,14 +43,15 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
             href={href}
             className={cn(
               "flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px]",
-              "text-[12px] font-medium transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 rounded-md",
+              "text-[12px] font-medium transition-colors rounded-md",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
               active
-                ? "text-aqua-500 hover:bg-aqua-50"
-                : "text-ink-400 hover:text-ink-600 hover:bg-surface-base"
+                ? "hover:bg-black/[0.03]"
+                : "hover:bg-black/[0.03]"
             )}
+            style={{ color: active ? "#1390AE" : "#6B6560" }}
           >
-            <Icon size={20} className={active ? "text-aqua-500" : "text-ink-400"} />
+            <Icon size={20} style={{ color: active ? "#1390AE" : "#6B6560" }} />
             {label}
           </Link>
         );
@@ -58,9 +59,13 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
 
       <button
         onClick={() => onQuickAdd("client")}
-        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium text-ink-400 transition-colors hover:text-ink-600 hover:bg-surface-base rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
+        className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium transition-colors hover:bg-black/[0.03] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
+        style={{ color: "#6B6560" }}
       >
-        <span className="grid place-items-center w-8 h-8 -mb-0.5 rounded-full bg-gradient-tide text-white shadow-card">
+        <span
+          className="grid place-items-center w-8 h-8 -mb-0.5 rounded-full text-white shadow-card"
+          style={{ background: "linear-gradient(135deg, #C9A961 0%, #D4B876 100%)" }}
+        >
           <Plus size={18} />
         </span>
         Add

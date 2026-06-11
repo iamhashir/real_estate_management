@@ -98,7 +98,7 @@
    ─────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  --gradient-deco: linear-gradient(135deg, #1A1814 0%, #2B2622 50%, #1B4D3E 100%);
+  --gradient-deco: linear-gradient(135deg, #F9F8F5 0%, #F0EDE4 50%, #E8E4D8 100%);
   --gradient-brass: linear-gradient(135deg, #C9A961 0%, #D4B876 100%);
   --gradient-tide: linear-gradient(135deg, #0E6B86 0%, #1390AE 45%, #19C7C2 100%);
   --gradient-foam: linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%);
@@ -133,18 +133,27 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #F5F1E8 0%, #FDFAF5 100%);
   position: relative;
+
+  background-color: #F9F8F5;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 80%, rgba(42, 107, 84, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   z-index: -1;
 }
@@ -177,12 +186,16 @@ body::before {
   animation: row-flash 1.8s ease-out forwards;
 }
 
-/* ─── Raised surface: geometric precision with art deco accent ────────────── */
+/* ─── Raised surface: dark glass panel ───────────────────────────────────── */
 
 .surface-raised {
-  background-color: var(--color-surface-card);
-  border: 1px solid var(--color-hairline);
-  box-shadow: var(--shadow-card);
+  background: linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(245,241,232,0.55) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.80);
+  box-shadow:
+    0 4px 24px rgba(26,24,20,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.90);
   position: relative;
 }
 
@@ -193,16 +206,18 @@ body::before {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.60), transparent);
 }
 
 .surface-raised-hover {
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: all 0.32s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .surface-raised-hover:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-float);
-  border-color: rgba(201, 169, 97, 0.3);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 32px rgba(26,24,20,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+  border-color: rgba(255,255,255,0.95);
 }
 
 /* Double-line accent for featured elements (geometric art deco style). */

@@ -9,10 +9,10 @@ import { Waves } from "lucide-react";
 const STAGE_HEX: Record<string, string> = {
   info:    "#1390AE",
   sea:     "#0E6B86",
-  warning: "#F5B53D",
+  warning: "#D4A95F",
   aqua:    "#19C7C2",
-  success: "#1FB888",
-  danger:  "#E5484D",
+  success: "#2A6B54",
+  danger:  "#A75049",
 };
 
 interface PipelinePanelProps {
@@ -21,7 +21,6 @@ interface PipelinePanelProps {
   onDealClick?: (id: string) => void;
 }
 
-// Active stages only, in flow order
 const ACTIVE_STAGES = DEAL_STAGES.filter(
   (s) => s.value !== "closed" && s.value !== "cancelled"
 );
@@ -30,9 +29,9 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
   return (
     <Card className="p-5 h-full">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-h3 text-ink-900">Active Pipeline</h2>
+        <h2 className="text-h3" style={{ color: "#111625" }}>Active Pipeline</h2>
         {pipeline && (
-          <span className="text-sm text-ink-400">{pipeline.length} deals</span>
+          <span className="text-sm" style={{ color: "#6B6560" }}>{pipeline.length} deals</span>
         )}
       </div>
 
@@ -46,7 +45,7 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
         <EmptyState
           icon={<Waves size={22} />}
           title="Calm waters"
-          description="No active deals yet. Create one from the “New” menu to start tracking your pipeline."
+          description='No active deals yet. Create one from the "New" menu to start tracking your pipeline.'
         />
       ) : (
         <div className="space-y-5">
@@ -57,7 +56,7 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
               <div key={stage.value}>
                 <div className="flex items-center gap-2 mb-2">
                   <StatusPill value={stage.value as DealStage} variant="deal" pulse={false} />
-                  <span className="text-xs text-ink-400">{deals.length}</span>
+                  <span className="text-xs" style={{ color: "#6B6560" }}>{deals.length}</span>
                 </div>
                 <div className="space-y-1.5">
                   {deals.map((d) => {
@@ -70,16 +69,29 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                         tabIndex={onDealClick ? 0 : undefined}
                         onClick={() => onDealClick?.(d._id)}
                         onKeyDown={(e) => e.key === "Enter" && onDealClick?.(d._id)}
-                        className="flex items-center justify-between gap-3 rounded-md bg-surface-base hover:bg-surface-card cursor-pointer px-3 py-2.5 border border-hairline transition-colors"
-                        style={{ borderLeftColor: accentColor, borderLeftWidth: "3px" }}
+                        className="flex items-center justify-between gap-3 rounded-md cursor-pointer px-3 py-2.5 transition-colors"
+                        style={{
+                          background: "rgba(255,255,255,0.55)",
+                          border:     "1px solid rgba(255,255,255,0.80)",
+                          boxShadow:  "0 1px 4px rgba(26,24,20,0.04)",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.80)")}
+                        onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.55)")}
                       >
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-ink-900 truncate">{d.propertyName}</p>
-                          <p className="text-xs text-ink-400 truncate">
-                            {d.buyerName ?? "Unassigned"} · {d.dealType === "rent" ? "Rent" : "Sale"} · <span className="text-ink-400">{formatRelativeDate(d._creationTime)}</span>
+                        {/* Stage accent dot replaces banned side-stripe */}
+                        <span
+                          className="w-2 h-2 rounded-full shrink-0"
+                          style={{ backgroundColor: accentColor }}
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium truncate" style={{ color: "#111625" }}>
+                            {d.propertyName}
+                          </p>
+                          <p className="text-xs truncate" style={{ color: "#78716c" }}>
+                            {d.buyerName ?? "Unassigned"} · {d.dealType === "rent" ? "Rent" : "Sale"} · {formatRelativeDate(d._creationTime)}
                           </p>
                         </div>
-                        <span className="text-sm font-medium text-ink-900 text-money shrink-0">
+                        <span className="text-sm font-medium text-money shrink-0" style={{ color: "#111625" }}>
                           {formatCurrency(d.agreedPrice ?? d.listPrice)}
                         </span>
                       </div>

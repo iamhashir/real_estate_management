@@ -34,7 +34,7 @@ export function Card({
     <Tag
       onClick={onClick}
       className={cn(
-        "surface-raised relative rounded-md overflow-hidden",
+        "surface-raised relative rounded-lg overflow-hidden",
         hover && "surface-raised-hover",
         onClick && "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2",
         className
