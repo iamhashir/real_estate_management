@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
+
 import { useMemo, useState, useEffect } from "react";
 import { PageShell } from "@/components/layout/PageShell";
 import { HeroBand } from "@/components/dashboard/HeroBand";

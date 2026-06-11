@@ -41,7 +41,7 @@ export function Card({
       )}
       tabIndex={onClick ? 0 : undefined}
       role={onClick ? "button" : undefined}
-      onKeyDown={onClick ? (e) => {
+      onKeyDown={onClick ? (e: React.KeyboardEvent<HTMLElement>) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           onClick();
