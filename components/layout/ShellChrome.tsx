@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { Sidebar } from "./Sidebar";
 import { TopBar, type QuickAddTarget } from "./TopBar";
 import { BottomTabBar } from "./BottomTabBar";
@@ -19,15 +20,25 @@ import { OfflineBanner } from "./OfflineBanner";
 export function ShellChrome({ children }: { children: React.ReactNode }) {
   const [quickAdd, setQuickAdd] = useState<QuickAddTarget | null>(null);
   const [search, setSearch] = useState("");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
     <div className="min-h-dvh">
       <OfflineBanner />
       <BackgroundDecor />
-      <Sidebar />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggle={() => setSidebarCollapsed((c) => !c)}
+      />
 
-      {/* Content column — offset for the fixed sidebar */}
-      <div className="md:ml-16 lg:ml-60 flex flex-col min-h-dvh">
+      {/* Content column — offset matches sidebar width, transitions with it */}
+      <div
+        className={cn(
+          "flex flex-col min-h-dvh",
+          sidebarCollapsed ? "md:ml-16" : "md:ml-16 lg:ml-60",
+        )}
+        style={{ transition: "margin-left 0.3s cubic-bezier(0.22, 1, 0.36, 1)" }}
+      >
         <TopBar onQuickAdd={setQuickAdd} search={search} onSearchChange={setSearch} />
         <div className="flex-1 min-w-0 pb-16 md:pb-0">
           <PageTransitionWrapper>{children}</PageTransitionWrapper>

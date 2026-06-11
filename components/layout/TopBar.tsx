@@ -108,14 +108,18 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
 
       {/* Quick add */}
       <div className="relative" ref={menuRef}>
-        <Button
-          size="md"
-          leftIcon={<Plus size={16} />}
-          rightIcon={<ChevronDown size={14} className={cn("transition-transform", menuOpen && "rotate-180")} />}
+        <button
           onClick={() => setMenuOpen((o) => !o)}
+          className={cn(
+            "h-9 w-9 flex items-center justify-center rounded-md transition-all",
+            "text-stone-500 hover:bg-stone-100",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400/40",
+            "touch-manipulation"
+          )}
+          aria-label="Quick add menu"
         >
-          <span className="hidden sm:inline">New</span>
-        </Button>
+          <Plus size={16} />
+        </button>
 
         {menuOpen && (
           <div

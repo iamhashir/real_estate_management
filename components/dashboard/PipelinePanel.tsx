@@ -71,12 +71,12 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                         onKeyDown={(e) => e.key === "Enter" && onDealClick?.(d._id)}
                         className="flex items-center justify-between gap-3 rounded-md cursor-pointer px-3 py-2.5 transition-colors"
                         style={{
-                          background: "rgba(255,255,255,0.55)",
-                          border:     "1px solid rgba(255,255,255,0.80)",
-                          boxShadow:  "0 1px 4px rgba(26,24,20,0.04)",
+                          background: "rgba(255,255,255,0.40)",
+                          border:     "1px solid rgba(255,255,255,0.55)",
+                          boxShadow:  "0 1px 4px rgba(26,24,20,0.03)",
                         }}
-                        onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.80)")}
-                        onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.55)")}
+                        onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.65)")}
+                        onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.40)")}
                       >
                         {/* Stage accent dot replaces banned side-stripe */}
                         <span
