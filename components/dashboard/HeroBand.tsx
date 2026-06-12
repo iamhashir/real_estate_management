@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatedNumber, Skeleton } from "@/components/ui";
+import { Skyline } from "@/components/illustrations";
 import { useCurrentAgent } from "@/hooks/useAgents";
 import { motion } from "framer-motion";
 
@@ -27,39 +28,29 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
   const firstName = agent?.name?.split(" ")[0];
 
   return (
-    <div
-      className="relative overflow-hidden rounded-lg"
-      style={{
-        background:           "linear-gradient(135deg, rgba(255,255,255,0.80) 0%, rgba(245,241,232,0.60) 100%)",
-        backdropFilter:       "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        border:               "1px solid rgba(255,255,255,0.90)",
-        boxShadow:            "0 4px 24px rgba(26,24,20,0.06)",
-      }}
-    >
-      {/* Art deco geometric accent elements */}
-      <motion.div
-        className="pointer-events-none absolute -top-32 -right-24 w-80 h-80 opacity-10"
-        initial={{ opacity: 0, scale: 0.8, rotate: -45 }}
-        animate={{ opacity: 0.08, scale: 1, rotate: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <div className="w-full h-full border-2 border-brass-400 rounded-full" />
-      </motion.div>
+    <div className="glass-cream relative overflow-hidden rounded-xl">
+      {/* Animated skyline — draws itself along the bottom edge */}
+      <div className="pointer-events-none absolute bottom-0 right-0 w-full lg:w-3/5 opacity-[0.16] lg:opacity-25">
+        <Skyline className="w-full h-auto" />
+      </div>
 
+      {/* Soft aqua orb behind the metrics */}
       <motion.div
-        className="pointer-events-none absolute -bottom-20 -left-20 w-60 h-60 opacity-5"
-        initial={{ opacity: 0, scale: 0.8, rotate: 45 }}
-        animate={{ opacity: 0.05, scale: 1, rotate: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-      >
-        <div className="w-full h-full border-2 border-emerald-400 rounded-full" />
-      </motion.div>
+        className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(63,216,207,0.18) 0%, transparent 70%)",
+          filter: "blur(30px)",
+        }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
 
-      {/* Accent top-edge line */}
+      {/* Honey top-edge accent line */}
       <div
         className="pointer-events-none absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(201,169,97,0.55) 50%, transparent 100%)" }}
+        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(201,158,78,0.55) 50%, transparent 100%)" }}
       />
 
       <div className="relative p-8 lg:p-14 min-h-72 lg:min-h-64 flex flex-col justify-between">
@@ -71,16 +62,15 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-stone-500 text-xs lg:text-sm font-bold uppercase tracking-[0.12em] mb-8 block">
+            <p className="text-ink-400 text-xs lg:text-sm font-bold uppercase tracking-[0.12em] mb-8 block">
               {today}
             </p>
-            <h1 className="font-serif text-6xl lg:text-7xl font-600 leading-none text-[#111625] mb-2">
+            <h1 className="font-serif text-6xl lg:text-7xl font-600 leading-none text-ink-900 mb-2">
               {greeting()}
             </h1>
             {firstName && (
               <motion.h2
-                className="font-serif text-5xl lg:text-6xl font-600 leading-none"
-                style={{ color: "#9A7120" }}
+                className="font-serif text-5xl lg:text-6xl font-600 leading-none text-brass-500"
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.2 }}
@@ -99,14 +89,14 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
           >
             {/* Primary metric: Portfolio */}
             <div className="flex flex-col lg:items-end group">
-              <p className="text-stone-500 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
+              <p className="text-ink-400 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
                 Portfolio Value
               </p>
               {isLoading ? (
                 <Skeleton className="h-12 lg:h-14 w-48 bg-black/10 rounded-sm" />
               ) : (
                 <motion.p
-                  className="font-display font-800 text-3xl lg:text-4xl text-[#111625] tracking-tight leading-none"
+                  className="font-display font-800 text-3xl lg:text-4xl text-ink-900 tracking-tight leading-none"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -119,19 +109,19 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             {/* Secondary metrics */}
             <div className="grid grid-cols-2 lg:flex lg:flex-col lg:gap-6 gap-4">
               <div className="lg:text-right">
-                <p className="text-stone-500 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-ink-400 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   In Pipeline
                 </p>
                 {isLoading ? (
                   <Skeleton className="h-8 w-28 bg-black/10 rounded-sm lg:ml-auto" />
                 ) : (
-                  <p className="font-display font-700 text-xl lg:text-2xl text-[#111625]">
+                  <p className="font-display font-700 text-xl lg:text-2xl text-ink-900">
                     <AnimatedNumber value={pipelineValue} currency />
                   </p>
                 )}
               </div>
               <div className="lg:text-right">
-                <p className="text-stone-500 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-ink-400 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   Commission MTD
                 </p>
                 {isLoading ? (

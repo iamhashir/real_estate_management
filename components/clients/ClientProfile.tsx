@@ -44,7 +44,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
   }
 
   if (profile === null) {
-    return <EmptyState title="Client not found" description="This record may have been removed." />;
+    return <EmptyState variant="search" title="Client not found" description="This record may have been removed." />;
   }
 
   const { client, deals, properties, activity } = profile;

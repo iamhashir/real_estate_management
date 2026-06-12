@@ -85,6 +85,7 @@ export default function PropertiesPage() {
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState
+            variant={search || Object.keys(filters).length ? "search" : "properties"}
             icon={<Building2 size={22} />}
             title={search || Object.keys(filters).length ? "No matches" : "No properties yet"}
             description={

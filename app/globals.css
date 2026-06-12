@@ -1,70 +1,75 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 /* ─── Design tokens ───────────────────────────────────────────────────────────
-   All utilities (bg-midnight-900, text-brass-500, shadow-card, font-display, etc.)
+   Porcelain & Cream — a bright, white-first glass theme. Cards are visible
+   creamy panes of frosted glass floating over a pure-white canvas.
+   All utilities (bg-surface-card, text-ink-900, shadow-card, font-display…)
    are generated from this block. Never add ad-hoc color values in components.
    ─────────────────────────────────────────────────────────────────────────── */
 
 @theme {
-  /* ── Deep charcoal / neutrals ───────────────────────────────────────── */
-  --color-midnight-950: #0F0E0D;
-  --color-midnight-900: #1A1814;
-  --color-midnight-800: #2B2622;
-  --color-midnight-700: #3F3A34;
-  --color-midnight-600: #4F4A44;
+  /* ── Deep charcoal / neutrals (text-weight anchors) ─────────────────── */
+  --color-midnight-950: #16140F;
+  --color-midnight-900: #211E18;
+  --color-midnight-800: #33302A;
+  --color-midnight-700: #47443D;
+  --color-midnight-600: #57544C;
 
-  /* ── Warm cream ─────────────────────────────────────────────────────── */
-  --color-cream-50: #FDFAF5;
-  --color-cream-100: #F5F1E8;
-  --color-cream-200: #E8E0D4;
+  /* ── Warm cream — the signature card tint ───────────────────────────── */
+  --color-cream-50: #FFFDF8;
+  --color-cream-100: #FBF5E9;
+  --color-cream-200: #F3EADA;
 
   /* ── Emerald / primary accent ──────────────────────────────────────── */
-  --color-emerald-600: #1B4D3E;
-  --color-emerald-500: #2A6B54;
-  --color-emerald-400: #3D8B6A;
-  --color-emerald-300: #5FA87F;
+  --color-emerald-600: #1E5A47;
+  --color-emerald-500: #2E7C61;
+  --color-emerald-400: #459C7B;
+  --color-emerald-300: #6BBA98;
 
-  /* ── Brass / action accent ─────────────────────────────────────────── */
-  --color-brass-500: #C9A961;
-  --color-brass-400: #D4B876;
-  --color-brass-300: #E0C896;
+  /* ── Brass / honey action accent ───────────────────────────────────── */
+  --color-brass-500: #C99E4E;
+  --color-brass-400: #D9B26A;
+  --color-brass-300: #E8CC95;
 
-  /* ── Sea (sidebar, nav shell) ──────────────────────────────────────── */
-  --color-sea-950: #04212B;
-  --color-sea-900: #063646;
-  --color-sea-800: #0A4D63;
-  --color-sea-700: #0E6B86;
-  --color-sea-600: #1390AE;
+  /* ── Sea (deep ink-teal: headings, primary buttons) ────────────────── */
+  --color-sea-950: #0A2E38;
+  --color-sea-900: #0D4152;
+  --color-sea-800: #115A70;
+  --color-sea-700: #15758F;
+  --color-sea-600: #1C97B5;
 
   /* ── Aqua (interactive accents, focus rings, buttons) ─────────────── */
-  --color-aqua-500: #19C7C2;
-  --color-aqua-400: #3FDCD3;
-  --color-aqua-300: #7CEDE4;
-  --color-aqua-200: #AAF3EE;
-  --color-aqua-100: #D6FAF5;
-  --color-aqua-50:  #F0FDFC;
+  --color-aqua-500: #17BFBA;
+  --color-aqua-400: #3FD8CF;
+  --color-aqua-300: #82E9E0;
+  --color-aqua-200: #B5F2EC;
+  --color-aqua-100: #DDFAF6;
+  --color-aqua-50:  #F2FDFB;
 
   /* ── Coral (status accents) ─────────────────────────────────────────── */
   --color-coral-500: #FF6B5E;
   --color-coral-400: #FF8A7F;
-  --color-coral-100: #FFE8E6;
+  --color-coral-100: #FFECEA;
 
-  /* ── Surface ──────────────────────────────────────────────────────────── */
-  --color-surface-base: #F5F1E8;
-  --color-surface-card: #FDFAF5;
+  /* ── Surface — white canvas, creamy cards ───────────────────────────── */
+  --color-surface-base: #FFFFFF;
+  --color-surface-card: #FFFDF8;
 
   /* ── Ink / text ───────────────────────────────────────────────────────── */
-  --color-ink-900: #1A1814;
-  --color-ink-600: #4F4A44;
-  --color-ink-400: #7A7570;
-  --color-ink-200: #C8BFAF;
-  --color-hairline: #E8E0D4;
+  --color-ink-900: #1F1C17;
+  --color-ink-700: #3E3A33;
+  --color-ink-600: #5A554C;
+  --color-ink-400: #8C867B;
+  --color-ink-300: #ABA496;
+  --color-ink-200: #D8D1C2;
+  --color-hairline: #EFE9DC;
 
   /* ── Semantic status ──────────────────────────────────────────────────── */
-  --color-success: #2A6B54;
-  --color-warning: #D4A95F;
-  --color-danger:  #A75049;
-  --color-info:    #1B4D3E;
+  --color-success: #2E7C61;
+  --color-warning: #D9A647;
+  --color-danger:  #D5544C;
+  --color-info:    #15758F;
 
   /* ── Typography ───────────────────────────────────────────────────────── */
   --font-serif:   var(--font-crimson);
@@ -72,25 +77,25 @@
   --font-sans:    var(--font-inter);
   --font-mono:    var(--font-space-mono);
 
-  /* ── Radius ───────────────────────────────────────────────────────────── */
-  --radius-sm:   4px;
-  --radius-md:   8px;
-  --radius-lg:   12px;
-  --radius-xl:   20px;
+  /* ── Radius — rounder, softer glass ─────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-xl:   28px;
   --radius-full: 9999px;
 
-  /* ── Shadows (deep, subtle) ─────────────────────────────────────────────── */
+  /* ── Shadows (airy, warm-tinted — never harsh gray) ─────────────────── */
   --shadow-card:
-    0 2px 8px rgba(26, 24, 20, 0.06),
-    0 4px 12px rgba(26, 24, 20, 0.08);
+    0 1px 2px rgba(160, 132, 86, 0.05),
+    0 10px 30px -10px rgba(160, 132, 86, 0.14);
   --shadow-float:
-    0 4px 16px rgba(26, 24, 20, 0.12),
-    0 8px 24px rgba(26, 24, 20, 0.10);
+    0 2px 6px rgba(160, 132, 86, 0.07),
+    0 20px 48px -16px rgba(160, 132, 86, 0.22);
   --shadow-pop:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 2px 8px rgba(26, 24, 20, 0.08),
-    0 8px 20px rgba(26, 24, 20, 0.12);
-  --shadow-glow:  0 0 0 3px rgba(201, 169, 97, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 8px rgba(160, 132, 86, 0.07),
+    0 14px 32px -10px rgba(160, 132, 86, 0.16);
+  --shadow-glow:  0 0 0 3px rgba(23, 191, 186, 0.22);
 }
 
 /* ─── CSS custom properties (non-utility — used via var()) ───────────────────
@@ -98,16 +103,61 @@
    ─────────────────────────────────────────────────────────────────────────── */
 
 :root {
-  --gradient-deco: linear-gradient(135deg, #F9F8F5 0%, #F0EDE4 50%, #E8E4D8 100%);
-  --gradient-brass: linear-gradient(135deg, #C9A961 0%, #D4B876 100%);
-  --gradient-tide: linear-gradient(135deg, #0E6B86 0%, #1390AE 45%, #19C7C2 100%);
-  --gradient-foam: linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%);
-  --surface-glass: rgba(245, 241, 232, 0.7);
-  --surface-glass-border: rgba(201, 169, 97, 0.2);
+  --gradient-deco: linear-gradient(135deg, #FFFFFF 0%, #FBF5E9 55%, #F3EADA 100%);
+  --gradient-brass: linear-gradient(135deg, #C99E4E 0%, #E2C586 100%);
+  --gradient-tide: linear-gradient(135deg, #115A70 0%, #1C97B5 45%, #17BFBA 100%);
+  --gradient-foam: linear-gradient(135deg, #17BFBA 0%, #3FD8CF 100%);
+  --surface-glass: rgba(255, 253, 247, 0.72);
+  --surface-glass-border: rgba(255, 255, 255, 0.92);
   --shadow-pop:
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 2px 8px rgba(26, 24, 20, 0.08),
-    0 8px 20px rgba(26, 24, 20, 0.12);
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 8px rgba(160, 132, 86, 0.07),
+    0 14px 32px -10px rgba(160, 132, 86, 0.16);
+
+  /* ── shadcn/ui semantic variables — mapped onto the porcelain palette ── */
+  --background: #FFFFFF;
+  --foreground: #1F1C17;
+  --card: #FFFDF8;
+  --card-foreground: #1F1C17;
+  --popover: #FFFDF8;
+  --popover-foreground: #1F1C17;
+  --primary: #115A70;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FBF5E9;
+  --secondary-foreground: #3E3A33;
+  --muted: #F7F2E7;
+  --muted-foreground: #8C867B;
+  --accent: #DDFAF6;
+  --accent-foreground: #115A70;
+  --destructive: #D5544C;
+  --destructive-foreground: #FFFFFF;
+  --border: #EFE9DC;
+  --input: #EFE9DC;
+  --ring: #17BFBA;
+  --radius: 0.875rem;
+}
+
+/* Expose the shadcn variables as Tailwind utilities (bg-background, etc.) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 }
 
 /* ─── Base ────────────────────────────────────────────────────────────────── */
@@ -127,35 +177,14 @@ html {
 body {
   height: 100%;
   min-height: 100%;
-  color: #1A1814;
+  color: #1F1C17;
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-
-  background-color: #F9F8F5;
-  background-image:
-    linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
+  background-color: #FFFFFF;
 }
 
 /* Premium skeleton shimmer — smooth, directional loader animation */
@@ -169,11 +198,21 @@ body::after {
   animation: skeleton-shimmer 2s infinite;
 }
 
-/* Slow ambient drift for the aurora background blobs. */
+/* Slow ambient drift for the aurora background orbs. */
 @keyframes drift {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
   50%  { transform: translate3d(3%, 4%, 0) scale(1.08); }
   100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Gentle vertical float for illustrations and decor orbs. */
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.float-soft {
+  animation: float-soft 6s ease-in-out infinite;
 }
 
 /* Row flash: aqua highlight that fades after a save. */
@@ -186,16 +225,24 @@ body::after {
   animation: row-flash 1.8s ease-out forwards;
 }
 
-/* ─── Raised surface: bright frosted glass panel ─────────────────────────── */
+/* ─── Raised surface: creamy frosted glass pane ──────────────────────────────
+   The signature card. A visibly creamy gradient over heavy blur, crisp white
+   border, warm airy shadow — reads as a physical piece of glass on white.   */
 
 .surface-raised {
-  background: linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(245,241,232,0.50) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.80);
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(253, 246, 232, 0.68) 55%,
+    rgba(248, 238, 218, 0.58) 100%
+  );
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow:
-    0 4px 24px rgba(26,24,20,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.90);
+    0 1px 2px rgba(160, 132, 86, 0.06),
+    0 12px 32px -10px rgba(160, 132, 86, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
   position: relative;
 }
 
@@ -206,26 +253,27 @@ body::after {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.60), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
 }
 
 .surface-raised-hover {
   transition: all 0.32s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .surface-raised-hover:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow:
-    0 8px 32px rgba(26,24,20,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.95);
-  border-color: rgba(255,255,255,0.95);
+    0 2px 6px rgba(160, 132, 86, 0.08),
+    0 24px 48px -14px rgba(160, 132, 86, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 1);
 }
 
-/* Double-line accent for featured elements (geometric art deco style). */
+/* Double-line accent for featured elements. */
 .ring-double {
   box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.4),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
     0 0 0 1px var(--color-hairline),
-    0 0 0 3px rgba(201, 169, 97, 0.15),
+    0 0 0 3px rgba(201, 158, 78, 0.12),
     var(--shadow-card);
 }
 
@@ -292,13 +340,61 @@ body::after {
   letter-spacing: -0.02em;
 }
 
-/* ─── Glass surface utility ───────────────────────────────────────────────── */
+/* ─── Glass surface utilities ─────────────────────────────────────────────── */
 
 .glass {
   background: var(--surface-glass);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border: 1px solid var(--surface-glass-border);
+}
+
+/* Brighter, whiter pane — top bars, floating menus */
+.glass-white {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 251, 242, 0.74) 100%);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+/* Deeper cream pane — featured panels, hero band */
+.glass-cream {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(251, 243, 226, 0.72) 50%,
+    rgba(246, 234, 210, 0.62) 100%
+  );
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 2px 6px rgba(160, 132, 86, 0.07),
+    0 24px 56px -18px rgba(160, 132, 86, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Light sweep that glides across glass panes on hover. */
+.glass-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.glass-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 65%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+.glass-sheen:hover::after {
+  transform: translateX(120%);
 }
 
 /* ─── Gradient utilities ──────────────────────────────────────────────────── */
@@ -319,7 +415,7 @@ body::after {
   background: var(--gradient-foam);
 }
 
-/* ─── Scrollbar (subtle aqua tint) ───────────────────────────────────────── */
+/* ─── Scrollbar (warm sand tint) ─────────────────────────────────────────── */
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -331,12 +427,12 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #B8D0D6;
+  background: #E2D9C6;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #7C97A0;
+  background: #C9BFA8;
 }
 
 /* ─── Focus ring ──────────────────────────────────────────────────────────── */

@@ -1,0 +1,60 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+      - "claude/**"
+  workflow_dispatch:
+    inputs:
+      vercel_token:
+        description: "Vercel personal access token"
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Mask token in logs
+        run: echo "::add-mask::${{ inputs.vercel_token || secrets.VERCEL_TOKEN }}"
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: |
+          TOKEN="${{ inputs.vercel_token || secrets.VERCEL_TOKEN }}"
+          SCOPE_FLAG=""
+
+          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            PROD_FLAG="--prod"
+          else
+            PROD_FLAG=""
+          fi
+
+          URL=$(vercel \
+            --token="$TOKEN" \
+            --yes \
+            $PROD_FLAG \
+            2>&1 | tail -1)
+
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "### 🚀 Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "**Live URL:** $URL" >> $GITHUB_STEP_SUMMARY
+          echo ""
+          echo "DEPLOY_URL=$URL"
+
+      - name: Print URL
+        run: echo "Live URL => ${{ steps.deploy.outputs.url }}"

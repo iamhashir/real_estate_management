@@ -8,10 +8,10 @@ import { Building2 } from "lucide-react";
 import type { Property } from "@/lib/types";
 
 const RAIL: Record<string, string> = {
-  available: "#19C7C2",
-  under_negotiation: "#F5B53D",
+  available: "#17BFBA",
+  under_negotiation: "#D9A647",
   sold: "#FF6B5E",
-  rented: "#1390AE",
+  rented: "#1C97B5",
 };
 
 function typeLabel(value: string) {
@@ -64,6 +64,7 @@ export function PropertyTable({ properties, isLoading, onRowClick, onCreate }: P
       renderCard={(p) => <PropertyCard property={p} />}
       emptyState={
         <EmptyState
+          variant="properties"
           icon={<Building2 size={22} />}
           title="No properties yet"
           description="Add your first listing to start building your portfolio."

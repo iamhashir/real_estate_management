@@ -145,6 +145,7 @@ export function DataTable<T>({
                 <td colSpan={columns.length}>
                   {emptyState ?? (
                     <EmptyState
+                      variant="search"
                       title="Nothing here yet"
                       description="No records match your current filters."
                     />

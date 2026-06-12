@@ -6,11 +6,11 @@ export default function NotFound() {
       <svg viewBox="0 0 200 60" className="w-48 h-12 mb-6 opacity-20" fill="none" aria-hidden="true">
         <path
           d="M0 30 Q25 8 50 30 Q75 52 100 30 Q125 8 150 30 Q175 52 200 30"
-          stroke="#19C7C2" strokeWidth="3" strokeLinecap="round"
+          stroke="#17BFBA" strokeWidth="3" strokeLinecap="round"
         />
         <path
           d="M0 42 Q25 20 50 42 Q75 64 100 42 Q125 20 150 42 Q175 64 200 42"
-          stroke="#1390AE" strokeWidth="2" strokeLinecap="round" opacity="0.6"
+          stroke="#1C97B5" strokeWidth="2" strokeLinecap="round" opacity="0.6"
         />
       </svg>
 

@@ -67,6 +67,7 @@ export function ClientList({ selectedId, onSelect, onCreate }: ClientListProps) 
           </div>
         ) : clients.length === 0 ? (
           <EmptyState
+            variant={search || type ? "search" : "clients"}
             icon={<Users size={22} />}
             title={search || type ? "No matches" : "No clients yet"}
             description={search || type ? "Try a different search or filter." : "Add your first client to get started."}

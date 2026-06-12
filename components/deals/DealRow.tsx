@@ -6,10 +6,10 @@ import { DEAL_STAGES } from "@/lib/constants";
 import type { DealStage } from "@/lib/constants";
 
 const STAGE_HEX: Record<string, string> = {
-  info:    "#1390AE",
-  sea:     "#0E6B86",
-  warning: "#F5B53D",
-  aqua:    "#19C7C2",
+  info:    "#1C97B5",
+  sea:     "#15758F",
+  warning: "#D9A647",
+  aqua:    "#17BFBA",
   success: "#1FB888",
   danger:  "#E5484D",
 };
@@ -31,7 +31,7 @@ interface DealRowProps {
 
 export function DealRow({ deal, onClick }: DealRowProps) {
   const stageMeta  = DEAL_STAGES.find((s) => s.value === deal.stage);
-  const accentHex  = STAGE_HEX[stageMeta?.color ?? "info"] ?? "#1390AE";
+  const accentHex  = STAGE_HEX[stageMeta?.color ?? "info"] ?? "#1C97B5";
   const price      = deal.agreedPrice ?? deal.listPrice;
   const partyName  = deal.buyerName ?? deal.sellerName ?? "Unassigned";
 

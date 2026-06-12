@@ -19,8 +19,8 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantMap: Record<ButtonVariant, string> = {
   primary:
     "bg-gradient-to-r from-sea-950 via-sea-800 to-sea-700 text-white font-medium " +
-    "shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_2px_4px_-1px_rgba(10,77,99,0.35),0_8px_20px_-6px_rgba(10,77,99,0.45)] " +
-    "hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_4px_8px_-2px_rgba(10,77,99,0.40),0_14px_28px_-8px_rgba(10,77,99,0.50)] " +
+    "shadow-[inset_0_1px_0_rgba(255,255,255,0.22),0_2px_4px_-1px_rgba(17,90,112,0.35),0_8px_20px_-6px_rgba(17,90,112,0.45)] " +
+    "hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_4px_8px_-2px_rgba(17,90,112,0.40),0_14px_28px_-8px_rgba(17,90,112,0.50)] " +
     "active:translate-y-0 active:scale-[0.98] " +
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea-700 focus-visible:ring-offset-2 " +
     "disabled:opacity-50 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none",
