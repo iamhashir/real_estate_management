@@ -41,4 +41,10 @@ yarn-error.log*
 next-env.d.ts
 
 # convex generated (rebuilt by `npx convex dev`)
+# Stubs committed so Vercel can build without a live Convex deployment.
+# Real codegen output (from `npx convex dev`) overwrites these locally.
 /convex/_generated
+!/convex/_generated/api.js
+!/convex/_generated/api.d.ts
+!/convex/_generated/server.js
+!/convex/_generated/server.d.ts
