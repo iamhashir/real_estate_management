@@ -64,53 +64,84 @@ A `/deals` page, a `/reports` page, a `/settings` page would each add navigation
 
 ---
 
-## 2. Color Palette
+## 2. Color Palette — Porcelain & Cream
 
-A cohesive ocean gradient — from deep sea navy to bright aqua, with a warm coral accent for action and warnings.
+A white-first glass theme: a pure-white canvas with visibly creamy frosted-glass
+cards floating on top. Deep ink-teal carries structure, honey gold is the warm
+action accent, aqua remains the interactive highlight.
 
-### Brand / Sea Blues
+### Brand / Sea (deep ink-teal)
 | Token | Hex | Use |
 |---|---|---|
-| `--sea-950` | `#04212B` | Darkest — sidebar, deep backgrounds |
-| `--sea-900` | `#063646` | Headers, nav surfaces |
-| `--sea-800` | `#0A4D63` | Primary text on light, deep buttons |
-| `--sea-700` | `#0E6B86` | Links, secondary actions |
-| `--sea-600` | `#1390AE` | Default brand blue |
+| `--sea-950` | `#0A2E38` | Darkest — primary button gradient ends |
+| `--sea-900` | `#0D4152` | Headings on light |
+| `--sea-800` | `#115A70` | Primary text accents, deep buttons, illustration line work |
+| `--sea-700` | `#15758F` | Links, secondary actions |
+| `--sea-600` | `#1C97B5` | Default brand blue |
 
 ### Aqua / Accent
 | Token | Hex | Use |
 |---|---|---|
-| `--aqua-500` | `#19C7C2` | Primary accent — CTAs, active states |
-| `--aqua-400` | `#3FDCD3` | Hover glow, highlights |
-| `--aqua-300` | `#7CEDE4` | Soft fills, selected chips |
-| `--aqua-100` | `#D6FAF5` | Tints, table row hover |
+| `--aqua-500` | `#17BFBA` | Primary accent — CTAs, active states |
+| `--aqua-400` | `#3FD8CF` | Hover glow, highlights, background orbs |
+| `--aqua-300` | `#82E9E0` | Soft fills, selected chips |
+| `--aqua-100` | `#DDFAF6` | Tints, table row hover |
+
+### Honey / Brass (warm action accent)
+| Token | Hex | Use |
+|---|---|---|
+| `--brass-500` | `#C99E4E` | Sidebar active state, hero name, key illustration accents |
+| `--brass-400` | `#E2C586` | Gradient ends, soft honey fills |
 
 ### Surface & Neutral
 | Token | Hex | Use |
 |---|---|---|
-| `--surface-base` | `#F4FBFC` | App background (faint aqua wash) |
-| `--surface-card` | `#FFFFFF` | Cards, panels |
-| `--surface-glass` | `rgba(255,255,255,0.65)` | Frosted overlays, drawers |
-| `--ink-900` | `#0B1F26` | Primary text |
-| `--ink-600` | `#42606B` | Secondary text |
-| `--ink-400` | `#7C97A0` | Muted / placeholder |
-| `--hairline` | `#DCEAEE` | Borders, dividers |
+| `--surface-base` | `#FFFFFF` | App background — pure white |
+| `--surface-card` | `#FFFDF8` | Opaque card fallback |
+| `--surface-glass` | `rgba(255,253,247,0.72)` | Frosted overlays, drawers |
+| `--ink-900` | `#1F1C17` | Primary text |
+| `--ink-600` | `#5A554C` | Secondary text |
+| `--ink-400` | `#8C867B` | Muted / placeholder |
+| `--hairline` | `#EFE9DC` | Borders, dividers |
 
 ### Semantic / Status
 | Token | Hex | Meaning |
 |---|---|---|
 | `--coral-500` | `#FF6B5E` | Action highlight, urgent, "Sold" pop |
-| `--success` | `#1FB888` | Closed deal, available, paid |
-| `--warning` | `#F5B53D` | Under negotiation, pending |
-| `--danger` | `#E5484D` | Errors, overdue, lost deal |
-| `--info` | `#1390AE` | Neutral info badges |
+| `--success` | `#2E7C61` | Closed deal, available, paid |
+| `--warning` | `#D9A647` | Under negotiation, pending |
+| `--danger` | `#D5544C` | Errors, overdue, lost deal |
+| `--info` | `#15758F` | Neutral info badges |
+
+### The Creamy Glass Card
+The signature surface (`.surface-raised` / `.glass-cream` in `globals.css`):
+a cream-tinted gradient over `blur(20px) saturate(1.5)`, a crisp white 1px
+border, and a warm sand-tinted airy shadow — never harsh gray.
+```css
+background: linear-gradient(140deg,
+  rgba(255,255,255,0.85) 0%,
+  rgba(253,246,232,0.68) 55%,
+  rgba(248,238,218,0.58) 100%);
+backdrop-filter: blur(20px) saturate(1.5);
+border: 1px solid rgba(255,255,255,0.95);
+box-shadow: 0 1px 2px rgba(160,132,86,0.06),
+            0 12px 32px -10px rgba(160,132,86,0.16),
+            inset 0 1px 0 rgba(255,255,255,1);
+```
 
 ### Signature Gradient
 Used for the hero stat band, primary buttons, and active nav.
 ```css
---gradient-tide: linear-gradient(135deg, #0E6B86 0%, #1390AE 45%, #19C7C2 100%);
---gradient-foam: linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%);
+--gradient-tide: linear-gradient(135deg, #115A70 0%, #1C97B5 45%, #17BFBA 100%);
+--gradient-foam: linear-gradient(135deg, #17BFBA 0%, #3FD8CF 100%);
 ```
+
+### Illustration
+Expressive hand-drawn SVG line art lives in `components/illustrations/` —
+an animated city skyline (`Skyline`) that draws itself into the dashboard hero,
+and per-domain empty-state scenes (`EmptyStateArt`: properties, clients, deals,
+search, generic) that sketch in with framer-motion path-draw animations.
+Line work uses `--sea-800`, fills use honey cream and aqua mist.
 
 ### Dark Mode
 Invert surfaces toward `--sea-950`/`--sea-900`, keep aqua accents at full saturation (they glow beautifully on dark), lift text to `#EAF7F8`.

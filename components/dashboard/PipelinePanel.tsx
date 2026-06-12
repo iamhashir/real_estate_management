@@ -7,12 +7,12 @@ import type { DashboardStats } from "@/lib/types";
 import { Waves } from "lucide-react";
 
 const STAGE_HEX: Record<string, string> = {
-  info:    "#1390AE",
-  sea:     "#0E6B86",
-  warning: "#D4A95F",
-  aqua:    "#19C7C2",
-  success: "#2A6B54",
-  danger:  "#A75049",
+  info:    "#1C97B5",
+  sea:     "#15758F",
+  warning: "#D9A647",
+  aqua:    "#17BFBA",
+  success: "#2E7C61",
+  danger:  "#C2453C",
 };
 
 interface PipelinePanelProps {
@@ -29,9 +29,9 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
   return (
     <Card className="p-5 h-full">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-h3" style={{ color: "#111625" }}>Active Pipeline</h2>
+        <h2 className="text-h3" style={{ color: "#1F1C17" }}>Active Pipeline</h2>
         {pipeline && (
-          <span className="text-sm" style={{ color: "#6B6560" }}>{pipeline.length} deals</span>
+          <span className="text-sm" style={{ color: "#7C766B" }}>{pipeline.length} deals</span>
         )}
       </div>
 
@@ -43,6 +43,7 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
         </div>
       ) : !pipeline || pipeline.length === 0 ? (
         <EmptyState
+          variant="deals"
           icon={<Waves size={22} />}
           title="Calm waters"
           description='No active deals yet. Create one from the "New" menu to start tracking your pipeline.'
@@ -56,12 +57,12 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
               <div key={stage.value}>
                 <div className="flex items-center gap-2 mb-2">
                   <StatusPill value={stage.value as DealStage} variant="deal" pulse={false} />
-                  <span className="text-xs" style={{ color: "#6B6560" }}>{deals.length}</span>
+                  <span className="text-xs" style={{ color: "#7C766B" }}>{deals.length}</span>
                 </div>
                 <div className="space-y-1.5">
                   {deals.map((d) => {
                     const stageMeta = DEAL_STAGES.find((s) => s.value === d.stage);
-                    const accentColor = STAGE_HEX[stageMeta?.color ?? "info"] ?? "#1390AE";
+                    const accentColor = STAGE_HEX[stageMeta?.color ?? "info"] ?? "#1C97B5";
                     return (
                       <div
                         key={d._id}
@@ -73,7 +74,7 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                         style={{
                           background: "rgba(255,255,255,0.40)",
                           border:     "1px solid rgba(255,255,255,0.55)",
-                          boxShadow:  "0 1px 4px rgba(26,24,20,0.03)",
+                          boxShadow:  "0 1px 4px rgba(160,132,86,0.05)",
                         }}
                         onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.65)")}
                         onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.40)")}
@@ -84,14 +85,14 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                           style={{ backgroundColor: accentColor }}
                         />
                         <div className="min-w-0 flex-1">
-                          <p className="text-sm font-medium truncate" style={{ color: "#111625" }}>
+                          <p className="text-sm font-medium truncate" style={{ color: "#1F1C17" }}>
                             {d.propertyName}
                           </p>
-                          <p className="text-xs truncate" style={{ color: "#78716c" }}>
+                          <p className="text-xs truncate" style={{ color: "#8C867B" }}>
                             {d.buyerName ?? "Unassigned"} · {d.dealType === "rent" ? "Rent" : "Sale"} · {formatRelativeDate(d._creationTime)}
                           </p>
                         </div>
-                        <span className="text-sm font-medium text-money shrink-0" style={{ color: "#111625" }}>
+                        <span className="text-sm font-medium text-money shrink-0" style={{ color: "#1F1C17" }}>
                           {formatCurrency(d.agreedPrice ?? d.listPrice)}
                         </span>
                       </div>

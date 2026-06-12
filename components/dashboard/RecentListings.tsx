@@ -25,13 +25,13 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-h3" style={{ color: "#111625" }}>Recent Listings</h2>
+        <h2 className="text-h3" style={{ color: "#1F1C17" }}>Recent Listings</h2>
         <Link
           href="/properties"
           className="inline-flex items-center gap-1 text-sm font-medium transition-colors min-h-[44px]"
-          style={{ color: "#1390AE" }}
-          onMouseEnter={e => ((e.target as HTMLAnchorElement).style.color = "#0E6B86")}
-          onMouseLeave={e => ((e.target as HTMLAnchorElement).style.color = "#1390AE")}
+          style={{ color: "#1C97B5" }}
+          onMouseEnter={e => ((e.target as HTMLAnchorElement).style.color = "#15758F")}
+          onMouseLeave={e => ((e.target as HTMLAnchorElement).style.color = "#1C97B5")}
         >
           View all <ArrowRight size={14} />
         </Link>
@@ -42,7 +42,7 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
           {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-20 rounded-md" />)}
         </div>
       ) : recent.length === 0 ? (
-        <EmptyState icon={<Building2 size={22} />} title="No listings yet" description="Add a property to see it here." />
+        <EmptyState variant="properties" icon={<Building2 size={22} />} title="No listings yet" description="Add a property to see it here." />
       ) : (
         <div className="grid sm:grid-cols-2 gap-3">
           {recent.map((p) => (
@@ -52,19 +52,19 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
               style={{
                 background: "rgba(255,255,255,0.55)",
                 border:     "1px solid rgba(255,255,255,0.80)",
-                boxShadow:  "0 1px 4px rgba(26,24,20,0.04)",
+                boxShadow:  "0 1px 4px rgba(160,132,86,0.06)",
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.80)";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(26,24,20,0.08)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(160,132,86,0.10)";
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.55)";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 4px rgba(26,24,20,0.04)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 4px rgba(160,132,86,0.06)";
               }}
             >
               <span className="relative w-14 h-14 rounded-md overflow-hidden shrink-0"
-                style={{ background: "linear-gradient(135deg, #19C7C2 0%, #3FDCD3 100%)" }}>
+                style={{ background: "linear-gradient(135deg, #17BFBA 0%, #3FD8CF 100%)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={propertyImage(p, 200)}
@@ -77,22 +77,22 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm font-medium truncate" style={{ color: "#111625" }}>{p.name}</p>
+                  <p className="text-sm font-medium truncate" style={{ color: "#1F1C17" }}>{p.name}</p>
                   <StatusPill value={p.status} variant="property" />
                 </div>
-                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "#78716c" }}>
+                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "#8C867B" }}>
                   <span className="flex items-center gap-0.5 min-w-0 truncate">
                     <MapPin size={11} className="shrink-0" />{p.area ?? p.city}
                   </span>
                   <Badge color="sea" size="sm">{typeLabel(p.type)}</Badge>
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "#78716c" }}>
-                  <span className="font-medium text-money" style={{ color: "#2A6B54" }}>{formatCurrency(p.price)}</span>
+                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "#8C867B" }}>
+                  <span className="font-medium text-money" style={{ color: "#2E7C61" }}>{formatCurrency(p.price)}</span>
                   {p.bedrooms != null && (
                     <span className="flex items-center gap-0.5"><BedDouble size={12} />{p.bedrooms}</span>
                   )}
                   <span className="flex items-center gap-0.5"><Maximize size={12} />{formatNumber(p.size)}m²</span>
-                  <span className="ml-auto whitespace-nowrap" style={{ color: "#6B6560" }}>
+                  <span className="ml-auto whitespace-nowrap" style={{ color: "#7C766B" }}>
                     {formatRelativeDate(p._creationTime)}
                   </span>
                 </div>

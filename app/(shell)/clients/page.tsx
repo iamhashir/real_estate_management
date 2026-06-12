@@ -70,6 +70,7 @@ export default function ClientsPage() {
         placeholder={
           <div className="h-full grid place-items-center">
             <EmptyState
+              variant="clients"
               icon={<Users size={22} />}
               title="Select a client"
               description="Choose someone from the list to see their profile, deals, and activity."

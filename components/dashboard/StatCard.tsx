@@ -23,43 +23,43 @@ interface StatCardProps {
 
 const T = {
   aqua: {
-    ring:  "#1390AE",
-    tint:  "rgba(19,144,174,0.06)",
-    track: "rgba(19,144,174,0.10)",
-    icon:  "#0E6B86",
-    val:   "#0E6B86",
-    glow:  "rgba(19,144,174,0.14)",
+    ring:  "#1C97B5",
+    tint:  "rgba(28,151,181,0.06)",
+    track: "rgba(28,151,181,0.10)",
+    icon:  "#15758F",
+    val:   "#15758F",
+    glow:  "rgba(28,151,181,0.14)",
   },
   sea: {
-    ring:  "#0E6B86",
-    tint:  "rgba(14,107,134,0.06)",
-    track: "rgba(14,107,134,0.10)",
-    icon:  "#0A4D63",
-    val:   "#0A4D63",
-    glow:  "rgba(14,107,134,0.14)",
+    ring:  "#15758F",
+    tint:  "rgba(21,117,143,0.06)",
+    track: "rgba(21,117,143,0.10)",
+    icon:  "#115A70",
+    val:   "#115A70",
+    glow:  "rgba(21,117,143,0.14)",
   },
   success: {
-    ring:  "#2A6B54",
-    tint:  "rgba(42,107,84,0.06)",
-    track: "rgba(42,107,84,0.10)",
-    icon:  "#1B4D3E",
-    val:   "#1B4D3E",
-    glow:  "rgba(42,107,84,0.14)",
+    ring:  "#2E7C61",
+    tint:  "rgba(46,124,97,0.06)",
+    track: "rgba(46,124,97,0.10)",
+    icon:  "#1E5A47",
+    val:   "#1E5A47",
+    glow:  "rgba(46,124,97,0.14)",
   },
   coral: {
     ring:  "#FF6B5E",
     tint:  "rgba(255,107,94,0.06)",
     track: "rgba(255,107,94,0.10)",
-    icon:  "#A75049",
-    val:   "#A75049",
+    icon:  "#C2453C",
+    val:   "#C2453C",
     glow:  "rgba(255,107,94,0.14)",
   },
 } satisfies Record<Accent, Record<string, string>>;
 
 const TREND_STYLE = {
-  up:   { bg: "rgba(42,107,84,0.10)",  text: "#1B4D3E" },
-  down: { bg: "rgba(167,80,73,0.10)",  text: "#7A2E28" },
-  flat: { bg: "rgba(79,74,68,0.10)",   text: "#4F4A44" },
+  up:   { bg: "rgba(46,124,97,0.10)",  text: "#1E5A47" },
+  down: { bg: "rgba(194,69,60,0.10)",  text: "#7A2E28" },
+  flat: { bg: "rgba(79,74,68,0.10)",   text: "#5A554C" },
 };
 
 // Framer Motion variants — hover state propagates from the card root
@@ -99,11 +99,11 @@ export function StatCard({
     <motion.div
       className="relative overflow-hidden rounded-lg cursor-default select-none"
       style={{
-        background:           "linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(245,241,232,0.50) 100%)",
-        backdropFilter:       "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        border:               "1px solid rgba(255,255,255,0.80)",
-        boxShadow:            "0 4px 24px rgba(26,24,20,0.08), inset 0 1px 0 rgba(255,255,255,0.90)",
+        background:           "linear-gradient(140deg, rgba(255,255,255,0.85) 0%, rgba(253,246,232,0.66) 60%, rgba(248,238,218,0.58) 100%)",
+        backdropFilter:       "blur(20px) saturate(1.5)",
+        WebkitBackdropFilter: "blur(20px) saturate(1.5)",
+        border:               "1px solid rgba(255,255,255,0.95)",
+        boxShadow:            "0 1px 2px rgba(160,132,86,0.06), 0 12px 32px -10px rgba(160,132,86,0.16), inset 0 1px 0 rgba(255,255,255,1)",
       }}
       variants={cardVariants}
       initial="rest"
@@ -151,7 +151,7 @@ export function StatCard({
             )}
             <p
               className="text-[10px] font-bold uppercase leading-none truncate tracking-[0.14em]"
-              style={{ color: "#78716c" }}
+              style={{ color: "#8C867B" }}
             >
               {label}
             </p>
@@ -179,7 +179,7 @@ export function StatCard({
             "font-display font-bold leading-none tracking-tight",
             currency ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl",
           )}
-          style={{ color: "#111625" }}
+          style={{ color: "#1F1C17" }}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -205,7 +205,7 @@ export function StatCard({
             {(ratioLabel || subtitle) && (
               <p
                 className="text-[10px] leading-none"
-                style={{ color: "#6B6560" }}
+                style={{ color: "#7C766B" }}
               >
                 {ratioLabel ?? subtitle}
               </p>

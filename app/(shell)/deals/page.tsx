@@ -148,6 +148,7 @@ export default function DealsPage() {
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState
+            variant={search || stageFilter !== "all" || typeFilter !== "all" ? "search" : "deals"}
             icon={<FileSignature size={22} />}
             title={search || stageFilter !== "all" || typeFilter !== "all" ? "No matches" : "No deals yet"}
             description={
