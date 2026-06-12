@@ -8,6 +8,7 @@ import { PageShell } from "@/components/layout/PageShell";
 import { Button, Reveal, Stagger, StaggerItem, Skeleton, EmptyState, Modal, useToast } from "@/components/ui";
 import { PropertyFilters, type PropertyFilterState } from "@/components/properties/PropertyFilters";
 import { PropertyCard } from "@/components/properties/PropertyCard";
+import { PropertyDetailDrawer } from "@/components/properties/PropertyDetailDrawer";
 import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
 import { useProperties, useDeleteProperty } from "@/hooks/useProperties";
 import type { Property } from "@/lib/types";
@@ -16,6 +17,7 @@ export default function PropertiesPage() {
   const [filters, setFilters] = useState<PropertyFilterState>({});
   const [search, setSearch] = useState("");
   const [adding, setAdding] = useState(false);
+  const [viewing, setViewing] = useState<Property | null>(null);
   const [editing, setEditing] = useState<Property | null>(null);
   const [deleting, setDeleting] = useState<Property | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -45,6 +47,12 @@ export default function PropertiesPage() {
       [p.name, p.address, p.area, p.city].some((f) => f?.toLowerCase().includes(q))
     );
   }, [properties, search]);
+
+  // Prefer the live record (Convex realtime) over the snapshot taken on click,
+  // so the detail drawer reflects edits made while it is open.
+  const viewingLive = viewing
+    ? properties.find((p) => p._id === viewing._id) ?? viewing
+    : null;
 
   return (
     <PageShell>
@@ -101,6 +109,7 @@ export default function PropertiesPage() {
               <StaggerItem key={p._id}>
                 <PropertyCard
                   property={p}
+                  onClick={() => setViewing(p)}
                   onEdit={() => setEditing(p)}
                   onDelete={() => setDeleting(p)}
                 />
@@ -110,6 +119,13 @@ export default function PropertiesPage() {
         )}
       </div>
 
+      <PropertyDetailDrawer
+        property={viewingLive}
+        isOpen={!!viewing}
+        onClose={() => setViewing(null)}
+        onEdit={(p) => { setViewing(null); setEditing(p); }}
+        onDelete={(p) => { setViewing(null); setDeleting(p); }}
+      />
       <PropertyFormDrawer isOpen={adding} onClose={() => setAdding(false)} />
       <PropertyFormDrawer
         isOpen={!!editing}
