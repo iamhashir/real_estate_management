@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
     inputs:
       vercel_token:
-        description: "Vercel personal access token"
-        required: true
+        description: "Vercel personal access token (leave blank to use VERCEL_TOKEN secret)"
+        required: false
         type: string
 
 jobs:
