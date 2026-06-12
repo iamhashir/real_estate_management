@@ -7,9 +7,12 @@ import { Plus, Search, FileSignature } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { Button, Reveal, Stagger, StaggerItem, Skeleton, EmptyState } from "@/components/ui";
 import { DealRow } from "@/components/deals/DealRow";
+import { DealsKanban } from "@/components/deals/DealsKanban";
+import { DealStageMenu, type StageMenuDeal } from "@/components/deals/DealStageMenu";
 import { DealDetailDrawer } from "@/components/forms/DealDetailDrawer";
 import { DealFormDrawer } from "@/components/forms/DealFormDrawer";
 import { useAllDeals } from "@/hooks/useDeals";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { DEAL_STAGES, DEAL_TYPES } from "@/lib/constants";
 import { formatCurrency } from "@/lib/utils";
 import { cn } from "@/lib/utils";
@@ -47,9 +50,13 @@ export default function DealsPage() {
   const [search,      setSearch]      = useState("");
   const [openDealId,  setOpenDealId]  = useState<string | null>(null);
   const [adding,      setAdding]      = useState(false);
+  const [stageMenuDeal, setStageMenuDeal] = useState<StageMenuDeal | null>(null);
 
+  const { isDesktop } = useBreakpoint();
+
+  // On desktop the kanban columns replace the stage filter, so fetch all stages
   const { deals, isLoading } = useAllDeals({
-    stage:    stageFilter !== "all" ? stageFilter : undefined,
+    stage:    !isDesktop && stageFilter !== "all" ? stageFilter : undefined,
     dealType: typeFilter  !== "all" ? typeFilter  : undefined,
   });
 
@@ -64,7 +71,7 @@ export default function DealsPage() {
   const pipelineValue = useMemo(
     () => filtered
       .filter((d) => d.stage !== "closed" && d.stage !== "cancelled")
-      .reduce((sum: number, d: any) => sum + (d.agreedPrice ?? d.listPrice ?? 0), 0),
+      .reduce((sum: number, d: { agreedPrice?: number; listPrice?: number }) => sum + (d.agreedPrice ?? d.listPrice ?? 0), 0),
     [filtered]
   );
 
@@ -98,8 +105,8 @@ export default function DealsPage() {
           </div>
         </Reveal>
 
-        {/* Stage chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+        {/* Stage chips — hidden on desktop where kanban columns replace them */}
+        <div className="flex lg:hidden items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1">
           {STAGE_CHIPS.map((chip) => (
             <Chip
               key={chip.value}
@@ -139,30 +146,48 @@ export default function DealsPage() {
           </div>
         </div>
 
-        {/* List */}
+        {/* Board (desktop) / List (mobile & tablet) */}
         {isLoading ? (
-          <div className="space-y-2">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <Skeleton key={i} className="h-[60px] rounded-md" />
-            ))}
-          </div>
+          isDesktop ? (
+            <div className="flex gap-4 overflow-hidden">
+              {DEAL_STAGES.map((s) => (
+                <Skeleton key={s.value} className="h-[420px] w-[280px] shrink-0 rounded-lg" />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <Skeleton key={i} className="h-[60px] rounded-md" />
+              ))}
+            </div>
+          )
         ) : filtered.length === 0 ? (
-          <EmptyState
-            variant={search || stageFilter !== "all" || typeFilter !== "all" ? "search" : "deals"}
-            icon={<FileSignature size={22} />}
-            title={search || stageFilter !== "all" || typeFilter !== "all" ? "No matches" : "No deals yet"}
-            description={
-              search || stageFilter !== "all" || typeFilter !== "all"
-                ? "Try a different search or clear the filters."
-                : "Create your first deal to start tracking your pipeline."
-            }
-            action={<Button onClick={() => setAdding(true)}>New Deal</Button>}
-          />
+          (() => {
+            const filtersActive =
+              !!search || typeFilter !== "all" || (!isDesktop && stageFilter !== "all");
+            return (
+              <EmptyState
+                variant={filtersActive ? "search" : "deals"}
+                icon={<FileSignature size={22} />}
+                title={filtersActive ? "No matches" : "No deals yet"}
+                description={
+                  filtersActive
+                    ? "Try a different search or clear the filters."
+                    : "Create your first deal to start tracking your pipeline."
+                }
+                action={<Button onClick={() => setAdding(true)}>New Deal</Button>}
+              />
+            );
+          })()
+        ) : isDesktop ? (
+          <Reveal>
+            <DealsKanban deals={filtered} onOpenDeal={setOpenDealId} />
+          </Reveal>
         ) : (
           <Stagger className="space-y-2">
             {filtered.map((deal) => (
               <StaggerItem key={deal._id}>
-                <DealRow deal={deal} onClick={setOpenDealId} />
+                <DealRow deal={deal} onClick={setOpenDealId} onStageMenu={setStageMenuDeal} />
               </StaggerItem>
             ))}
           </Stagger>
@@ -170,6 +195,7 @@ export default function DealsPage() {
       </div>
 
       <DealDetailDrawer dealId={openDealId} onClose={() => setOpenDealId(null)} />
+      <DealStageMenu deal={stageMenuDeal} onClose={() => setStageMenuDeal(null)} />
       <DealFormDrawer
         isOpen={adding}
         onClose={() => setAdding(false)}
