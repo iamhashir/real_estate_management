@@ -36,7 +36,6 @@ jobs:
         id: deploy
         run: |
           TOKEN="${{ inputs.vercel_token || secrets.VERCEL_TOKEN }}"
-          SCOPE_FLAG=""
 
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             PROD_FLAG="--prod"
@@ -44,16 +43,20 @@ jobs:
             PROD_FLAG=""
           fi
 
-          URL=$(vercel \
+          OUTPUT=$(vercel \
             --token="$TOKEN" \
             --yes \
             $PROD_FLAG \
-            2>&1 | tail -1)
+            2>&1)
+
+          echo "$OUTPUT"
+
+          # Extract the deployment URL — vercel prints it on the last https:// line
+          URL=$(echo "$OUTPUT" | grep -oE 'https://[a-zA-Z0-9._-]+\.vercel\.app' | tail -1)
 
           echo "url=$URL" >> $GITHUB_OUTPUT
-          echo "### 🚀 Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "### Deployed!" >> $GITHUB_STEP_SUMMARY
           echo "**Live URL:** $URL" >> $GITHUB_STEP_SUMMARY
-          echo ""
           echo "DEPLOY_URL=$URL"
 
       - name: Print URL
