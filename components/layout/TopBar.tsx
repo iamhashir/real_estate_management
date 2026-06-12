@@ -13,6 +13,8 @@ interface TopBarProps {
   onQuickAdd: (target: QuickAddTarget) => void;
   search: string;
   onSearchChange: (value: string) => void;
+  /** Opens the global Cmd+K command palette. */
+  onOpenPalette?: () => void;
 }
 
 const QUICK_ADD: { target: QuickAddTarget; label: string; icon: typeof Building2 }[] = [
@@ -21,7 +23,7 @@ const QUICK_ADD: { target: QuickAddTarget; label: string; icon: typeof Building2
   { target: "deal",     label: "New Deal",     icon: FileSignature },
 ];
 
-export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
+export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: TopBarProps) {
   const [menuOpen, setMenuOpen]           = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const menuRef   = useRef<HTMLDivElement>(null);
@@ -84,7 +86,7 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
           }}
           placeholder="Search…"
           className={cn(
-            "w-full h-9 pl-9 pr-3 rounded-md text-base md:text-sm",
+            "w-full h-9 pl-9 pr-3 md:pr-12 rounded-md text-base md:text-sm",
             "outline-none transition-all focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/40"
           )}
           style={{
@@ -93,6 +95,21 @@ export function TopBar({ onQuickAdd, search, onSearchChange }: TopBarProps) {
             color:      "#1F1C17",
           }}
         />
+
+        {/* ⌘K hint — opens the command palette */}
+        <button
+          type="button"
+          onClick={onOpenPalette}
+          aria-label="Open command palette"
+          tabIndex={-1}
+          className={cn(
+            "hidden md:flex items-center absolute right-2 top-1/2 -translate-y-1/2",
+            "text-xs px-1.5 py-0.5 rounded border border-hairline bg-white/60 text-ink-600",
+            "hover:bg-white hover:text-ink-900 transition-colors touch-manipulation"
+          )}
+        >
+          ⌘K
+        </button>
 
         <AnimatePresence>
           {showPanel && (

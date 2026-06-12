@@ -11,6 +11,7 @@ import { PropertyFormDrawer } from "@/components/forms/PropertyFormDrawer";
 import { DealFormDrawer } from "@/components/forms/DealFormDrawer";
 import { PageTransitionWrapper } from "./PageTransitionWrapper";
 import { OfflineBanner } from "./OfflineBanner";
+import { CommandPalette } from "./CommandPalette";
 
 /**
  * The persistent app chrome. Renders the fixed sidebar + bottom bar, offsets
@@ -21,6 +22,7 @@ export function ShellChrome({ children }: { children: React.ReactNode }) {
   const [quickAdd, setQuickAdd] = useState<QuickAddTarget | null>(null);
   const [search, setSearch] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   return (
     <div className="min-h-dvh">
@@ -39,13 +41,25 @@ export function ShellChrome({ children }: { children: React.ReactNode }) {
         )}
         style={{ transition: "margin-left 0.3s cubic-bezier(0.22, 1, 0.36, 1)" }}
       >
-        <TopBar onQuickAdd={setQuickAdd} search={search} onSearchChange={setSearch} />
+        <TopBar
+          onQuickAdd={setQuickAdd}
+          search={search}
+          onSearchChange={setSearch}
+          onOpenPalette={() => setPaletteOpen(true)}
+        />
         <div className="flex-1 min-w-0 pb-16 md:pb-0">
           <PageTransitionWrapper>{children}</PageTransitionWrapper>
         </div>
       </div>
 
       <BottomTabBar onQuickAdd={setQuickAdd} />
+
+      {/* Global Cmd+K command palette */}
+      <CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        onQuickAdd={setQuickAdd}
+      />
 
       {/* Quick-add drawers */}
       <ClientFormDrawer isOpen={quickAdd === "client"} onClose={() => setQuickAdd(null)} />

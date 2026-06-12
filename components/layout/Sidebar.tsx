@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -7,6 +8,7 @@ import { motion } from "framer-motion";
 import { LayoutDashboard, Building2, Users, FileSignature, Anchor, ChevronLeft, ChevronRight } from "lucide-react";
 import { Avatar } from "@/components/ui";
 import { useCurrentAgent } from "@/hooks/useAgents";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/shadcn/tooltip";
 
 const NAV = [
   { href: "/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
@@ -80,11 +82,10 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       <nav className="flex-1 py-4 px-2 lg:px-3 space-y-1">
         {NAV.map(({ href, label, icon: Icon }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
-          return (
+          const link = (
             <Link
-              key={href}
               href={href}
-              title={label}
+              title={collapsed ? undefined : label}
               className={cn(
                 "group relative flex items-center gap-3 rounded-md h-11 px-3 lg:px-3.5",
                 "text-sm font-medium transition-colors",
@@ -136,6 +137,18 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
               </span>
             </Link>
           );
+
+          // Collapsed (icons-only): show the label as a tooltip to the right.
+          if (collapsed) {
+            return (
+              <Tooltip key={href}>
+                <TooltipTrigger asChild>{link}</TooltipTrigger>
+                <TooltipContent side="right">{label}</TooltipContent>
+              </Tooltip>
+            );
+          }
+
+          return <Fragment key={href}>{link}</Fragment>;
         })}
       </nav>
 
