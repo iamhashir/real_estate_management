@@ -12,6 +12,7 @@ export { DatePicker }      from "./DatePicker";
 export { Drawer }          from "./Drawer";
 export { EmptyState }      from "./EmptyState";
 export { Input }           from "./Input";
+export { MapLocationPicker } from "./MapLocationPicker";
 export { Modal }           from "./Modal";
 export { RangeSlider }     from "./RangeSlider";
 export { SegmentedToggle } from "./SegmentedToggle";

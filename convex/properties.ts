@@ -115,6 +115,8 @@ export const create = mutation({
     features:     v.optional(v.array(v.string())),
     description:  v.optional(v.string()),
     agentId:      v.optional(v.id("agents")),
+    latitude:     v.optional(v.number()),
+    longitude:    v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const id = await ctx.db.insert("properties", {
@@ -149,6 +151,8 @@ export const update = mutation({
     features:    v.optional(v.array(v.string())),
     description: v.optional(v.string()),
     agentId:     v.optional(v.id("agents")),
+    latitude:    v.optional(v.number()),
+    longitude:   v.optional(v.number()),
   },
   handler: async (ctx, { id, ...patch }) => {
     await ctx.db.patch(id, patch);

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Drawer, Input, SegmentedToggle, Combobox, Textarea, Button, useToast } from "@/components/ui";
+import { Drawer, Input, SegmentedToggle, Combobox, Textarea, Button, useToast, MapLocationPicker } from "@/components/ui";
 import { ChipToggleGroup, FormSection, useDraft } from "./formHelpers";
 import {
   PROPERTY_TYPES, LISTING_TYPES, PROPERTY_FEATURES, CITIES, AREAS_BY_CITY,
@@ -34,6 +34,8 @@ interface Draft {
   floor: string;
   features: string[];
   description: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 const EMPTY: Draft = {
@@ -41,6 +43,7 @@ const EMPTY: Draft = {
   type: "apartment", listingType: "sale",
   price: "", size: "", bedrooms: "", bathrooms: "", floor: "",
   features: [], description: "",
+  latitude: undefined, longitude: undefined,
 };
 
 function draftFromProperty(p: Property): Draft {
@@ -52,6 +55,7 @@ function draftFromProperty(p: Property): Draft {
     bathrooms: p.bathrooms != null ? String(p.bathrooms) : "",
     floor: p.floor != null ? String(p.floor) : "",
     features: p.features ?? [], description: p.description ?? "",
+    latitude: p.latitude, longitude: p.longitude,
   };
 }
 
@@ -127,6 +131,8 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
           floor: num(form.floor),
           features: form.features.length ? form.features : undefined,
           description: form.description.trim() || undefined,
+          latitude: form.latitude,
+          longitude: form.longitude,
         });
         toast.success(`"${form.name}" updated`);
         onClose();
@@ -145,6 +151,8 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
           floor: num(form.floor),
           features: form.features.length ? form.features : undefined,
           description: form.description.trim() || undefined,
+          latitude: form.latitude,
+          longitude: form.longitude,
           agentId: (agent?._id as never) ?? undefined,
         });
         toast.success(`"${form.name}" listed`);
@@ -256,6 +264,14 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
                   hint={!form.city ? "Pick a city first" : undefined}
                 />
               </div>
+              <MapLocationPicker
+                latitude={form.latitude}
+                longitude={form.longitude}
+                onLocationChange={(lat, lng) => {
+                  set("latitude", lat);
+                  set("longitude", lng);
+                }}
+              />
             </FormSection>
           )}
 

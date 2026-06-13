@@ -43,6 +43,8 @@ export interface Property extends BaseDoc {
   features?: string[];
   description?: string;
   agentId?: string;
+  latitude?: number;
+  longitude?: number;
 }
 
 // ─── Client ───────────────────────────────────────────────────────────────────

@@ -98,6 +98,8 @@ export default defineSchema({
     features: v.optional(v.array(v.string())),
     description: v.optional(v.string()),
     agentId: v.optional(v.id("agents")),
+    latitude: v.optional(v.number()),
+    longitude: v.optional(v.number()),
   })
     .index("by_status", ["status"])
     .index("by_type", ["type"])
