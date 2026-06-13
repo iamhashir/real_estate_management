@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Drawer, Input, SegmentedToggle, Combobox, Textarea, Button, useToast, MapLocationPicker } from "@/components/ui";
-import { ChipToggleGroup, FormSection, useDraft } from "./formHelpers";
+import { ChipToggleGroup, FormSection, FormStepper, useDraft } from "./formHelpers";
+import { formatCurrency } from "@/lib/utils";
 import {
   PROPERTY_TYPES, LISTING_TYPES, PROPERTY_FEATURES, CITIES, AREAS_BY_CITY,
 } from "@/lib/constants";
@@ -240,6 +241,7 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
                 onChange={(e) => set("name", e.target.value)}
                 onBlur={validateStep1}
                 hint="e.g. Marina Gate 2 — 2BR with full sea view"
+                autoComplete="off"
               />
               <Input
                 label="Address"
@@ -247,6 +249,7 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
                 error={errors.address}
                 onChange={(e) => set("address", e.target.value)}
                 onBlur={validateStep1}
+                autoComplete="street-address"
               />
               <div className="grid grid-cols-2 gap-3">
                 <Combobox
@@ -280,45 +283,51 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
               <FormSection title="Pricing">
                 <Input
                   label={`Price (AED${form.listingType === "rent" ? " / year" : ""})`}
-                  type="number"
+                  type="text"
                   inputMode="numeric"
+                  pattern="[0-9]*"
                   value={form.price}
                   error={errors.price}
-                  onChange={(e) => set("price", e.target.value)}
+                  hint={form.price && Number(form.price) > 0 ? formatCurrency(Number(form.price)) : undefined}
+                  onChange={(e) => set("price", e.target.value.replace(/[^0-9]/g, ""))}
                   onBlur={validateStep2}
+                  autoComplete="off"
                 />
                 <div className="grid grid-cols-2 gap-3">
                   <Input
                     label="Size (sqm)"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
+                    pattern="[0-9]*"
                     value={form.size}
                     error={errors.size}
-                    onChange={(e) => set("size", e.target.value)}
+                    hint={form.size && Number(form.size) > 0 ? `${Number(form.size).toLocaleString()} sqm` : undefined}
+                    onChange={(e) => set("size", e.target.value.replace(/[^0-9]/g, ""))}
                     onBlur={validateStep2}
+                    autoComplete="off"
                   />
                   <Input
                     label="Floor"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
+                    pattern="[0-9]*"
                     value={form.floor}
-                    onChange={(e) => set("floor", e.target.value)}
+                    onChange={(e) => set("floor", e.target.value.replace(/[^0-9]/g, ""))}
+                    autoComplete="off"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <Input
+                  <FormStepper
                     label="Bedrooms"
-                    type="number"
-                    inputMode="numeric"
-                    value={form.bedrooms}
-                    onChange={(e) => set("bedrooms", e.target.value)}
+                    value={form.bedrooms === "" ? undefined : Number(form.bedrooms)}
+                    max={10}
+                    onChange={(v) => set("bedrooms", String(v))}
                   />
-                  <Input
+                  <FormStepper
                     label="Bathrooms"
-                    type="number"
-                    inputMode="numeric"
-                    value={form.bathrooms}
-                    onChange={(e) => set("bathrooms", e.target.value)}
+                    value={form.bathrooms === "" ? undefined : Number(form.bathrooms)}
+                    max={10}
+                    onChange={(v) => set("bathrooms", String(v))}
                   />
                 </div>
               </FormSection>

@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { Minus, Plus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 // ─── Compact currency for slider thumbs / tight spaces ──────────────────────────
@@ -36,7 +37,7 @@ export function ChipToggleGroup({ label, options, selected, onToggle }: ChipTogg
               type="button"
               onClick={() => onToggle(opt.value)}
               className={cn(
-                "px-3 py-1.5 rounded-full text-sm font-medium transition-colors min-h-[36px] cursor-pointer",
+                "px-3 py-1.5 rounded-full text-sm font-medium transition-colors min-h-[44px] cursor-pointer",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2",
                 active
                   ? "bg-aqua-100 text-sea-800 border border-aqua-300 hover:bg-aqua-200"
@@ -47,6 +48,68 @@ export function ChipToggleGroup({ label, options, selected, onToggle }: ChipTogg
             </button>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Integer stepper — replaces type="number" for bounded whole-number fields ───
+// One tap per increment; can't produce invalid input; 44px touch targets.
+
+interface FormStepperProps {
+  label:     string;
+  value:     number | undefined;
+  min?:      number;
+  max?:      number;
+  suffix?:   string;
+  onChange:  (v: number) => void;
+}
+
+export function FormStepper({ label, value, min = 0, max = 20, suffix, onChange }: FormStepperProps) {
+  const atMin = value === undefined || value <= min;
+  const atMax = value !== undefined && value >= max;
+
+  return (
+    <div className="space-y-1.5">
+      <p className="text-label text-ink-600">{label}</p>
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={() => { if (!atMin) onChange((value ?? min + 1) - 1); }}
+          disabled={atMin}
+          aria-label={`Decrease ${label}`}
+          className={cn(
+            "min-h-[44px] min-w-[44px] rounded-md border border-hairline",
+            "flex items-center justify-center text-ink-700",
+            "transition-colors touch-manipulation",
+            "hover:bg-surface-base hover:border-ink-200",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
+            "disabled:opacity-30 disabled:cursor-not-allowed"
+          )}
+        >
+          <Minus size={16} />
+        </button>
+
+        <span className="flex-1 text-center font-display font-semibold text-2xl text-ink-900 tabular-nums select-none">
+          {value !== undefined ? `${value}${suffix ?? ""}` : "—"}
+        </span>
+
+        <button
+          type="button"
+          onClick={() => { if (!atMax) onChange(value === undefined ? min : value + 1); }}
+          disabled={atMax}
+          aria-label={`Increase ${label}`}
+          className={cn(
+            "min-h-[44px] min-w-[44px] rounded-md border border-hairline",
+            "flex items-center justify-center text-ink-700",
+            "transition-colors touch-manipulation",
+            "hover:bg-surface-base hover:border-ink-200",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
+            "disabled:opacity-30 disabled:cursor-not-allowed"
+          )}
+        >
+          <Plus size={16} />
+        </button>
       </div>
     </div>
   );

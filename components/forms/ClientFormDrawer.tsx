@@ -188,6 +188,7 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
               error={errors.firstName}
               onChange={(e) => set("firstName", e.target.value)}
               onBlur={validate}
+              autoComplete="given-name"
             />
             <Input
               label="Last name"
@@ -195,6 +196,7 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
               error={errors.lastName}
               onChange={(e) => set("lastName", e.target.value)}
               onBlur={validate}
+              autoComplete="family-name"
             />
           </div>
           <Input
@@ -204,12 +206,14 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
             error={errors.phone}
             onChange={(e) => set("phone", e.target.value)}
             onBlur={validate}
+            autoComplete="tel"
           />
           <Input
             label="Email"
             type="email"
             value={form.email}
             onChange={(e) => set("email", e.target.value)}
+            autoComplete="email"
           />
           <Combobox
             label="Nationality"

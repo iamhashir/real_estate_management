@@ -236,27 +236,34 @@ export function DealFormDrawer({ isOpen, onClose, onCreated }: DealFormDrawerPro
                 <div className="grid grid-cols-2 gap-3">
                   <Input
                     label="List price (AED)"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
+                    pattern="[0-9]*"
                     value={listPrice}
                     error={errors.listPrice}
-                    onChange={(e) => setListPrice(e.target.value)}
+                    hint={listPrice && Number(listPrice) > 0 ? formatCurrency(Number(listPrice)) : undefined}
+                    onChange={(e) => setListPrice(e.target.value.replace(/[^0-9]/g, ""))}
                     onBlur={step2Ok}
+                    autoComplete="off"
                   />
                   <Input
                     label="Agreed price (AED)"
-                    type="number"
+                    type="text"
                     inputMode="numeric"
+                    pattern="[0-9]*"
                     value={agreedPrice}
-                    onChange={(e) => setAgreedPrice(e.target.value)}
+                    hint={agreedPrice && Number(agreedPrice) > 0 ? formatCurrency(Number(agreedPrice)) : undefined}
+                    onChange={(e) => setAgreedPrice(e.target.value.replace(/[^0-9]/g, ""))}
+                    autoComplete="off"
                   />
                 </div>
                 <Input
                   label="Commission rate (%)"
-                  type="number"
+                  type="text"
                   inputMode="decimal"
                   value={commissionRate}
-                  onChange={(e) => setCommissionRate(e.target.value)}
+                  onChange={(e) => setCommissionRate(e.target.value.replace(/[^0-9.]/g, ""))}
+                  autoComplete="off"
                 />
 
                 {/* Live commission preview */}

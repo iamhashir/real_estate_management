@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronDown, Plus, Search, X } from "lucide-react";
 import React, { useId, useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { Spinner } from "./Spinner";
 
 export interface ComboboxOption {
@@ -42,11 +44,13 @@ export function Combobox({
   className,
 }: ComboboxProps) {
   const id          = useId();
+  const { isMobile } = useBreakpoint();
   const [open, setOpen]       = useState(false);
   const [query, setQuery]     = useState("");
   const [focused, setFocused] = useState(false);
-  const inputRef  = useRef<HTMLInputElement>(null);
-  const listRef   = useRef<HTMLUListElement>(null);
+  const inputRef      = useRef<HTMLInputElement>(null);
+  const mobileInputRef = useRef<HTMLInputElement>(null);
+  const listRef       = useRef<HTMLUListElement>(null);
   const [highlighted, setHighlighted] = useState<number>(-1);
 
   const selected    = options.find((o) => o.value === value);
@@ -173,69 +177,159 @@ export function Combobox({
         </div>
       </div>
 
-      {/* Dropdown */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.12 }}
-            className="absolute inset-x-0 top-full mt-1 z-50 bg-surface-card border border-hairline rounded-md shadow-float overflow-hidden"
-          >
-            <ul
-              ref={listRef}
-              id={`${id}-list`}
-              role="listbox"
-              className="max-h-52 overflow-y-auto overscroll-contain py-1"
+      {/* Desktop dropdown — stays inline, anchored below the trigger */}
+      {!isMobile && (
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.12 }}
+              className="absolute inset-x-0 top-full mt-1 z-50 bg-surface-card border border-hairline rounded-md shadow-float overflow-hidden"
             >
-              {filtered.length === 0 && !showCreate && (
-                <li className="px-3 py-2.5 text-sm text-ink-500 text-center">
-                  No results
-                </li>
-              )}
-              {filtered.map((opt, i) => (
-                <li
-                  key={opt.value}
-                  role="option"
-                  aria-selected={opt.value === value}
-                  onMouseDown={() => select(opt.value)}
-                  className={cn(
-                    "flex items-center gap-2.5 px-3 py-2.5 cursor-pointer text-sm transition-colors",
-                    i === highlighted || opt.value === value
-                      ? "bg-aqua-100 text-sea-800"
-                      : "text-ink-900 hover:bg-surface-base"
-                  )}
-                >
-                  <span className="flex-1">
-                    <span className="block">{opt.label}</span>
-                    {opt.sublabel && (
-                      <span className="text-xs text-ink-500">{opt.sublabel}</span>
+              <ul
+                ref={listRef}
+                id={`${id}-list`}
+                role="listbox"
+                className="max-h-52 overflow-y-auto overscroll-contain py-1"
+              >
+                {filtered.length === 0 && !showCreate && (
+                  <li className="px-3 py-2.5 text-sm text-ink-500 text-center">No results</li>
+                )}
+                {filtered.map((opt, i) => (
+                  <li
+                    key={opt.value}
+                    role="option"
+                    aria-selected={opt.value === value}
+                    onMouseDown={() => select(opt.value)}
+                    className={cn(
+                      "flex items-center gap-2.5 px-3 py-2.5 cursor-pointer text-sm transition-colors",
+                      i === highlighted || opt.value === value
+                        ? "bg-aqua-100 text-sea-800"
+                        : "text-ink-900 hover:bg-surface-base"
                     )}
-                  </span>
-                  {opt.value === value && <Check size={13} className="text-aqua-500 shrink-0" />}
-                </li>
-              ))}
-              {showCreate && (
-                <li
-                  role="option"
-                  onMouseDown={handleCreate}
-                  className={cn(
-                    "flex items-center gap-2 px-3 py-2.5 cursor-pointer text-sm font-medium",
-                    "border-t border-hairline transition-colors",
-                    highlighted === filtered.length
-                      ? "bg-aqua-100 text-sea-800"
-                      : "text-aqua-500 hover:bg-aqua-100"
+                  >
+                    <span className="flex-1">
+                      <span className="block">{opt.label}</span>
+                      {opt.sublabel && <span className="text-xs text-ink-500">{opt.sublabel}</span>}
+                    </span>
+                    {opt.value === value && <Check size={13} className="text-aqua-500 shrink-0" />}
+                  </li>
+                ))}
+                {showCreate && (
+                  <li
+                    role="option"
+                    onMouseDown={handleCreate}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-2.5 cursor-pointer text-sm font-medium",
+                      "border-t border-hairline transition-colors",
+                      highlighted === filtered.length
+                        ? "bg-aqua-100 text-sea-800"
+                        : "text-aqua-500 hover:bg-aqua-100"
+                    )}
+                  >
+                    <Plus size={14} />
+                    {createLabel} &ldquo;{query}&rdquo;
+                  </li>
+                )}
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+
+      {/* Mobile bottom-sheet — portalled to body so it clears the drawer and keyboard */}
+      {isMobile && typeof window !== "undefined" && createPortal(
+        <AnimatePresence>
+          {open && (
+            <>
+              <motion.div
+                key="combobox-overlay"
+                className="fixed inset-0 z-[70] bg-sea-950/40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                onClick={() => setOpen(false)}
+                aria-hidden="true"
+              />
+              <motion.div
+                key="combobox-sheet"
+                className="fixed inset-x-0 bottom-0 z-[71] bg-surface-card rounded-t-2xl shadow-float flex flex-col"
+                style={{ maxHeight: "72dvh" }}
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", stiffness: 340, damping: 34 }}
+              >
+                {/* Handle + label */}
+                <div className="flex flex-col items-center pt-3 pb-2 px-4 border-b border-hairline shrink-0">
+                  <div className="w-10 h-1 rounded-full bg-hairline mb-3" />
+                  <p className="text-sm font-semibold text-ink-900 mb-2">{label}</p>
+                  {/* Search */}
+                  <div className="relative w-full">
+                    <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none" />
+                    <input
+                      ref={mobileInputRef}
+                      autoFocus
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search…"
+                      className="w-full h-11 pl-9 pr-3 rounded-lg border border-hairline text-base text-ink-900 bg-surface-base outline-none focus:border-aqua-400 focus:shadow-glow"
+                    />
+                  </div>
+                </div>
+
+                {/* Options list */}
+                <ul className="flex-1 overflow-y-auto overscroll-contain py-2">
+                  {filtered.length === 0 && !showCreate && (
+                    <li className="px-4 py-6 text-sm text-ink-500 text-center">No results</li>
                   )}
-                >
-                  <Plus size={14} />
-                  {createLabel} &ldquo;{query}&rdquo;
-                </li>
-              )}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  {filtered.map((opt) => (
+                    <li
+                      key={opt.value}
+                      onClick={() => select(opt.value)}
+                      className={cn(
+                        "flex items-center gap-3 px-4 py-3 cursor-pointer text-base transition-colors min-h-[52px]",
+                        opt.value === value
+                          ? "bg-aqua-50 text-sea-800"
+                          : "text-ink-900 hover:bg-surface-base"
+                      )}
+                    >
+                      <span className="flex-1">
+                        <span className="block font-medium">{opt.label}</span>
+                        {opt.sublabel && <span className="text-sm text-ink-500">{opt.sublabel}</span>}
+                      </span>
+                      {opt.value === value && <Check size={16} className="text-aqua-500 shrink-0" />}
+                    </li>
+                  ))}
+                  {showCreate && (
+                    <li
+                      onClick={handleCreate}
+                      className="flex items-center gap-2 px-4 py-3 cursor-pointer text-base font-medium border-t border-hairline text-aqua-500 hover:bg-aqua-50 min-h-[52px]"
+                    >
+                      <Plus size={16} />
+                      {createLabel} &ldquo;{query}&rdquo;
+                    </li>
+                  )}
+                </ul>
+
+                {/* Cancel */}
+                <div className="shrink-0 px-4 py-3 border-t border-hairline safe-bottom">
+                  <button
+                    onClick={() => setOpen(false)}
+                    className="w-full h-11 rounded-xl border border-hairline text-sm font-medium text-ink-700 hover:bg-surface-base transition-colors touch-manipulation"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       {error && (
         <p className="mt-1 text-xs text-danger" role="alert" aria-live="polite">
