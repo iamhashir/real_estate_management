@@ -90,7 +90,7 @@ export function Input({
               : "top-1/2 -translate-y-1/2 text-sm",
             error   ? "text-danger"   :
             focused ? "text-aqua-500" :
-                      "text-ink-400"
+                      "text-ink-500"
           )}
         >
           {label}
@@ -114,7 +114,7 @@ export function Input({
         </p>
       )}
       {!error && hint && (
-        <p id={`${id}-hint`} className="mt-1 text-xs text-ink-400">
+        <p id={`${id}-hint`} className="mt-1 text-xs text-ink-500">
           {hint}
         </p>
       )}

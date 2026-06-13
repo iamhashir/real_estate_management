@@ -71,7 +71,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
               {onEdit && (
                 <button
                   onClick={onEdit}
-                  className="w-8 h-8 rounded-md grid place-items-center text-ink-400 hover:text-sea-700 hover:bg-aqua-100 transition-colors"
+                  className="w-8 h-8 rounded-md grid place-items-center text-ink-500 hover:text-sea-700 hover:bg-aqua-100 transition-colors"
                   aria-label="Edit client"
                 >
                   <Pencil size={15} />
@@ -80,7 +80,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
               {onDelete && (
                 <button
                   onClick={onDelete}
-                  className="w-8 h-8 rounded-md grid place-items-center text-ink-400 hover:text-danger hover:bg-danger/10 transition-colors"
+                  className="w-8 h-8 rounded-md grid place-items-center text-ink-500 hover:text-danger hover:bg-danger/10 transition-colors"
                   aria-label="Delete client"
                 >
                   <Trash2 size={15} />
@@ -112,12 +112,12 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
         </h2>
         <div className="space-y-4">
           <div>
-            <p className="text-label text-ink-400 mb-1">Budget</p>
+            <p className="text-label text-ink-600 mb-1">Budget</p>
             <p className="text-ink-900 text-money">{budget ?? "Not specified"}</p>
           </div>
           {client.preferredPropertyTypes?.length ? (
             <div>
-              <p className="text-label text-ink-400 mb-1.5">Property types</p>
+              <p className="text-label text-ink-600 mb-1.5">Property types</p>
               <div className="flex flex-wrap gap-1.5">
                 {client.preferredPropertyTypes.map((t) => <Badge key={t} color="aqua">{propTypeLabel(t)}</Badge>)}
               </div>
@@ -125,7 +125,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
           ) : null}
           {client.preferredLocations?.length ? (
             <div>
-              <p className="text-label text-ink-400 mb-1.5">Preferred locations</p>
+              <p className="text-label text-ink-600 mb-1.5">Preferred locations</p>
               <div className="flex flex-wrap gap-1.5">
                 {client.preferredLocations.map((l) => <Badge key={l} color="sea">{l}</Badge>)}
               </div>
@@ -138,10 +138,10 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
       <Card className="p-5">
         <h2 className="text-h3 text-ink-900 mb-4 flex items-center gap-2">
           <FileSignature size={16} className="text-aqua-500" /> Deals
-          <span className="text-sm text-ink-400 font-normal">({deals.length})</span>
+          <span className="text-sm text-ink-500 font-normal">({deals.length})</span>
         </h2>
         {deals.length === 0 ? (
-          <p className="text-sm text-ink-400">No deals linked to this client yet.</p>
+          <p className="text-sm text-ink-500">No deals linked to this client yet.</p>
         ) : (
           <div className="space-y-2">
             {deals.map((d) => (
@@ -165,7 +165,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
           <ActivityIcon size={16} className="text-aqua-500" /> Activity
         </h2>
         {activity.length === 0 ? (
-          <p className="text-sm text-ink-400">No activity recorded.</p>
+          <p className="text-sm text-ink-500">No activity recorded.</p>
         ) : (
           <ul className="space-y-3">
             {activity.map((a) => (
@@ -175,7 +175,7 @@ export function ClientProfile({ clientId, onEdit, onDelete }: { clientId: string
                 </span>
                 <div className="min-w-0">
                   <p className="text-sm text-ink-900">{a.content}</p>
-                  <p className="text-xs text-ink-400">{formatRelativeDate(a._creationTime)}</p>
+                  <p className="text-xs text-ink-500">{formatRelativeDate(a._creationTime)}</p>
                 </div>
               </li>
             ))}

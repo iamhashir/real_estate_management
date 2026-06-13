@@ -26,7 +26,7 @@ export function ChipToggleGroup({ label, options, selected, onToggle }: ChipTogg
   );
   return (
     <div className="space-y-2">
-      <p className="text-label text-ink-400">{label}</p>
+      <p className="text-label text-ink-600">{label}</p>
       <div className="flex flex-wrap gap-1.5">
         {normalized.map((opt) => {
           const active = selected.includes(opt.value);
@@ -57,7 +57,7 @@ export function ChipToggleGroup({ label, options, selected, onToggle }: ChipTogg
 export function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-4">
-      <h3 className="text-label text-ink-400 border-b border-hairline pb-2">{title}</h3>
+      <h3 className="text-label text-ink-600 border-b border-hairline pb-2">{title}</h3>
       {children}
     </section>
   );

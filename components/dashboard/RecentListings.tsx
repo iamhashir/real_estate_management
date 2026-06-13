@@ -80,13 +80,13 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
                   <p className="text-sm font-medium truncate" style={{ color: "var(--color-ink-900)" }}>{p.name}</p>
                   <StatusPill value={p.status} variant="property" />
                 </div>
-                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "var(--color-ink-400)" }}>
+                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
                   <span className="flex items-center gap-0.5 min-w-0 truncate">
                     <MapPin size={11} className="shrink-0" />{p.area ?? p.city}
                   </span>
                   <Badge color="sea" size="sm">{typeLabel(p.type)}</Badge>
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "var(--color-ink-400)" }}>
+                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "var(--text-muted)" }}>
                   <span className="font-medium text-money" style={{ color: "var(--color-success)" }}>{formatCurrency(p.price)}</span>
                   {p.bedrooms != null && (
                     <span className="flex items-center gap-0.5"><BedDouble size={12} />{p.bedrooms}</span>

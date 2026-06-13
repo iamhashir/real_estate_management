@@ -147,7 +147,7 @@ export function Combobox({
             floated
               ? "top-1.5 text-[10px] font-medium tracking-wide uppercase"
               : "top-1/2 -translate-y-1/2 text-sm",
-            error ? "text-danger" : focused || open ? "text-aqua-500" : "text-ink-400"
+            error ? "text-danger" : focused || open ? "text-aqua-500" : "text-ink-500"
           )}
         >
           {label}
@@ -190,7 +190,7 @@ export function Combobox({
               className="max-h-52 overflow-y-auto overscroll-contain py-1"
             >
               {filtered.length === 0 && !showCreate && (
-                <li className="px-3 py-2.5 text-sm text-ink-400 text-center">
+                <li className="px-3 py-2.5 text-sm text-ink-500 text-center">
                   No results
                 </li>
               )}
@@ -210,7 +210,7 @@ export function Combobox({
                   <span className="flex-1">
                     <span className="block">{opt.label}</span>
                     {opt.sublabel && (
-                      <span className="text-xs text-ink-400">{opt.sublabel}</span>
+                      <span className="text-xs text-ink-500">{opt.sublabel}</span>
                     )}
                   </span>
                   {opt.value === value && <Check size={13} className="text-aqua-500 shrink-0" />}
@@ -242,7 +242,7 @@ export function Combobox({
           {error}
         </p>
       )}
-      {!error && hint && <p className="mt-1 text-xs text-ink-400">{hint}</p>}
+      {!error && hint && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
     </div>
   );
 }

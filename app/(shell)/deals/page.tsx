@@ -90,7 +90,7 @@ export default function DealsPage() {
                   <>
                     {filtered.length} {filtered.length === 1 ? "deal" : "deals"}
                     {activeCount > 0 && pipelineValue > 0 && (
-                      <span className="text-ink-400">
+                      <span className="text-ink-500">
                         {" "}· {activeCount} active · {formatCurrency(pipelineValue)} pipeline
                       </span>
                     )}

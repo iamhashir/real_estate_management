@@ -36,7 +36,7 @@ export function ClientListItem({ client, active, onClick }: ClientListItemProps)
           <StatusPill value={client.status} variant="client" />
         </div>
         <div className="flex items-center gap-2 mt-0.5">
-          <p className="text-[13px] text-ink-400 truncate">{client.phone}</p>
+          <p className="text-[13px] text-ink-500 truncate">{client.phone}</p>
           <Badge color="muted" size="sm">{typeLabel(client.clientType)}</Badge>
         </div>
       </div>

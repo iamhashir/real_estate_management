@@ -25,8 +25,8 @@ function SectionHeader({
 }) {
   return (
     <div className="flex items-center gap-2 px-3 pt-3 pb-1.5">
-      <Icon size={12} className="text-ink-400" />
-      <span className="text-[11px] font-semibold text-ink-400 uppercase tracking-wider">{title}</span>
+      <Icon size={12} className="text-ink-500" />
+      <span className="text-[11px] font-semibold text-ink-600 uppercase tracking-wider">{title}</span>
       <span className="ml-auto text-[11px] text-ink-300">{count}</span>
     </div>
   );
@@ -59,7 +59,7 @@ function ResultRow({
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-ink-900 truncate">{primary}</p>
-        <p className="text-xs text-ink-400 truncate">{secondary}</p>
+        <p className="text-xs text-ink-500 truncate">{secondary}</p>
       </div>
       {trailing && (
         <span className="text-sm text-money text-ink-600 shrink-0">{trailing}</span>
@@ -207,7 +207,7 @@ export function GlobalSearchPanel({ query, onClose }: Props) {
         {/* Empty state */}
         {!loading && totalResults === 0 && (
           <div className="px-4 py-7 text-center">
-            <p className="text-sm text-ink-400">
+            <p className="text-sm text-ink-500">
               No results for{" "}
               <span className="font-medium text-ink-700">"{query}"</span>
             </p>

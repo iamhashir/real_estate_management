@@ -33,7 +33,7 @@ export function PropertyTable({ properties, isLoading, onRowClick, onCreate }: P
       render: (p) => (
         <div className="min-w-0">
           <p className="font-medium text-ink-900 truncate">{p.name}</p>
-          <p className="text-xs text-ink-400 truncate">{p.area ? `${p.area}, ` : ""}{p.city}</p>
+          <p className="text-xs text-ink-500 truncate">{p.area ? `${p.area}, ` : ""}{p.city}</p>
         </div>
       ),
     },
@@ -46,7 +46,7 @@ export function PropertyTable({ properties, isLoading, onRowClick, onCreate }: P
       key: "price", header: "Price", align: "right",
       render: (p) => (
         <span className="text-money font-medium">
-          {formatCurrency(p.price)}{p.listingType === "rent" && <span className="text-ink-400">/yr</span>}
+          {formatCurrency(p.price)}{p.listingType === "rent" && <span className="text-ink-500">/yr</span>}
         </span>
       ),
     },

@@ -88,7 +88,7 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                           <p className="text-sm font-medium truncate" style={{ color: "var(--color-ink-900)" }}>
                             {d.propertyName}
                           </p>
-                          <p className="text-xs truncate" style={{ color: "var(--color-ink-400)" }}>
+                          <p className="text-xs truncate" style={{ color: "var(--text-muted)" }}>
                             {d.buyerName ?? "Unassigned"} · {d.dealType === "rent" ? "Rent" : "Sale"} · {formatRelativeDate(d._creationTime)}
                           </p>
                         </div>

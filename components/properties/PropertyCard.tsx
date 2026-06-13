@@ -84,19 +84,19 @@ export function PropertyCard({
       {/* Body */}
       <div className="p-4">
         <h3 className="text-h3 text-ink-900 truncate">{property.name}</h3>
-        <p className="text-xs text-ink-400 flex items-center gap-1 mt-1">
+        <p className="text-xs text-ink-500 flex items-center gap-1 mt-1">
           <MapPin size={12} className="shrink-0" />
           <span className="truncate">{property.area ? `${property.area}, ` : ""}{property.city}</span>
         </p>
 
         <div className="flex items-center gap-4 mt-3 pt-3 border-t border-hairline text-sm text-ink-600">
           {property.bedrooms != null && (
-            <span className="flex items-center gap-1.5"><BedDouble size={15} className="text-ink-400" />{property.bedrooms} bd</span>
+            <span className="flex items-center gap-1.5"><BedDouble size={15} className="text-ink-500" />{property.bedrooms} bd</span>
           )}
           {property.bathrooms != null && (
-            <span className="flex items-center gap-1.5"><Bath size={15} className="text-ink-400" />{property.bathrooms} ba</span>
+            <span className="flex items-center gap-1.5"><Bath size={15} className="text-ink-500" />{property.bathrooms} ba</span>
           )}
-          <span className="flex items-center gap-1.5"><Maximize size={15} className="text-ink-400" />{formatNumber(property.size)} m²</span>
+          <span className="flex items-center gap-1.5"><Maximize size={15} className="text-ink-500" />{formatNumber(property.size)} m²</span>
         </div>
       </div>
     </Card>

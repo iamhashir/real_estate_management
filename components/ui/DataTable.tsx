@@ -97,7 +97,7 @@ export function DataTable<T>({
       <div className="flex items-center justify-end px-4 py-2 border-b border-hairline gap-2">
         <button
           onClick={() => setDensity(density === "comfortable" ? "compact" : "comfortable")}
-          className="flex items-center gap-1.5 text-xs text-ink-400 hover:text-ink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2 rounded-sm px-1.5 py-1"
+          className="flex items-center gap-1.5 text-xs text-ink-500 hover:text-ink-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400 focus-visible:ring-offset-2 rounded-sm px-1.5 py-1"
           title={density === "comfortable" ? "Switch to compact" : "Switch to comfortable"}
         >
           {density === "comfortable"
@@ -115,7 +115,7 @@ export function DataTable<T>({
                 <th
                   key={col.key}
                   className={cn(
-                    "px-4 py-2.5 text-left text-label text-ink-400 font-medium whitespace-nowrap",
+                    "px-4 py-2.5 text-left text-label text-ink-600 font-medium whitespace-nowrap",
                     "border-b border-hairline sticky top-0 bg-surface-base",
                     col.align === "right"  && "text-right",
                     col.align === "center" && "text-center",

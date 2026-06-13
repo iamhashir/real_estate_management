@@ -61,7 +61,7 @@ export function PropertyFilters({ value, onChange }: PropertyFiltersProps) {
         <button
           type="button"
           onClick={() => onChange({})}
-          className="text-sm text-ink-400 hover:text-ink-700 whitespace-nowrap shrink-0 px-2 min-h-[36px]"
+          className="text-sm text-ink-500 hover:text-ink-700 whitespace-nowrap shrink-0 px-2 min-h-[36px]"
         >
           Clear
         </button>

@@ -253,6 +253,21 @@
   --shadow-row-hover:  0 2px 8px rgb(var(--rgb-shadow) / 0.10);
   --shadow-row-soft:   0 1px 4px rgb(var(--rgb-shadow) / 0.05);
 
+  /* ─── Text contrast hierarchy ───────────────────────────────────────── */
+  /* WCAG 2.1 AA ratios on white (#FFFFFF):
+     --text-heading:     ink-900  (#1F1C17) → 17.3:1 AAA
+     --text-body:        ink-700  (#3E3A33) →  9.4:1 AAA
+     --text-secondary:   ink-600  (#5A554C) →  6.6:1 AA
+     --text-label:       ink-600  (#5A554C) →  6.6:1 AA  (small/uppercase labels ≤ 12px)
+     --text-muted:       ink-500  (#7C766B) →  4.5:1 AA  (metadata, timestamps, sub-text)
+     --text-placeholder: ink-400  (#8C867B) →  3.6:1     (placeholder/disabled only)  */
+  --text-heading:     var(--color-ink-900);
+  --text-body:        var(--color-ink-700);
+  --text-secondary:   var(--color-ink-600);
+  --text-label:       var(--color-ink-600);
+  --text-muted:       var(--color-ink-500);
+  --text-placeholder: var(--color-ink-400);
+
   /* ─── Warm hairlines, tracks & misc chrome ──────────────────────────── */
   --hairline-strong:   rgb(var(--rgb-shadow) / 0.13);
   --wash-warm:         rgb(var(--rgb-shadow) / 0.07);
@@ -292,7 +307,7 @@
   --secondary: #FBF5E9;
   --secondary-foreground: #3E3A33;
   --muted: #F7F2E7;
-  --muted-foreground: #8C867B;
+  --muted-foreground: #7C766B;
   --accent: #DDFAF6;
   --accent-foreground: #115A70;
   --destructive: #D5544C;

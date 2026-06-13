@@ -60,7 +60,7 @@ export function SegmentedToggle({
               "transition-colors duration-150 touch-manipulation select-none",
               s.item,
               fullWidth && "flex-1",
-              active ? "text-sea-800" : "text-ink-400 hover:text-ink-600"
+              active ? "text-sea-800" : "text-ink-500 hover:text-ink-700"
             )}
           >
             {active && (

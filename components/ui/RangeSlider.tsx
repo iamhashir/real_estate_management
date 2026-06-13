@@ -65,7 +65,7 @@ export function RangeSlider({
   return (
     <div className={cn("space-y-3", className)}>
       {label && (
-        <p className="text-label text-ink-400">{label}</p>
+        <p className="text-label text-ink-600">{label}</p>
       )}
 
       {/* Value display */}

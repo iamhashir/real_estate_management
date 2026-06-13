@@ -184,10 +184,10 @@ function ImageGallery({ property }: { property: Property }) {
 function SpecTile({ icon: Icon, label, value }: { icon: IconType; label: string; value: string }) {
   return (
     <div className="flex items-center gap-2.5 rounded-md border border-hairline bg-surface-base px-3 py-2.5 min-w-0">
-      <Icon size={16} className="text-ink-400 shrink-0" />
+      <Icon size={16} className="text-ink-500 shrink-0" />
       <div className="min-w-0">
         <p className="text-sm font-medium text-ink-900 text-money truncate">{value}</p>
-        <p className="text-xs text-ink-400">{label}</p>
+        <p className="text-xs text-ink-500">{label}</p>
       </div>
     </div>
   );
@@ -267,7 +267,7 @@ export function PropertyDetailDrawer({ property, isOpen, onClose, onEdit, onDele
           </div>
           <h3 className="font-display font-600 text-xl md:text-2xl text-ink-900 mt-2">{p.name}</h3>
           <p className="text-sm text-ink-600 flex items-center gap-1.5 mt-1">
-            <MapPin size={14} className="text-ink-400 shrink-0" />
+            <MapPin size={14} className="text-ink-500 shrink-0" />
             <span>
               {p.address}
               {p.area ? `, ${p.area}` : ""}, {p.city}
@@ -279,10 +279,10 @@ export function PropertyDetailDrawer({ property, isOpen, onClose, onEdit, onDele
         <motion.section variants={section} className="rounded-md border border-hairline bg-aqua-100/40 px-4 py-3">
           <p className="font-display font-600 text-2xl text-ink-900 text-money">
             {formatCurrency(p.price)}
-            {isRent && <span className="text-sm font-sans font-normal text-ink-400"> /yr</span>}
+            {isRent && <span className="text-sm font-sans font-normal text-ink-500"> /yr</span>}
           </p>
           {p.size > 0 && (
-            <p className="text-xs text-ink-400 mt-0.5 text-money">
+            <p className="text-xs text-ink-500 mt-0.5 text-money">
               {formatCurrency(Math.round(p.price / p.size))} per m²{isRent ? " / year" : ""}
             </p>
           )}
@@ -308,7 +308,7 @@ export function PropertyDetailDrawer({ property, isOpen, onClose, onEdit, onDele
         {/* 5 — Features */}
         {p.features && p.features.length > 0 && (
           <motion.section variants={section}>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-400 mb-2">Features</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-ink-600 mb-2">Features</p>
             <div className="flex flex-wrap gap-1.5">
               {p.features.map((f) => (
                 <span key={f} className="rounded-full bg-aqua-100/60 text-sea-800 text-xs font-medium px-2.5 py-1">
@@ -322,7 +322,7 @@ export function PropertyDetailDrawer({ property, isOpen, onClose, onEdit, onDele
         {/* 6 — Description */}
         {p.description && (
           <motion.section variants={section}>
-            <p className="text-xs font-medium uppercase tracking-wide text-ink-400 mb-2">Description</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-ink-600 mb-2">Description</p>
             <p className="text-sm text-ink-600 leading-relaxed whitespace-pre-wrap">{p.description}</p>
           </motion.section>
         )}

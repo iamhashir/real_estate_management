@@ -25,7 +25,7 @@ export default function RootError({
         An unexpected error occurred. You can try refreshing the page or return to the dashboard.
       </p>
       {error.digest && (
-        <p className="mt-2 text-xs text-ink-400 font-mono">Error ID: {error.digest}</p>
+        <p className="mt-2 text-xs text-ink-500 font-mono">Error ID: {error.digest}</p>
       )}
       <div className="flex gap-3 mt-6">
         <button

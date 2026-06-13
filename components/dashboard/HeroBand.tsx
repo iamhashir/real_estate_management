@@ -62,7 +62,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-ink-400 text-xs lg:text-sm font-bold uppercase tracking-[0.12em] mb-8 block">
+            <p className="text-ink-600 text-xs lg:text-sm font-bold uppercase tracking-[0.12em] mb-8 block">
               {today}
             </p>
             <h1 className="font-serif text-6xl lg:text-7xl font-600 leading-none text-ink-900 mb-2">
@@ -89,7 +89,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
           >
             {/* Primary metric: Portfolio */}
             <div className="flex flex-col lg:items-end group">
-              <p className="text-ink-400 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
+              <p className="text-ink-600 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
                 Portfolio Value
               </p>
               {isLoading ? (
@@ -109,7 +109,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             {/* Secondary metrics */}
             <div className="grid grid-cols-2 lg:flex lg:flex-col lg:gap-6 gap-4">
               <div className="lg:text-right">
-                <p className="text-ink-400 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-ink-600 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   In Pipeline
                 </p>
                 {isLoading ? (
@@ -121,7 +121,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
                 )}
               </div>
               <div className="lg:text-right">
-                <p className="text-ink-400 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-ink-600 text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   Commission MTD
                 </p>
                 {isLoading ? (

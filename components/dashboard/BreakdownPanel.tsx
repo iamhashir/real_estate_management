@@ -59,7 +59,7 @@ function BarRow({ label, count, total, color }: { label: string; count: number; 
   return (
     <div>
       <div className="flex items-center justify-between text-sm mb-1">
-        <span style={{ color: "var(--color-ink-400)" }}>{label}</span>
+        <span style={{ color: "var(--text-muted)" }}>{label}</span>
         <span className="font-medium text-money" style={{ color: "var(--color-ink-900)" }}>{count}</span>
       </div>
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--track-warm)" }}>
@@ -96,7 +96,7 @@ export function BreakdownPanel({ propertiesByStatus, dealsByStage, isLoading }: 
               <li key={s.value} className="flex items-center justify-between gap-2 text-sm">
                 <span className="flex items-center gap-2 min-w-0">
                   <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: HEX[s.color] }} />
-                  <span className="truncate" style={{ color: "var(--color-ink-400)" }}>{s.label}</span>
+                  <span className="truncate" style={{ color: "var(--text-muted)" }}>{s.label}</span>
                 </span>
                 <span className="font-medium text-money shrink-0" style={{ color: "var(--color-ink-900)" }}>
                   {propertiesByStatus[s.value] ?? 0}

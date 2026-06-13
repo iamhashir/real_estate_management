@@ -205,7 +205,7 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                           <Building2 size={16} className="text-aqua-500 shrink-0" />
                           <span className="min-w-0 flex-1 truncate">
                             {p.name}
-                            <span className="ml-2 text-xs text-ink-400">
+                            <span className="ml-2 text-xs text-ink-500">
                               {[p.area, p.city].filter(Boolean).join(", ")}
                             </span>
                           </span>
@@ -236,7 +236,7 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                             <Users size={16} className="text-sea-700 shrink-0" />
                             <span className="min-w-0 flex-1 truncate">
                               {c.firstName} {c.lastName}
-                              <span className="ml-2 text-xs text-ink-400">
+                              <span className="ml-2 text-xs text-ink-500">
                                 {typeLabel} · {c.phone}
                               </span>
                             </span>
@@ -264,7 +264,7 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                             <FileSignature size={16} className="text-coral-500 shrink-0" />
                             <span className="min-w-0 flex-1 truncate">
                               {d.propertyName}
-                              <span className="ml-2 text-xs text-ink-400">
+                              <span className="ml-2 text-xs text-ink-500">
                                 {stageLabel} · {d.dealType === "rent" ? "Rent" : "Sale"}
                               </span>
                             </span>
@@ -278,11 +278,11 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                   )}
 
                   {loading && (
-                    <p className="px-3 py-3 text-sm text-ink-400">Searching…</p>
+                    <p className="px-3 py-3 text-sm text-ink-500">Searching…</p>
                   )}
 
                   {searching && !loading && totalResults === 0 && (
-                    <p className="px-3 py-3 text-sm text-ink-400">
+                    <p className="px-3 py-3 text-sm text-ink-500">
                       No results for{" "}
                       <span className="font-medium text-ink-700">“{searchQuery}”</span>
                     </p>

@@ -63,7 +63,7 @@ export function DealRow({ deal, onClick, onStageMenu }: DealRowProps) {
     >
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-ink-900 truncate">{deal.propertyName}</p>
-        <p className="text-[13px] text-ink-400 truncate mt-0.5">
+        <p className="text-[13px] text-ink-500 truncate mt-0.5">
           {partyName}
           <span className="mx-1.5 text-ink-300">·</span>
           {deal.dealType === "rent" ? "Rent" : "Sale"}
@@ -93,7 +93,7 @@ export function DealRow({ deal, onClick, onStageMenu }: DealRowProps) {
             aria-haspopup="listbox"
           >
             <StatusPill value={deal.stage} variant="deal" pulse={false} />
-            <ChevronDown size={14} className="text-ink-400 shrink-0" aria-hidden="true" />
+            <ChevronDown size={14} className="text-ink-500 shrink-0" aria-hidden="true" />
           </button>
         ) : (
           <StatusPill value={deal.stage} variant="deal" pulse={false} />

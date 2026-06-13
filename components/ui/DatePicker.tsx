@@ -128,7 +128,7 @@ export function DatePicker({
             floated
               ? "top-1.5 text-[10px] font-medium tracking-wide uppercase"
               : "top-1/2 -translate-y-1/2 text-sm",
-            error ? "text-danger" : focused || open ? "text-aqua-500" : "text-ink-400"
+            error ? "text-danger" : focused || open ? "text-aqua-500" : "text-ink-500"
           )}
         >
           {label}
@@ -188,7 +188,7 @@ export function DatePicker({
             {/* Day grid */}
             <div className="grid grid-cols-7 gap-0.5">
               {DAYS.map((d) => (
-                <div key={d} className="text-center text-[10px] font-medium text-ink-400 py-1">
+                <div key={d} className="text-center text-[10px] font-medium text-ink-600 py-1">
                   {d}
                 </div>
               ))}
@@ -222,7 +222,7 @@ export function DatePicker({
       </AnimatePresence>
 
       {error && <p className="mt-1 text-xs text-danger">{error}</p>}
-      {!error && hint && <p className="mt-1 text-xs text-ink-400">{hint}</p>}
+      {!error && hint && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
     </div>
   );
 }

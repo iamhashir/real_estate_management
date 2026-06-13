@@ -154,13 +154,13 @@ export function DealDetailDrawer({ dealId, onClose }: DealDetailDrawerProps) {
             <Skeleton className="h-20 rounded-md" />
           </div>
         ) : !deal ? (
-          <p className="text-sm text-ink-400">Deal not found.</p>
+          <p className="text-sm text-ink-500">Deal not found.</p>
         ) : (
           <div className="space-y-6">
 
             {/* Stage stepper */}
             <div>
-              <p className="text-label text-ink-400 mb-4">Pipeline Stage</p>
+              <p className="text-label text-ink-600 mb-4">Pipeline Stage</p>
               <div className="flex items-start">
                 {MAIN_STAGES.map((stage, i) => {
                   const isPast    = !isCancelled && i < currentIdx;
@@ -210,25 +210,25 @@ export function DealDetailDrawer({ dealId, onClose }: DealDetailDrawerProps) {
               {property && (
                 <InfoRow icon={<Building2 size={14} />} label="Property">
                   <p className="text-sm font-medium text-ink-900">{property.name}</p>
-                  <p className="text-xs text-ink-400">{property.area ? `${property.area}, ` : ""}{property.city}</p>
+                  <p className="text-xs text-ink-500">{property.area ? `${property.area}, ` : ""}{property.city}</p>
                 </InfoRow>
               )}
               <InfoRow icon={<User size={14} />} label="Buyer">
                 {buyer
-                  ? <><p className="text-sm font-medium text-ink-900">{buyer.firstName} {buyer.lastName}</p><p className="text-xs text-ink-400">{buyer.phone}</p></>
-                  : <span className="text-sm text-ink-400">—</span>
+                  ? <><p className="text-sm font-medium text-ink-900">{buyer.firstName} {buyer.lastName}</p><p className="text-xs text-ink-500">{buyer.phone}</p></>
+                  : <span className="text-sm text-ink-500">—</span>
                 }
               </InfoRow>
               <InfoRow icon={<User size={14} />} label="Seller">
                 {seller
-                  ? <><p className="text-sm font-medium text-ink-900">{seller.firstName} {seller.lastName}</p><p className="text-xs text-ink-400">{seller.phone}</p></>
-                  : <span className="text-sm text-ink-400">—</span>
+                  ? <><p className="text-sm font-medium text-ink-900">{seller.firstName} {seller.lastName}</p><p className="text-xs text-ink-500">{seller.phone}</p></>
+                  : <span className="text-sm text-ink-500">—</span>
                 }
               </InfoRow>
               {agentRec && (
                 <InfoRow icon={<User size={14} />} label="Agent">
                   <p className="text-sm font-medium text-ink-900">{agentRec.name}</p>
-                  <p className="text-xs text-ink-400 capitalize">{agentRec.role}</p>
+                  <p className="text-xs text-ink-500 capitalize">{agentRec.role}</p>
                 </InfoRow>
               )}
             </Section>
@@ -271,7 +271,7 @@ export function DealDetailDrawer({ dealId, onClose }: DealDetailDrawerProps) {
                       </span>
                       <div className="min-w-0">
                         <p className="text-sm text-ink-900">{a.content}</p>
-                        <p className="text-xs text-ink-400">{formatRelativeDate(a._creationTime)}</p>
+                        <p className="text-xs text-ink-500">{formatRelativeDate(a._creationTime)}</p>
                       </div>
                     </li>
                   ))}
@@ -300,7 +300,7 @@ export function DealDetailDrawer({ dealId, onClose }: DealDetailDrawerProps) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-label text-ink-400 border-b border-hairline pb-2">{title}</h3>
+      <h3 className="text-label text-ink-600 border-b border-hairline pb-2">{title}</h3>
       {children}
     </div>
   );
@@ -311,7 +311,7 @@ function InfoRow({ icon, label, children }: { icon: React.ReactNode; label: stri
     <div className="flex items-start gap-3">
       <span className="mt-0.5 text-aqua-500 shrink-0">{icon}</span>
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] text-ink-400 uppercase tracking-wide font-medium mb-0.5">{label}</p>
+        <p className="text-[11px] text-ink-600 uppercase tracking-wide font-medium mb-0.5">{label}</p>
         {children}
       </div>
     </div>
@@ -321,8 +321,8 @@ function InfoRow({ icon, label, children }: { icon: React.ReactNode; label: stri
 function MetricPill({ label, value, dim }: { label: string; value: string; dim?: boolean }) {
   return (
     <div className="rounded-md bg-surface-base border border-hairline px-3 py-2.5">
-      <p className="text-[10px] text-ink-400 font-medium uppercase tracking-wide leading-tight">{label}</p>
-      <p className={cn("text-sm font-medium mt-1 text-money", dim ? "text-ink-400" : "text-ink-900")}>{value}</p>
+      <p className="text-[10px] text-ink-600 font-medium uppercase tracking-wide leading-tight">{label}</p>
+      <p className={cn("text-sm font-medium mt-1 text-money", dim ? "text-ink-500" : "text-ink-900")}>{value}</p>
     </div>
   );
 }

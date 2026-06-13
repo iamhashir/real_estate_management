@@ -189,7 +189,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             <p className="text-sm font-medium truncate" style={{ color: "var(--color-ink-900)" }}>
               {agent?.name ?? "No agent"}
             </p>
-            <p className="text-xs truncate capitalize" style={{ color: "var(--color-ink-400)" }}>
+            <p className="text-xs truncate capitalize" style={{ color: "var(--text-muted)" }}>
               {agent?.role ?? "—"}
             </p>
           </div>

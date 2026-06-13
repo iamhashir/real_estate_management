@@ -71,7 +71,7 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
         <Search
           size={16}
           className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10"
-          style={{ color: "var(--color-ink-400)" }}
+          style={{ color: "var(--text-muted)" }}
         />
         <input
           type="search"

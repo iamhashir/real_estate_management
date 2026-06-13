@@ -16,7 +16,7 @@ export function ClientDealRow({ deal, property }: ClientDealRowProps) {
         <p className="text-sm font-medium text-ink-900 truncate">
           {property?.name ?? "Unknown property"}
         </p>
-        <p className="text-xs text-ink-400">
+        <p className="text-xs text-ink-500">
           {deal.dealType === "rent" ? "Rent" : "Sale"}
           {deal.contractDate ? ` · ${formatDate(deal.contractDate)}` : ""}
         </p>

@@ -153,7 +153,7 @@ export function StatCard({
             )}
             <p
               className="text-[10px] font-bold uppercase leading-none truncate tracking-[0.14em]"
-              style={{ color: "var(--color-ink-400)" }}
+              style={{ color: "var(--text-label)" }}
             >
               {label}
             </p>

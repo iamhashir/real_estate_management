@@ -77,7 +77,7 @@ export function Select({
             hasValue || focused
               ? "top-1.5 text-[10px] font-medium tracking-wide uppercase"
               : "top-1/2 -translate-y-1/2 text-sm",
-            error ? "text-danger" : focused ? "text-aqua-500" : "text-ink-400"
+            error ? "text-danger" : focused ? "text-aqua-500" : "text-ink-500"
           )}
         >
           {label}
@@ -94,7 +94,7 @@ export function Select({
           {error}
         </p>
       )}
-      {!error && hint && <p className="mt-1 text-xs text-ink-400">{hint}</p>}
+      {!error && hint && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
     </div>
   );
 }

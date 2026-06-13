@@ -114,7 +114,7 @@ function ModalBody({
         </div>
         <button
           onClick={onClose}
-          className="text-ink-400 hover:text-ink-700 transition-colors p-1 rounded min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="text-ink-500 hover:text-ink-700 transition-colors p-1 rounded min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label="Close"
         >
           <X size={16} />
