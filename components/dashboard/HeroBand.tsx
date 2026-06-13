@@ -39,7 +39,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
         className="pointer-events-none absolute -top-24 -right-16 w-72 h-72 rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(63,216,207,0.18) 0%, transparent 70%)",
+            "var(--glow-aqua-soft)",
           filter: "blur(30px)",
         }}
         initial={{ opacity: 0, scale: 0.8 }}
@@ -50,7 +50,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
       {/* Honey top-edge accent line */}
       <div
         className="pointer-events-none absolute top-0 left-0 right-0 h-px"
-        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(201,158,78,0.55) 50%, transparent 100%)" }}
+        style={{ background: "var(--divider-brass)" }}
       />
 
       <div className="relative p-8 lg:p-14 min-h-72 lg:min-h-64 flex flex-col justify-between">

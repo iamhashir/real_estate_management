@@ -8,10 +8,10 @@ import { Building2 } from "lucide-react";
 import type { Property } from "@/lib/types";
 
 const RAIL: Record<string, string> = {
-  available: "#17BFBA",
-  under_negotiation: "#D9A647",
-  sold: "#FF6B5E",
-  rented: "#1C97B5",
+  available: "var(--color-aqua-500)",
+  under_negotiation: "var(--color-warning)",
+  sold: "var(--color-coral-500)",
+  rented: "var(--color-sea-600)",
 };
 
 function typeLabel(value: string) {
@@ -60,7 +60,7 @@ export function PropertyTable({ properties, isLoading, onRowClick, onCreate }: P
       getRowId={(p) => p._id}
       isLoading={isLoading}
       onRowClick={onRowClick}
-      railColor={(p) => RAIL[p.status] ?? "#DCEAEE"}
+      railColor={(p) => RAIL[p.status] ?? "var(--color-aqua-100)"}
       renderCard={(p) => <PropertyCard property={p} />}
       emptyState={
         <EmptyState

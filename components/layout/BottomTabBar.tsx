@@ -29,9 +29,9 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
         "pb-[env(safe-area-inset-bottom)]"
       )}
       style={{
-        background:    "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(253,246,232,0.80) 100%)",
-        borderTopColor:"rgba(255,255,255,0.90)",
-        boxShadow:     "0 -1px 0 rgba(160,132,86,0.08), 0 -4px 16px rgba(160,132,86,0.07)",
+        background:    "var(--glass-bar-bottom)",
+        borderTopColor:"var(--glass-edge-soft)",
+        boxShadow:     "var(--shadow-bar-top)",
       }}
       aria-label="Primary"
     >
@@ -49,9 +49,9 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
                 ? "hover:bg-black/[0.03]"
                 : "hover:bg-black/[0.03]"
             )}
-            style={{ color: active ? "#1C97B5" : "#7C766B" }}
+            style={{ color: active ? "var(--color-sea-600)" : "var(--color-ink-500)" }}
           >
-            <Icon size={20} style={{ color: active ? "#1C97B5" : "#7C766B" }} />
+            <Icon size={20} style={{ color: active ? "var(--color-sea-600)" : "var(--color-ink-500)" }} />
             {label}
           </Link>
         );
@@ -60,11 +60,11 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
       <button
         onClick={() => onQuickAdd("client")}
         className="flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] text-[12px] font-medium transition-colors hover:bg-black/[0.03] rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400"
-        style={{ color: "#7C766B" }}
+        style={{ color: "var(--color-ink-500)" }}
       >
         <span
           className="grid place-items-center w-8 h-8 -mb-0.5 rounded-full text-white shadow-card"
-          style={{ background: "linear-gradient(135deg, #C99E4E 0%, #E2C586 100%)" }}
+          style={{ background: "var(--gradient-brass)" }}
         >
           <Plus size={18} />
         </span>

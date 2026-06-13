@@ -12,10 +12,10 @@ interface StatBandProps {
 }
 
 const SKELETON_ACCENTS = [
-  "rgba(25,199,194,0.20)",
-  "rgba(28,151,181,0.20)",
-  "rgba(61,139,106,0.18)",
-  "rgba(255,107,94,0.18)",
+  "var(--glow-statband-aqua)",
+  "var(--glow-statband-sea)",
+  "var(--glow-statband-success)",
+  "var(--glow-statband-coral)",
 ];
 
 function SkeletonMedallion({ glow }: { glow: string }) {
@@ -23,25 +23,25 @@ function SkeletonMedallion({ glow }: { glow: string }) {
     <motion.div
       className="flex flex-col gap-3 p-4 rounded-lg overflow-hidden"
       style={{
-        background:  "linear-gradient(135deg, rgba(255,255,255,0.70) 0%, rgba(253,246,232,0.58) 100%)",
+        background:  "var(--glass-statband)",
         backdropFilter: "blur(12px)",
         border:      `1px solid ${glow}`,
-        boxShadow:   "0 4px 24px rgba(160,132,86,0.08), inset 0 1px 0 rgba(255,255,255,0.90)",
+        boxShadow:   "var(--shadow-statband)",
       }}
       animate={{ opacity: [0.5, 0.80, 0.5] }}
       transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-3.5 h-3.5 rounded-sm" style={{ background: "rgba(160,132,86,0.09)" }} />
-          <div className="w-20 h-2 rounded-full" style={{ background: "rgba(160,132,86,0.08)" }} />
+          <div className="w-3.5 h-3.5 rounded-sm" style={{ background: "var(--track-warm)" }} />
+          <div className="w-20 h-2 rounded-full" style={{ background: "var(--track-warm-soft)" }} />
         </div>
-        <div className="w-8 h-3.5 rounded-full" style={{ background: "rgba(160,132,86,0.07)" }} />
+        <div className="w-8 h-3.5 rounded-full" style={{ background: "var(--wash-warm)" }} />
       </div>
-      <div className="w-16 h-7 rounded-md" style={{ background: "rgba(160,132,86,0.09)" }} />
+      <div className="w-16 h-7 rounded-md" style={{ background: "var(--track-warm)" }} />
       <div className="flex flex-col gap-1.5">
-        <div className="w-full h-px rounded-full" style={{ background: "rgba(160,132,86,0.08)" }} />
-        <div className="w-24 h-2 rounded-full" style={{ background: "rgba(160,132,86,0.06)" }} />
+        <div className="w-full h-px rounded-full" style={{ background: "var(--track-warm-soft)" }} />
+        <div className="w-24 h-2 rounded-full" style={{ background: "var(--wash-warm-faint)" }} />
       </div>
     </motion.div>
   );

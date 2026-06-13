@@ -61,9 +61,9 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
         "flex items-center gap-3 px-4 md:px-6"
       )}
       style={{
-        background:        "linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(253,246,232,0.70) 100%)",
-        borderBottomColor: "rgba(255,255,255,0.90)",
-        boxShadow:         "0 1px 0 rgba(160,132,86,0.08)",
+        background:        "var(--glass-bar-top)",
+        borderBottomColor: "var(--glass-edge-soft)",
+        boxShadow:         "var(--shadow-bar-bottom)",
       }}
     >
       {/* Search + floating panel */}
@@ -71,7 +71,7 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
         <Search
           size={16}
           className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10"
-          style={{ color: "#8C867B" }}
+          style={{ color: "var(--color-ink-400)" }}
         />
         <input
           type="search"
@@ -90,9 +90,9 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
             "outline-none transition-all focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/40"
           )}
           style={{
-            background: "rgba(160,132,86,0.07)",
-            border:     "1px solid rgba(160,132,86,0.13)",
-            color:      "#1F1C17",
+            background: "var(--wash-warm)",
+            border:     "1px solid var(--hairline-strong)",
+            color:      "var(--color-ink-900)",
           }}
         />
 
@@ -142,9 +142,9 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
           <div
             className="absolute right-0 top-full mt-2 w-52 z-50 rounded-md overflow-hidden py-1"
             style={{
-              background:    "linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(253,246,232,0.88) 100%)",
-              border:        "1px solid rgba(255,255,255,0.90)",
-              boxShadow:     "0 8px 32px rgba(160,132,86,0.16), 0 2px 8px rgba(160,132,86,0.08)",
+              background:    "var(--glass-menu)",
+              border:        "1px solid var(--glass-edge-soft)",
+              boxShadow:     "var(--shadow-menu)",
               backdropFilter: "blur(16px)",
             }}
             role="menu"
@@ -158,8 +158,8 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
                   "flex items-center gap-3 w-full px-3.5 py-2.5 text-sm transition-colors text-left min-h-[44px]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-aqua-400"
                 )}
-                style={{ color: "#1F1C17" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(160,132,86,0.06)")}
+                style={{ color: "var(--color-ink-900)" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--wash-warm-faint)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "")}
               >
                 <Icon size={16} className="text-aqua-500 shrink-0" />

@@ -28,6 +28,9 @@
   --color-emerald-300: #6BBA98;
 
   /* ── Brass / honey action accent ───────────────────────────────────── */
+  --color-brass-900: #5A3D00;
+  --color-brass-700: #8A6420;
+  --color-brass-600: #A87B26;
   --color-brass-500: #C99E4E;
   --color-brass-400: #D9B26A;
   --color-brass-300: #E8CC95;
@@ -48,6 +51,8 @@
   --color-aqua-50:  #F2FDFB;
 
   /* ── Coral (status accents) ─────────────────────────────────────────── */
+  --color-coral-700: #7A2E28;
+  --color-coral-600: #C2453C;
   --color-coral-500: #FF6B5E;
   --color-coral-400: #FF8A7F;
   --color-coral-100: #FFECEA;
@@ -60,16 +65,22 @@
   --color-ink-900: #1F1C17;
   --color-ink-700: #3E3A33;
   --color-ink-600: #5A554C;
+  --color-ink-500: #7C766B;
   --color-ink-400: #8C867B;
   --color-ink-300: #ABA496;
   --color-ink-200: #D8D1C2;
   --color-hairline: #EFE9DC;
 
+  /* ── Warm sand (scrollbar, fine chrome) ─────────────────────────────── */
+  --color-sand-300: #E2D9C6;
+  --color-sand-400: #C9BFA8;
+
   /* ── Semantic status ──────────────────────────────────────────────────── */
-  --color-success: #2E7C61;
-  --color-warning: #D9A647;
-  --color-danger:  #D5544C;
-  --color-info:    #15758F;
+  --color-success:     #2E7C61;
+  --color-warning:     #D9A647;
+  --color-warning-700: #7A4F00;
+  --color-danger:      #D5544C;
+  --color-info:        #15758F;
 
   /* ── Typography ───────────────────────────────────────────────────────── */
   --font-serif:   var(--font-crimson);
@@ -113,6 +124,161 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
     0 2px 8px rgba(160, 132, 86, 0.07),
     0 14px 32px -10px rgba(160, 132, 86, 0.16);
+
+  /* ─── Translucency channels ──────────────────────────────────────────────
+     Base RGB triplets for composing every tint, glow, shadow, and decorative
+     orb. Tweak one channel here and all of its translucent uses update at once.
+     The whole app draws on ~14 hues — nothing renders a colour not listed here.
+     ─────────────────────────────────────────────────────────────────────── */
+  --rgb-white:        255 255 255;
+  --rgb-shadow:       160 132 86;   /* warm sand — all elevation shadows */
+  --rgb-brass:        201 158 78;   /* brass glow, active-nav wash */
+  --rgb-dotgrid:      120 105 80;   /* background dot grid */
+  --rgb-honey:        233 205 150;  /* honey orb + illustration fills */
+  --rgb-honey-pale:   245 228 190;
+  --rgb-aqua:         23 191 186;   /* aqua mist + illustration pops */
+  --rgb-aqua-bright:  63 216 207;
+  --rgb-aqua-pale:    221 250 246;  /* pale aqua disc (aqua-100) */
+  --rgb-rose:         255 138 127;  /* rose orb */
+  --rgb-coral:        255 107 94;   /* coral accents */
+  --rgb-coral-pale:   255 236 234;  /* pale coral disc (coral-100) */
+  --rgb-sea-bright:   28 151 181;   /* stat aqua-accent */
+  --rgb-sea-mid:      21 117 143;   /* stat sea-accent */
+  --rgb-emerald:      46 124 97;    /* stat success-accent + trend up */
+  --rgb-coral-deep:   194 69 60;    /* trend down */
+  --rgb-ink-soft:     79 74 68;     /* trend flat */
+  --rgb-cream-warm:   253 246 232;
+  --rgb-cream-deep:   248 238 218;
+  --rgb-cream-soft:   251 243 226;
+  --rgb-cream-bright: 255 251 242;
+  --rgb-cream-pane:   255 253 247;
+  --rgb-sea-deep:     17 90 112;    /* primary-button shadow */
+  --rgb-pearl:        249 248 245;  /* breakdown dial centre */
+  --rgb-warning:      217 166 71;   /* offline banner amber */
+  --rgb-danger:       213 84 76;    /* canonical alert red (#D5544C) */
+
+  /* ─── Shared glass chrome ───────────────────────────────────────────── */
+  --glass-edge:        rgb(var(--rgb-white) / 0.95);   /* crisp glass border  */
+  --hairline-warm:     rgb(var(--rgb-shadow) / 0.12);  /* warm divider line   */
+
+  /* ─── Sidebar rail ──────────────────────────────────────────────────── */
+  --surface-rail:      linear-gradient(180deg, rgb(var(--rgb-white) / 0.82) 0%, rgb(var(--rgb-cream-warm) / 0.68) 100%);
+  --rail-shadow:       1px 0 0 rgb(var(--rgb-shadow) / 0.08);
+  --nav-active-wash:   rgb(var(--rgb-brass) / 0.12);
+  --nav-hover-wash:    rgb(var(--rgb-shadow) / 0.07);
+  --nav-active-bar:    linear-gradient(to bottom, var(--color-brass-500), var(--color-brass-300));
+  --nav-active-glow:   0 0 8px rgb(var(--rgb-brass) / 0.50);
+  --brand-mark-shadow: 0 2px 10px rgb(var(--rgb-brass) / 0.30);
+  --avatar-wash:       rgb(var(--rgb-brass) / 0.14);
+  --toggle-surface:    rgb(var(--rgb-cream-pane) / 0.92);
+  --toggle-shadow:     0 4px 14px rgb(var(--rgb-shadow) / 0.18);
+
+  /* ─── Stat card ─────────────────────────────────────────────────────── */
+  --surface-stat:  linear-gradient(140deg, rgb(var(--rgb-white) / 0.85) 0%, rgb(var(--rgb-cream-warm) / 0.66) 60%, rgb(var(--rgb-cream-deep) / 0.58) 100%);
+  --stat-shadow:   0 1px 2px rgb(var(--rgb-shadow) / 0.06), 0 12px 32px -10px rgb(var(--rgb-shadow) / 0.16), inset 0 1px 0 rgb(var(--rgb-white) / 1);
+  --stat-shimmer:  linear-gradient(90deg, transparent, rgb(var(--rgb-white) / 0.40), transparent);
+
+  /* Stat accent sets — ring · ink · tint · track · glow */
+  --stat-aqua-ring: var(--color-sea-600);    --stat-aqua-ink: var(--color-sea-700);
+  --stat-aqua-tint: rgb(var(--rgb-sea-bright) / 0.06);  --stat-aqua-track: rgb(var(--rgb-sea-bright) / 0.10);  --stat-aqua-glow: rgb(var(--rgb-sea-bright) / 0.14);
+  --stat-sea-ring: var(--color-sea-700);     --stat-sea-ink: var(--color-sea-800);
+  --stat-sea-tint: rgb(var(--rgb-sea-mid) / 0.06);      --stat-sea-track: rgb(var(--rgb-sea-mid) / 0.10);      --stat-sea-glow: rgb(var(--rgb-sea-mid) / 0.14);
+  --stat-success-ring: var(--color-emerald-500); --stat-success-ink: var(--color-emerald-600);
+  --stat-success-tint: rgb(var(--rgb-emerald) / 0.06);  --stat-success-track: rgb(var(--rgb-emerald) / 0.10);  --stat-success-glow: rgb(var(--rgb-emerald) / 0.14);
+  --stat-coral-ring: var(--color-coral-500); --stat-coral-ink: var(--color-coral-600);
+  --stat-coral-tint: rgb(var(--rgb-coral) / 0.06);      --stat-coral-track: rgb(var(--rgb-coral) / 0.10);      --stat-coral-glow: rgb(var(--rgb-coral) / 0.14);
+
+  /* Trend pills */
+  --trend-up-bg:   rgb(var(--rgb-emerald) / 0.10);    --trend-up-text:   var(--color-emerald-600);
+  --trend-down-bg: rgb(var(--rgb-coral-deep) / 0.10); --trend-down-text: var(--color-coral-700);
+  --trend-flat-bg: rgb(var(--rgb-ink-soft) / 0.10);   --trend-flat-text: var(--color-ink-600);
+
+  /* ─── Background atmosphere ─────────────────────────────────────────── */
+  --bg-dotgrid:      rgb(var(--rgb-dotgrid) / 0.07);
+  --orb-honey:       radial-gradient(circle, rgb(var(--rgb-honey) / 0.30) 0%, rgb(var(--rgb-honey-pale) / 0.12) 45%, transparent 70%);
+  --orb-aqua:        radial-gradient(circle, rgb(var(--rgb-aqua-bright) / 0.16) 0%, rgb(var(--rgb-aqua-bright) / 0.06) 45%, transparent 70%);
+  --orb-rose:        radial-gradient(circle, rgb(var(--rgb-rose) / 0.12) 0%, rgb(var(--rgb-rose) / 0.05) 45%, transparent 70%);
+  --wash-cream:      radial-gradient(ellipse 85% 60% at 50% 35%, rgb(var(--rgb-cream-bright) / 0.85) 0%, transparent 100%);
+  --ring-brass:      rgb(var(--rgb-brass) / 0.16);
+  --ring-aqua:       rgb(var(--rgb-aqua) / 0.20);
+  --ring-aqua-soft:  rgb(var(--rgb-aqua) / 0.18);
+  --bead-brass:      rgb(var(--rgb-brass) / 0.45);
+  --bead-brass-glow: 0 0 12px rgb(var(--rgb-brass) / 0.35);
+
+  /* ─── Illustration palette (line-art scenes) ────────────────────────── */
+  --art-line:       var(--color-sea-800);
+  --art-line-deep:  var(--color-sea-900);
+  --art-accent:     var(--color-brass-500);
+  --art-pop:        var(--color-aqua-500);
+  --art-flag:       var(--color-coral-500);
+  --art-muted:      var(--color-ink-300);
+  --art-bird:       var(--color-ink-600);
+  --art-pane:       rgb(var(--rgb-white) / 0.90);
+  --art-pane-soft:  rgb(var(--rgb-white) / 0.85);
+  --art-disc-cream: rgb(var(--rgb-cream-soft) / 0.90);
+  --art-disc-aqua:  rgb(var(--rgb-aqua-pale) / 0.80);
+  --art-disc-coral: rgb(var(--rgb-coral-pale) / 0.90);
+  --art-honey-faint:  rgb(var(--rgb-honey) / 0.25);
+  --art-honey:        rgb(var(--rgb-honey) / 0.30);
+  --art-honey-disc:   rgb(var(--rgb-honey) / 0.35);
+  --art-honey-mid:    rgb(var(--rgb-honey) / 0.40);
+  --art-honey-strong: rgb(var(--rgb-honey) / 0.50);
+  --art-aqua:         rgb(var(--rgb-aqua) / 0.35);
+  --art-aqua-soft:    rgb(var(--rgb-aqua) / 0.28);
+  --art-brass:        rgb(var(--rgb-brass) / 0.30);
+  --art-coral:        rgb(var(--rgb-coral) / 0.25);
+
+  /* ─── Bars, menus & panels (glass recipes) ──────────────────────────── */
+  --glass-bar-top:     linear-gradient(135deg, rgb(var(--rgb-white) / 0.88) 0%, rgb(var(--rgb-cream-warm) / 0.70) 100%);
+  --glass-bar-bottom:  linear-gradient(180deg, rgb(var(--rgb-white) / 0.90) 0%, rgb(var(--rgb-cream-warm) / 0.80) 100%);
+  --glass-menu:        linear-gradient(135deg, rgb(var(--rgb-white) / 0.96) 0%, rgb(var(--rgb-cream-warm) / 0.88) 100%);
+  --glass-palette:     linear-gradient(140deg, rgb(var(--rgb-white) / 0.92), rgb(var(--rgb-cream-warm) / 0.85));
+  --glass-statband:    linear-gradient(135deg, rgb(var(--rgb-white) / 0.70) 0%, rgb(var(--rgb-cream-warm) / 0.58) 100%);
+  --glass-edge-soft:   rgb(var(--rgb-white) / 0.90);
+
+  --shadow-bar-top:    0 -1px 0 rgb(var(--rgb-shadow) / 0.08), 0 -4px 16px rgb(var(--rgb-shadow) / 0.07);
+  --shadow-bar-bottom: 0 1px 0 rgb(var(--rgb-shadow) / 0.08);
+  --shadow-menu:       0 8px 32px rgb(var(--rgb-shadow) / 0.16), 0 2px 8px rgb(var(--rgb-shadow) / 0.08);
+  --shadow-palette:    0 24px 64px -16px rgb(var(--rgb-shadow) / 0.28), 0 4px 16px rgb(var(--rgb-shadow) / 0.10);
+  --shadow-statband:   0 4px 24px rgb(var(--rgb-shadow) / 0.08), inset 0 1px 0 rgb(var(--rgb-white) / 0.90);
+
+  /* ─── List rows & soft surfaces ─────────────────────────────────────── */
+  --row-surface:       rgb(var(--rgb-white) / 0.55);
+  --row-surface-hover: rgb(var(--rgb-white) / 0.80);
+  --row-border:        rgb(var(--rgb-white) / 0.80);
+  --row-soft:          rgb(var(--rgb-white) / 0.40);
+  --row-soft-hover:    rgb(var(--rgb-white) / 0.65);
+  --row-soft-border:   rgb(var(--rgb-white) / 0.55);
+  --shadow-row:        0 1px 4px rgb(var(--rgb-shadow) / 0.06);
+  --shadow-row-hover:  0 2px 8px rgb(var(--rgb-shadow) / 0.10);
+  --shadow-row-soft:   0 1px 4px rgb(var(--rgb-shadow) / 0.05);
+
+  /* ─── Warm hairlines, tracks & misc chrome ──────────────────────────── */
+  --hairline-strong:   rgb(var(--rgb-shadow) / 0.13);
+  --wash-warm:         rgb(var(--rgb-shadow) / 0.07);
+  --wash-warm-faint:   rgb(var(--rgb-shadow) / 0.06);
+  --track-warm:        rgb(var(--rgb-shadow) / 0.09);
+  --track-warm-soft:   rgb(var(--rgb-shadow) / 0.08);
+  --breakdown-surface: rgb(var(--rgb-pearl) / 0.96);
+  --breakdown-empty:   rgb(var(--rgb-shadow) / 0.10);
+  --breakdown-shadow:  inset 0 0 0 1px rgb(var(--rgb-shadow) / 0.08);
+  --surface-warning:   rgb(var(--rgb-warning) / 0.92);
+
+  /* ─── Hero band & accents ───────────────────────────────────────────── */
+  --glow-aqua-soft:    radial-gradient(circle, rgb(var(--rgb-aqua-bright) / 0.18) 0%, transparent 70%);
+  --divider-brass:     linear-gradient(90deg, transparent 0%, rgb(var(--rgb-brass) / 0.55) 50%, transparent 100%);
+
+  /* StatBand per-card ambient glows */
+  --glow-statband-aqua:    rgb(var(--rgb-aqua) / 0.20);
+  --glow-statband-sea:     rgb(var(--rgb-sea-bright) / 0.20);
+  --glow-statband-success: rgb(var(--rgb-emerald) / 0.18);
+  --glow-statband-coral:   rgb(var(--rgb-coral) / 0.18);
+
+  /* ─── Form & button states ──────────────────────────────────────────── */
+  --ring-danger:             rgb(var(--rgb-danger) / 0.15);
+  --btn-primary-shadow:       inset 0 1px 0 rgb(var(--rgb-white) / 0.22), 0 2px 4px -1px rgb(var(--rgb-sea-deep) / 0.35), 0 8px 20px -6px rgb(var(--rgb-sea-deep) / 0.45);
+  --btn-primary-shadow-hover: inset 0 1px 0 rgb(var(--rgb-white) / 0.28), 0 4px 8px -2px rgb(var(--rgb-sea-deep) / 0.40), 0 14px 28px -8px rgb(var(--rgb-sea-deep) / 0.50);
+  --btn-danger-shadow:        inset 0 1px 0 rgb(var(--rgb-white) / 0.6), 0 1px 2px rgb(var(--rgb-danger) / 0.12);
 
   /* ── shadcn/ui semantic variables — mapped onto the porcelain palette ── */
   --background: #FFFFFF;
@@ -177,14 +343,14 @@ html {
 body {
   height: 100%;
   min-height: 100%;
-  color: #1F1C17;
+  color: var(--color-ink-900);
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 14px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
-  background-color: #FFFFFF;
+  background-color: var(--color-surface-base);
 }
 
 /* Premium skeleton shimmer — smooth, directional loader animation */
@@ -427,12 +593,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E2D9C6;
+  background: var(--color-sand-300);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C9BFA8;
+  background: var(--color-sand-400);
 }
 
 /* ─── Focus ring ──────────────────────────────────────────────────────────── */

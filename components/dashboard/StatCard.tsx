@@ -21,45 +21,47 @@ interface StatCardProps {
   large?: boolean;
 }
 
+// Accent colours resolve to the central --stat-* tokens in globals.css; tweak
+// a hue there and every stat card follows. Nothing here is a raw colour value.
 const T = {
   aqua: {
-    ring:  "#1C97B5",
-    tint:  "rgba(28,151,181,0.06)",
-    track: "rgba(28,151,181,0.10)",
-    icon:  "#15758F",
-    val:   "#15758F",
-    glow:  "rgba(28,151,181,0.14)",
+    ring:  "var(--stat-aqua-ring)",
+    tint:  "var(--stat-aqua-tint)",
+    track: "var(--stat-aqua-track)",
+    icon:  "var(--stat-aqua-ink)",
+    val:   "var(--stat-aqua-ink)",
+    glow:  "var(--stat-aqua-glow)",
   },
   sea: {
-    ring:  "#15758F",
-    tint:  "rgba(21,117,143,0.06)",
-    track: "rgba(21,117,143,0.10)",
-    icon:  "#115A70",
-    val:   "#115A70",
-    glow:  "rgba(21,117,143,0.14)",
+    ring:  "var(--stat-sea-ring)",
+    tint:  "var(--stat-sea-tint)",
+    track: "var(--stat-sea-track)",
+    icon:  "var(--stat-sea-ink)",
+    val:   "var(--stat-sea-ink)",
+    glow:  "var(--stat-sea-glow)",
   },
   success: {
-    ring:  "#2E7C61",
-    tint:  "rgba(46,124,97,0.06)",
-    track: "rgba(46,124,97,0.10)",
-    icon:  "#1E5A47",
-    val:   "#1E5A47",
-    glow:  "rgba(46,124,97,0.14)",
+    ring:  "var(--stat-success-ring)",
+    tint:  "var(--stat-success-tint)",
+    track: "var(--stat-success-track)",
+    icon:  "var(--stat-success-ink)",
+    val:   "var(--stat-success-ink)",
+    glow:  "var(--stat-success-glow)",
   },
   coral: {
-    ring:  "#FF6B5E",
-    tint:  "rgba(255,107,94,0.06)",
-    track: "rgba(255,107,94,0.10)",
-    icon:  "#C2453C",
-    val:   "#C2453C",
-    glow:  "rgba(255,107,94,0.14)",
+    ring:  "var(--stat-coral-ring)",
+    tint:  "var(--stat-coral-tint)",
+    track: "var(--stat-coral-track)",
+    icon:  "var(--stat-coral-ink)",
+    val:   "var(--stat-coral-ink)",
+    glow:  "var(--stat-coral-glow)",
   },
 } satisfies Record<Accent, Record<string, string>>;
 
 const TREND_STYLE = {
-  up:   { bg: "rgba(46,124,97,0.10)",  text: "#1E5A47" },
-  down: { bg: "rgba(194,69,60,0.10)",  text: "#7A2E28" },
-  flat: { bg: "rgba(79,74,68,0.10)",   text: "#5A554C" },
+  up:   { bg: "var(--trend-up-bg)",   text: "var(--trend-up-text)" },
+  down: { bg: "var(--trend-down-bg)", text: "var(--trend-down-text)" },
+  flat: { bg: "var(--trend-flat-bg)", text: "var(--trend-flat-text)" },
 };
 
 // Framer Motion variants — hover state propagates from the card root
@@ -99,11 +101,11 @@ export function StatCard({
     <motion.div
       className="relative overflow-hidden rounded-lg cursor-default select-none"
       style={{
-        background:           "linear-gradient(140deg, rgba(255,255,255,0.85) 0%, rgba(253,246,232,0.66) 60%, rgba(248,238,218,0.58) 100%)",
+        background:           "var(--surface-stat)",
         backdropFilter:       "blur(20px) saturate(1.5)",
         WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-        border:               "1px solid rgba(255,255,255,0.95)",
-        boxShadow:            "0 1px 2px rgba(160,132,86,0.06), 0 12px 32px -10px rgba(160,132,86,0.16), inset 0 1px 0 rgba(255,255,255,1)",
+        border:               "1px solid var(--glass-edge)",
+        boxShadow:            "var(--stat-shadow)",
       }}
       variants={cardVariants}
       initial="rest"
@@ -124,7 +126,7 @@ export function StatCard({
         className="absolute inset-y-0 w-1/2 pointer-events-none z-20 skew-x-[-18deg]"
         variants={shimmerVariants}
         style={{
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.40), transparent)",
+          background: "var(--stat-shimmer)",
         }}
       />
 
@@ -151,7 +153,7 @@ export function StatCard({
             )}
             <p
               className="text-[10px] font-bold uppercase leading-none truncate tracking-[0.14em]"
-              style={{ color: "#8C867B" }}
+              style={{ color: "var(--color-ink-400)" }}
             >
               {label}
             </p>
@@ -179,7 +181,7 @@ export function StatCard({
             "font-display font-bold leading-none tracking-tight",
             currency ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl",
           )}
-          style={{ color: "#1F1C17" }}
+          style={{ color: "var(--color-ink-900)" }}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -205,7 +207,7 @@ export function StatCard({
             {(ratioLabel || subtitle) && (
               <p
                 className="text-[10px] leading-none"
-                style={{ color: "#7C766B" }}
+                style={{ color: "var(--color-ink-500)" }}
               >
                 {ratioLabel ?? subtitle}
               </p>

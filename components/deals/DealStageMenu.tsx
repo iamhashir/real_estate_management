@@ -70,7 +70,7 @@ export function DealStageMenu({ deal, onClose }: DealStageMenuProps) {
       <div className="space-y-1" role="listbox" aria-label="Deal stage">
         {DEAL_STAGES.map((stage) => {
           const isCurrent = current?.stage === stage.value;
-          const accentHex = STAGE_HEX[stage.color] ?? "#1C97B5";
+          const accentHex = STAGE_HEX[stage.color] ?? "var(--color-sea-600)";
           return (
             <button
               key={stage.value}

@@ -26,7 +26,7 @@ export function BackgroundDecor() {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(120,105,80,0.07) 1px, transparent 1px)",
+            "radial-gradient(circle, var(--bg-dotgrid) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -43,7 +43,7 @@ export function BackgroundDecor() {
           maxWidth: 880,
           maxHeight: 880,
           background:
-            "radial-gradient(circle, rgba(233,205,150,0.30) 0%, rgba(245,228,190,0.12) 45%, transparent 70%)",
+            "var(--orb-honey)",
           filter: "blur(70px)",
         }}
         {...drift(-30, 24, 26)}
@@ -60,7 +60,7 @@ export function BackgroundDecor() {
           maxWidth: 700,
           maxHeight: 700,
           background:
-            "radial-gradient(circle, rgba(63,216,207,0.16) 0%, rgba(63,216,207,0.06) 45%, transparent 70%)",
+            "var(--orb-aqua)",
           filter: "blur(60px)",
         }}
         {...drift(36, -20, 32)}
@@ -77,7 +77,7 @@ export function BackgroundDecor() {
           maxWidth: 620,
           maxHeight: 620,
           background:
-            "radial-gradient(circle, rgba(255,138,127,0.12) 0%, rgba(255,138,127,0.05) 45%, transparent 70%)",
+            "var(--orb-rose)",
           filter: "blur(60px)",
         }}
         {...drift(-24, -28, 38)}
@@ -88,7 +88,7 @@ export function BackgroundDecor() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 85% 60% at 50% 35%, rgba(255,251,242,0.85) 0%, transparent 100%)",
+            "var(--wash-cream)",
         }}
       />
 
@@ -100,7 +100,7 @@ export function BackgroundDecor() {
           height: 760,
           top: "-24%",
           right: "-14%",
-          border: "1px solid rgba(201,158,78,0.16)",
+          border: "1px solid var(--ring-brass)",
         }}
         animate={reduceMotion ? undefined : { rotate: 360 }}
         transition={
@@ -115,8 +115,8 @@ export function BackgroundDecor() {
           style={{
             top: "50%",
             left: -4,
-            background: "rgba(201,158,78,0.45)",
-            boxShadow: "0 0 12px rgba(201,158,78,0.35)",
+            background: "var(--bead-brass)",
+            boxShadow: "var(--bead-brass-glow)",
           }}
         />
       </motion.div>
@@ -128,7 +128,7 @@ export function BackgroundDecor() {
           height: 480,
           top: "-10%",
           right: "-5%",
-          border: "1px dashed rgba(23,191,186,0.20)",
+          border: "1px dashed var(--ring-aqua)",
         }}
         animate={reduceMotion ? undefined : { rotate: -360 }}
         transition={
@@ -146,7 +146,7 @@ export function BackgroundDecor() {
           height: 300,
           bottom: "-8%",
           left: "-5%",
-          border: "1px solid rgba(23,191,186,0.18)",
+          border: "1px solid var(--ring-aqua-soft)",
         }}
         animate={reduceMotion ? undefined : { rotate: 360 }}
         transition={

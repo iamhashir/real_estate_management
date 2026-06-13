@@ -41,11 +41,11 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
         collapsed ? "md:w-16 lg:w-16" : "md:w-16 lg:w-60",
       )}
       style={{
-        background:           "linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(253,246,232,0.68) 100%)",
+        background:           "var(--surface-rail)",
         backdropFilter:       "blur(22px) saturate(1.5)",
         WebkitBackdropFilter: "blur(22px) saturate(1.5)",
-        borderRight:          "1px solid rgba(255,255,255,0.95)",
-        boxShadow:            "1px 0 0 rgba(160,132,86,0.08)",
+        borderRight:          "1px solid var(--glass-edge)",
+        boxShadow:            "var(--rail-shadow)",
       }}
       aria-label="Main navigation"
     >
@@ -55,14 +55,14 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           "h-14 flex items-center shrink-0",
           collapsed ? "justify-center px-3" : "gap-2.5 px-3 lg:px-5",
         )}
-        style={{ borderBottom: "1px solid rgba(160,132,86,0.12)" }}
+        style={{ borderBottom: "1px solid var(--hairline-warm)" }}
       >
         <span
           className="grid place-items-center w-9 h-9 rounded-md shrink-0"
           style={{
-            background: "linear-gradient(135deg, #C99E4E 0%, #E2C586 100%)",
-            color:      "#5A3D00",
-            boxShadow:  "0 2px 10px rgba(201,158,78,0.30)",
+            background: "var(--gradient-brass)",
+            color:      "var(--color-brass-900)",
+            boxShadow:  "var(--brand-mark-shadow)",
           }}
         >
           <Anchor size={18} strokeWidth={2.4} />
@@ -72,7 +72,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             "font-display font-600 text-base tracking-tight whitespace-nowrap",
             collapsed ? "hidden" : "hidden lg:block",
           )}
-          style={{ color: "#1F1C17" }}
+          style={{ color: "var(--color-ink-900)" }}
         >
           Harbour
         </span>
@@ -91,22 +91,22 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
                 "text-sm font-medium transition-colors",
                 // Center icons when sidebar is icon-only
                 collapsed ? "justify-center" : "justify-center lg:justify-start",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C99E4E]/60",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass-500/60",
               )}
               style={{
-                background: active ? "rgba(201,158,78,0.12)" : "transparent",
-                color:      active ? "#8A6420"               : "#5A554C",
+                background: active ? "var(--nav-active-wash)" : "transparent",
+                color:      active ? "var(--color-brass-700)" : "var(--color-ink-600)",
               }}
               onMouseEnter={e => {
                 if (!active) {
-                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(160,132,86,0.07)";
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#1F1C17";
+                  (e.currentTarget as HTMLAnchorElement).style.background = "var(--nav-hover-wash)";
+                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-ink-900)";
                 }
               }}
               onMouseLeave={e => {
                 if (!active) {
                   (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-                  (e.currentTarget as HTMLAnchorElement).style.color = "#5A554C";
+                  (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-ink-600)";
                 }
               }}
             >
@@ -117,15 +117,15 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   className="absolute left-0 inset-y-2 w-0.5 rounded-r-full"
                   style={{
-                    background: "linear-gradient(to bottom, #C99E4E, #E2C586)",
-                    boxShadow:  "0 0 8px rgba(201,158,78,0.50)",
+                    background: "var(--nav-active-bar)",
+                    boxShadow:  "var(--nav-active-glow)",
                   }}
                 />
               )}
               <Icon
                 size={19}
                 className="shrink-0 transition-colors"
-                style={{ color: active ? "#A87B26" : "inherit" }}
+                style={{ color: active ? "var(--color-brass-600)" : "inherit" }}
               />
               <span
                 className={cn(
@@ -155,7 +155,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       {/* Agent identity */}
       <div
         className="p-2 lg:p-3 shrink-0"
-        style={{ borderTop: "1px solid rgba(160,132,86,0.12)" }}
+        style={{ borderTop: "1px solid var(--hairline-warm)" }}
       >
         <div
           className={cn(
@@ -173,8 +173,8 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             <span
               className="w-9 h-9 rounded-full grid place-items-center text-xs font-display font-600 shrink-0"
               style={{
-                background: "rgba(201,158,78,0.14)",
-                color:      "#8A6420",
+                background: "var(--avatar-wash)",
+                color:      "var(--color-brass-700)",
               }}
             >
               —
@@ -186,10 +186,10 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
               collapsed ? "hidden" : "hidden lg:block",
             )}
           >
-            <p className="text-sm font-medium truncate" style={{ color: "#1F1C17" }}>
+            <p className="text-sm font-medium truncate" style={{ color: "var(--color-ink-900)" }}>
               {agent?.name ?? "No agent"}
             </p>
-            <p className="text-xs truncate capitalize" style={{ color: "#8C867B" }}>
+            <p className="text-xs truncate capitalize" style={{ color: "var(--color-ink-400)" }}>
               {agent?.role ?? "—"}
             </p>
           </div>
@@ -207,18 +207,18 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             "transition-colors duration-200",
           )}
           style={{
-            background: "rgba(255,253,247,0.92)",
-            border:     "1px solid rgba(255,255,255,0.95)",
-            boxShadow:  "0 4px 14px rgba(160,132,86,0.18)",
-            color:      "#5A554C",
+            background: "var(--toggle-surface)",
+            border:     "1px solid var(--glass-edge)",
+            boxShadow:  "var(--toggle-shadow)",
+            color:      "var(--color-ink-600)",
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = "#FFFFFF";
-            (e.currentTarget as HTMLButtonElement).style.color = "#1F1C17";
+            (e.currentTarget as HTMLButtonElement).style.background = "var(--color-surface-base)";
+            (e.currentTarget as HTMLButtonElement).style.color = "var(--color-ink-900)";
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,253,247,0.92)";
-            (e.currentTarget as HTMLButtonElement).style.color = "#5A554C";
+            (e.currentTarget as HTMLButtonElement).style.background = "var(--toggle-surface)";
+            (e.currentTarget as HTMLButtonElement).style.color = "var(--color-ink-600)";
           }}
         >
           {collapsed

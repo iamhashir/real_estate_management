@@ -30,7 +30,7 @@ export function OfflineBanner() {
           role="alert"
           aria-live="assertive"
           className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-center gap-2 py-2 px-4 text-sm font-medium text-white"
-          style={{ background: "rgba(245, 181, 61, 0.92)", backdropFilter: "blur(8px)" }}
+          style={{ background: "var(--surface-warning)", backdropFilter: "blur(8px)" }}
         >
           <WifiOff size={14} aria-hidden="true" />
           <span>You&apos;re offline — changes will sync when reconnected</span>

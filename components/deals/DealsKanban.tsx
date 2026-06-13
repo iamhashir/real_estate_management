@@ -43,12 +43,12 @@ interface DealsKanbanProps {
 // Glass card surface — matches the established style in dashboard/StatCard.tsx
 const GLASS_STYLE: React.CSSProperties = {
   background:
-    "linear-gradient(140deg, rgba(255,255,255,0.85) 0%, rgba(253,246,232,0.66) 60%, rgba(248,238,218,0.58) 100%)",
+    "var(--surface-stat)",
   backdropFilter:       "blur(20px) saturate(1.5)",
   WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-  border:               "1px solid rgba(255,255,255,0.95)",
+  border:               "1px solid var(--glass-edge)",
   boxShadow:
-    "0 1px 2px rgba(160,132,86,0.06), 0 12px 32px -10px rgba(160,132,86,0.16), inset 0 1px 0 rgba(255,255,255,1)",
+    "var(--stat-shadow)",
 };
 
 function dealValue(d: KanbanDeal): number {
@@ -59,7 +59,7 @@ function dealValue(d: KanbanDeal): number {
 
 function KanbanCard({ deal, overlay }: { deal: KanbanDeal; overlay?: boolean }) {
   const stageMeta = DEAL_STAGES.find((s) => s.value === deal.stage);
-  const accentHex = STAGE_HEX[stageMeta?.color ?? "info"] ?? "#1C97B5";
+  const accentHex = STAGE_HEX[stageMeta?.color ?? "info"] ?? "var(--color-sea-600)";
   const partyName = deal.buyerName ?? deal.sellerName ?? "Unassigned";
 
   return (
@@ -141,7 +141,7 @@ function KanbanColumn({
   dragHappenedRef: React.MutableRefObject<boolean>;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.value });
-  const accentHex = STAGE_HEX[stage.color] ?? "#1C97B5";
+  const accentHex = STAGE_HEX[stage.color] ?? "var(--color-sea-600)";
   const total = deals.reduce((sum, d) => sum + dealValue(d), 0);
 
   return (

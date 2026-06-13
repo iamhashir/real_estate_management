@@ -25,13 +25,13 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-h3" style={{ color: "#1F1C17" }}>Recent Listings</h2>
+        <h2 className="text-h3" style={{ color: "var(--color-ink-900)" }}>Recent Listings</h2>
         <Link
           href="/properties"
           className="inline-flex items-center gap-1 text-sm font-medium transition-colors min-h-[44px]"
-          style={{ color: "#1C97B5" }}
-          onMouseEnter={e => ((e.target as HTMLAnchorElement).style.color = "#15758F")}
-          onMouseLeave={e => ((e.target as HTMLAnchorElement).style.color = "#1C97B5")}
+          style={{ color: "var(--color-sea-600)" }}
+          onMouseEnter={e => ((e.target as HTMLAnchorElement).style.color = "var(--color-sea-700)")}
+          onMouseLeave={e => ((e.target as HTMLAnchorElement).style.color = "var(--color-sea-600)")}
         >
           View all <ArrowRight size={14} />
         </Link>
@@ -50,21 +50,21 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
               key={p._id}
               className="flex items-center gap-3 rounded-md px-3 py-2.5 cursor-pointer transition-all"
               style={{
-                background: "rgba(255,255,255,0.55)",
-                border:     "1px solid rgba(255,255,255,0.80)",
-                boxShadow:  "0 1px 4px rgba(160,132,86,0.06)",
+                background: "var(--row-surface)",
+                border:     "1px solid var(--row-surface-hover)",
+                boxShadow:  "var(--shadow-row)",
               }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.80)";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(160,132,86,0.10)";
+                (e.currentTarget as HTMLDivElement).style.background = "var(--row-surface-hover)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--shadow-row-hover)";
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.55)";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 4px rgba(160,132,86,0.06)";
+                (e.currentTarget as HTMLDivElement).style.background = "var(--row-surface)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "var(--shadow-row)";
               }}
             >
               <span className="relative w-14 h-14 rounded-md overflow-hidden shrink-0"
-                style={{ background: "linear-gradient(135deg, #17BFBA 0%, #3FD8CF 100%)" }}>
+                style={{ background: "var(--gradient-foam)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={propertyImage(p, 200)}
@@ -77,22 +77,22 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm font-medium truncate" style={{ color: "#1F1C17" }}>{p.name}</p>
+                  <p className="text-sm font-medium truncate" style={{ color: "var(--color-ink-900)" }}>{p.name}</p>
                   <StatusPill value={p.status} variant="property" />
                 </div>
-                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "#8C867B" }}>
+                <div className="flex items-center gap-2 mt-1 text-xs" style={{ color: "var(--color-ink-400)" }}>
                   <span className="flex items-center gap-0.5 min-w-0 truncate">
                     <MapPin size={11} className="shrink-0" />{p.area ?? p.city}
                   </span>
                   <Badge color="sea" size="sm">{typeLabel(p.type)}</Badge>
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "#8C867B" }}>
-                  <span className="font-medium text-money" style={{ color: "#2E7C61" }}>{formatCurrency(p.price)}</span>
+                <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: "var(--color-ink-400)" }}>
+                  <span className="font-medium text-money" style={{ color: "var(--color-success)" }}>{formatCurrency(p.price)}</span>
                   {p.bedrooms != null && (
                     <span className="flex items-center gap-0.5"><BedDouble size={12} />{p.bedrooms}</span>
                   )}
                   <span className="flex items-center gap-0.5"><Maximize size={12} />{formatNumber(p.size)}m²</span>
-                  <span className="ml-auto whitespace-nowrap" style={{ color: "#7C766B" }}>
+                  <span className="ml-auto whitespace-nowrap" style={{ color: "var(--color-ink-500)" }}>
                     {formatRelativeDate(p._creationTime)}
                   </span>
                 </div>

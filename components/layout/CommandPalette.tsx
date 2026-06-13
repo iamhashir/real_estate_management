@@ -117,12 +117,12 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
               )}
               style={{
                 background:
-                  "linear-gradient(140deg, rgba(255,255,255,0.92), rgba(253,246,232,0.85))",
+                  "var(--glass-palette)",
                 backdropFilter: "blur(20px) saturate(1.5)",
                 WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-                border: "1px solid rgba(255,255,255,0.95)",
+                border: "1px solid var(--glass-edge)",
                 boxShadow:
-                  "0 24px 64px -16px rgba(160,132,86,0.28), 0 4px 16px rgba(160,132,86,0.10)",
+                  "var(--shadow-palette)",
               }}
               initial={{ opacity: 0, scale: reducedMotion ? 1 : 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -147,7 +147,7 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                 {/* Input row */}
                 <div
                   className="flex items-center gap-2.5 px-4"
-                  style={{ borderBottom: "1px solid rgba(160,132,86,0.13)" }}
+                  style={{ borderBottom: "1px solid var(--hairline-strong)" }}
                 >
                   <Search size={16} className="text-ink-400 shrink-0" />
                   <Command.Input
@@ -292,7 +292,7 @@ export function CommandPalette({ open, onOpenChange, onQuickAdd }: CommandPalett
                 {/* Footer hint */}
                 <div
                   className="px-4 py-2 text-xs text-ink-600"
-                  style={{ borderTop: "1px solid rgba(160,132,86,0.13)" }}
+                  style={{ borderTop: "1px solid var(--hairline-strong)" }}
                 >
                   ↑↓ navigate · ↵ select · esc close
                 </div>

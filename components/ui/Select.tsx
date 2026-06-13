@@ -44,7 +44,7 @@ export function Select({
           "relative flex items-center rounded-md border transition-all duration-150 bg-surface-card",
           "peer-focus-visible:outline-none",
           error
-            ? "border-danger/60 shadow-[0_0_0_2px_rgba(229,72,77,0.15)]"
+            ? "border-danger/60 shadow-[0_0_0_2px_var(--ring-danger)]"
             : focused
               ? "border-aqua-400 shadow-glow ring-1 ring-aqua-400/30"
               : "border-hairline hover:border-ink-200"

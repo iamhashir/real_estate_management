@@ -47,9 +47,9 @@ export function Skyline({ className }: SkylineProps) {
         cx="430"
         cy="80"
         r="34"
-        stroke="#C99E4E"
+        stroke="var(--art-accent)"
         strokeWidth="2"
-        fill="rgba(233,205,150,0.25)"
+        fill="var(--art-honey-faint)"
         initial={reduceMotion ? undefined : { cy: 130, opacity: 0 }}
         animate={reduceMotion ? undefined : { cy: 80, opacity: 1 }}
         transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
@@ -62,7 +62,7 @@ export function Skyline({ className }: SkylineProps) {
           y1={80 + Math.sin((deg * Math.PI) / 180) * 44}
           x2={430 + Math.cos((deg * Math.PI) / 180) * 52}
           y2={80 + Math.sin((deg * Math.PI) / 180) * 52}
-          stroke="#C99E4E"
+          stroke="var(--art-accent)"
           strokeWidth="2"
           strokeLinecap="round"
           {...windowAppear(0.06 * i)}
@@ -75,7 +75,7 @@ export function Skyline({ className }: SkylineProps) {
         y1="222"
         x2="550"
         y2="222"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinecap="round"
         {...path(0)}
@@ -84,14 +84,14 @@ export function Skyline({ className }: SkylineProps) {
       {/* Tower 1 — tall, left */}
       <motion.path
         d="M60 222 V92 H128 V222"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.15)}
       />
       <motion.path
         d="M78 92 V74 H110 V92"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.35)}
@@ -99,10 +99,10 @@ export function Skyline({ className }: SkylineProps) {
       {/* Antenna */}
       <motion.line
         x1="94" y1="74" x2="94" y2="54"
-        stroke="#115A70" strokeWidth="2" strokeLinecap="round"
+        stroke="var(--art-line)" strokeWidth="2" strokeLinecap="round"
         {...path(0.5)}
       />
-      <motion.circle cx="94" cy="50" r="3" fill="#17BFBA" {...windowAppear(0.5)} />
+      <motion.circle cx="94" cy="50" r="3" fill="var(--art-pop)" {...windowAppear(0.5)} />
 
       {/* Tower 1 windows */}
       {[112, 136, 160, 184].map((y, row) =>
@@ -114,7 +114,7 @@ export function Skyline({ className }: SkylineProps) {
             width="10"
             height="12"
             rx="1.5"
-            fill="rgba(23,191,186,0.35)"
+            fill="var(--art-aqua)"
             {...windowAppear(row * 0.1 + col * 0.05)}
           />
         ))
@@ -123,7 +123,7 @@ export function Skyline({ className }: SkylineProps) {
       {/* Tower 2 — mid, stepped */}
       <motion.path
         d="M152 222 V132 H190 V112 H226 V222"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.3)}
@@ -136,7 +136,7 @@ export function Skyline({ className }: SkylineProps) {
           width="44"
           height="10"
           rx="1.5"
-          fill="rgba(201,158,78,0.30)"
+          fill="var(--art-brass)"
           {...windowAppear(0.3 + row * 0.1)}
         />
       ))}
@@ -144,17 +144,17 @@ export function Skyline({ className }: SkylineProps) {
       {/* Tower 3 — landmark, tallest */}
       <motion.path
         d="M252 222 V64 L290 40 L328 64 V222"
-        stroke="#0D4152"
+        stroke="var(--art-line-deep)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.45)}
       />
       <motion.line
         x1="290" y1="40" x2="290" y2="20"
-        stroke="#0D4152" strokeWidth="2" strokeLinecap="round"
+        stroke="var(--art-line-deep)" strokeWidth="2" strokeLinecap="round"
         {...path(0.8)}
       />
-      <motion.circle cx="290" cy="16" r="3" fill="#FF6B5E" {...windowAppear(0.8)} />
+      <motion.circle cx="290" cy="16" r="3" fill="var(--art-flag)" {...windowAppear(0.8)} />
       {[84, 110, 136, 162, 188].map((y, row) => (
         <motion.rect
           key={`t3-${row}`}
@@ -163,7 +163,7 @@ export function Skyline({ className }: SkylineProps) {
           width="44"
           height="12"
           rx="1.5"
-          fill="rgba(23,191,186,0.28)"
+          fill="var(--art-aqua-soft)"
           {...windowAppear(0.45 + row * 0.08)}
         />
       ))}
@@ -171,7 +171,7 @@ export function Skyline({ className }: SkylineProps) {
       {/* House — foreground, right of landmark */}
       <motion.path
         d="M352 222 V160 L394 128 L436 160 V222"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.6)}
@@ -179,27 +179,27 @@ export function Skyline({ className }: SkylineProps) {
       {/* Door */}
       <motion.path
         d="M382 222 V188 H406 V222"
-        stroke="#C99E4E"
+        stroke="var(--art-accent)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.9)}
       />
-      <motion.circle cx="401" cy="206" r="2" fill="#C99E4E" {...windowAppear(0.9)} />
+      <motion.circle cx="401" cy="206" r="2" fill="var(--art-accent)" {...windowAppear(0.9)} />
       {/* Round attic window */}
       <motion.circle
         cx="394"
         cy="158"
         r="9"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2"
-        fill="rgba(233,205,150,0.30)"
+        fill="var(--art-honey)"
         {...windowAppear(0.7)}
       />
 
       {/* Tower 4 — right edge */}
       <motion.path
         d="M460 222 V108 H520 V222"
-        stroke="#115A70"
+        stroke="var(--art-line)"
         strokeWidth="2.5"
         strokeLinejoin="round"
         {...path(0.75)}
@@ -213,7 +213,7 @@ export function Skyline({ className }: SkylineProps) {
             width="12"
             height="14"
             rx="1.5"
-            fill="rgba(255,107,94,0.25)"
+            fill="var(--art-coral)"
             {...windowAppear(0.75 + row * 0.1 + col * 0.05)}
           />
         ))
@@ -228,7 +228,7 @@ export function Skyline({ className }: SkylineProps) {
         <motion.path
           key={`bird-${i}`}
           d={`M${b.x} ${b.y} q5 -6 10 0 q5 -6 10 0`}
-          stroke="#5A554C"
+          stroke="var(--art-bird)"
           strokeWidth="1.5"
           strokeLinecap="round"
           initial={reduceMotion ? undefined : { opacity: 0, x: -16 }}

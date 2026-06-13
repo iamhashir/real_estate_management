@@ -15,7 +15,7 @@ const colorMap: Record<BadgeColor, string> = {
   aqua:    "bg-aqua-100 text-sea-800",
   coral:   "bg-coral-100 text-coral-500",
   sea:     "bg-sea-800/10 text-sea-700",
-  warning: "bg-warning/15 text-[#7A4F00]",
+  warning: "bg-warning/15 text-warning-700",
   success: "bg-success/15 text-success",
   danger:  "bg-danger/15 text-danger",
   info:    "bg-info/15 text-info",
