@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, RotateCcw } from "lucide-react";
+import { MapPin, RotateCcw, ChevronDown, ChevronUp } from "lucide-react";
 import { Drawer, Input, SegmentedToggle, Combobox, Textarea, Button, useToast, MapLocationPicker } from "@/components/ui";
 import { ChipToggleGroup, FormSection, FormStepper, useDraft } from "./formHelpers";
 import { formatCurrency } from "@/lib/utils";
@@ -74,12 +74,20 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
   const { agent } = useCurrentAgent();
 
   const [form, setForm, clearDraft, hasDraft] = useDraft<Draft>("draft:property", EMPTY, isOpen && !isEdit);
-  const [step, setStep]   = useState(0);
-  const [dir, setDir]     = useState(1);
+  const [step, setStep]     = useState(0);
+  const [dir, setDir]       = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap]               = useState(false);
   const [showDraftBanner, setShowDraftBanner] = useState(false);
+  const [closeWarning, setCloseWarning]     = useState(false);
+  const [showAllFeatures, setShowAllFeatures] = useState(false);
+
+  const FEATURES_PREVIEW = 8;
+  const hiddenFeaturesCount = Math.max(0, PROPERTY_FEATURES.length - FEATURES_PREVIEW);
+  const visibleFeatures = showAllFeatures
+    ? PROPERTY_FEATURES
+    : (PROPERTY_FEATURES as readonly string[]).slice(0, FEATURES_PREVIEW);
 
   // Show draft banner when a non-trivial draft was restored
   useEffect(() => {
@@ -126,9 +134,26 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
 
   const next  = () => { if (validateStep1()) { setDir(1); setStep(1); setErrors({}); } };
   const back  = () => { setDir(-1); setStep(0); setErrors({}); };
-  const reset = () => { setForm(EMPTY); setStep(0); setErrors({}); clearDraft(); setShowDraftBanner(false); };
+  const reset = () => {
+    setForm(EMPTY); setStep(0); setErrors({});
+    clearDraft(); setShowDraftBanner(false);
+    setShowAllFeatures(false); setCloseWarning(false);
+  };
 
-  const handleClose = () => { setStep(0); setShowMap(false); onClose(); };
+  // Dirty check — any meaningful content entered
+  const isDirty = !isEdit && (
+    form.name.trim() !== "" || form.city !== "" ||
+    form.price !== "" || form.features.length > 0
+  );
+
+  const handleClose = () => {
+    if (isDirty) { setCloseWarning(true); return; }
+    setStep(0); setShowMap(false); setCloseWarning(false); onClose();
+  };
+
+  const handleDiscard = () => {
+    reset(); setStep(0); setShowMap(false); onClose();
+  };
 
   const num = (s: string) => (s.trim() === "" ? undefined : Number(s));
 
@@ -197,7 +222,15 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
       title={isEdit ? "Edit Property" : "New Property"}
       description={step === 0 ? "Step 1 of 2 — Details" : "Step 2 of 2 — Pricing & specs"}
       footer={
-        step === 0 ? (
+        closeWarning ? (
+          <div className="space-y-3">
+            <p className="text-sm text-center text-ink-700 font-medium">Discard unsaved changes?</p>
+            <div className="flex gap-2">
+              <Button variant="secondary" fullWidth onClick={() => setCloseWarning(false)}>Keep editing</Button>
+              <Button variant="danger" fullWidth onClick={handleDiscard}>Discard</Button>
+            </div>
+          </div>
+        ) : step === 0 ? (
           <div className="flex gap-2">
             <Button variant="secondary" fullWidth onClick={handleClose}>Cancel</Button>
             <Button fullWidth onClick={next}>Continue to Pricing</Button>
@@ -418,45 +451,64 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
           {step === 1 && (
             <>
               <FormSection title="Pricing">
+                {/* "Price" label only — hint carries the formatted AED value */}
                 <Input
-                  label={`Price${form.listingType === "rent" ? " (AED / year)" : " (AED)"}`}
+                  label={form.listingType === "rent" ? "Annual rent" : "Price"}
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={form.price}
                   error={errors.price}
-                  hint={form.price && Number(form.price) > 0 ? formatCurrency(Number(form.price)) : undefined}
+                  hint={form.price && Number(form.price) > 0 ? formatCurrency(Number(form.price)) : "AED"}
                   onChange={(e) => set("price", e.target.value.replace(/[^0-9]/g, ""))}
                   onBlur={validateStep2}
                   autoComplete="off"
                 />
                 <Input
-                  label="Size (sqm)"
+                  label="Size"
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={form.size}
                   error={errors.size}
-                  hint={form.size && Number(form.size) > 0 ? `${Number(form.size).toLocaleString()} sqm` : undefined}
+                  hint={form.size && Number(form.size) > 0 ? `${Number(form.size).toLocaleString()} sqm` : "sqm"}
                   onChange={(e) => set("size", e.target.value.replace(/[^0-9]/g, ""))}
                   onBlur={validateStep2}
                   autoComplete="off"
                 />
+
+                {/* Live price-per-sqm — agents think in this unit constantly */}
+                <AnimatePresence>
+                  {form.price && form.size &&
+                   Number(form.price) > 0 && Number(form.size) > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-surface-base border border-hairline"
+                    >
+                      <span className="text-xs text-ink-500 uppercase tracking-wide font-medium">Price / sqm</span>
+                      <span className="font-display font-semibold text-sm text-sea-700 text-money">
+                        {formatCurrency(Math.round(Number(form.price) / Number(form.size)))}
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </FormSection>
 
               <FormSection title="Specifications">
-                {/* Floor — belongs with physical specs, not next to size */}
                 <Input
                   label="Floor number"
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={form.floor}
+                  hint="Leave blank for ground floor or N/A"
                   onChange={(e) => set("floor", e.target.value.replace(/[^0-9]/g, ""))}
                   autoComplete="off"
                 />
 
-                {/* Bedrooms + Bathrooms only for property types that have rooms */}
                 {showRooms && (
                   <div className="grid grid-cols-2 gap-4">
                     <FormStepper
@@ -477,8 +529,12 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
 
               <FormSection title="Features">
                 <ChipToggleGroup
-                  label="Amenities"
-                  options={PROPERTY_FEATURES}
+                  label={
+                    form.features.length
+                      ? `Amenities · ${form.features.length} selected`
+                      : "Amenities"
+                  }
+                  options={visibleFeatures}
                   selected={form.features}
                   onToggle={(v) =>
                     set("features",
@@ -488,13 +544,30 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
                     )
                   }
                 />
+
+                {/* Collapse / expand when list is long */}
+                {hiddenFeaturesCount > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowAllFeatures((s) => !s)}
+                    className="flex items-center gap-1 text-xs font-medium text-aqua-500 hover:text-sea-700 transition-colors touch-manipulation mt-1"
+                  >
+                    {showAllFeatures ? (
+                      <><ChevronUp size={13} /> Show fewer</>
+                    ) : (
+                      <><ChevronDown size={13} /> Show {hiddenFeaturesCount} more</>
+                    )}
+                  </button>
+                )}
               </FormSection>
 
               <FormSection title="Description">
                 <Textarea
                   label="Describe the property"
                   value={form.description}
-                  rows={4}
+                  rows={3}
+                  autoGrow
+                  maxChars={1000}
                   onChange={(e) => set("description", e.target.value)}
                 />
               </FormSection>
