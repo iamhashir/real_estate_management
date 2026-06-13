@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, StatusPill, Skeleton, EmptyState } from "@/components/ui";
+import { Card, StatusPill, Skeleton, EmptyState, Stagger, StaggerItem } from "@/components/ui";
 import { formatCurrency, formatRelativeDate } from "@/lib/utils";
 import { DEAL_STAGES, type DealStage } from "@/lib/constants";
 import type { DashboardStats } from "@/lib/types";
@@ -49,12 +49,12 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
           description='No active deals yet. Create one from the "New" menu to start tracking your pipeline.'
         />
       ) : (
-        <div className="space-y-5">
+        <Stagger className="space-y-5">
           {ACTIVE_STAGES.map((stage) => {
             const deals = pipeline.filter((d) => d.stage === stage.value);
             if (!deals.length) return null;
             return (
-              <div key={stage.value}>
+              <StaggerItem key={stage.value}><div>
                 <div className="flex items-center gap-2 mb-2">
                   <StatusPill value={stage.value as DealStage} variant="deal" pulse={false} />
                   <span className="text-xs" style={{ color: "var(--color-ink-500)" }}>{deals.length}</span>
@@ -99,10 +99,10 @@ export function PipelinePanel({ pipeline, isLoading, onDealClick }: PipelinePane
                     );
                   })}
                 </div>
-              </div>
+              </div></StaggerItem>
             );
           })}
-        </div>
+        </Stagger>
       )}
     </Card>
   );

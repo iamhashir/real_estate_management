@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Card, StatusPill, Badge, Skeleton, EmptyState } from "@/components/ui";
+import { Card, StatusPill, Badge, Skeleton, EmptyState, Stagger, StaggerItem } from "@/components/ui";
 import { formatCurrency, formatNumber, formatRelativeDate } from "@/lib/utils";
 import { propertyImage } from "@/lib/propertyImage";
 import { PROPERTY_TYPES } from "@/lib/constants";
@@ -44,10 +44,10 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
       ) : recent.length === 0 ? (
         <EmptyState variant="properties" icon={<Building2 size={22} />} title="No listings yet" description="Add a property to see it here." />
       ) : (
-        <div className="grid sm:grid-cols-2 gap-3">
+        <Stagger className="grid sm:grid-cols-2 gap-3">
           {recent.map((p) => (
+            <StaggerItem key={p._id}>
             <div
-              key={p._id}
               className="flex items-center gap-3 rounded-md px-3 py-2.5 cursor-pointer transition-all"
               style={{
                 background: "var(--row-surface)",
@@ -98,8 +98,9 @@ export function RecentListings({ properties, isLoading }: RecentListingsProps) {
                 </div>
               </div>
             </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       )}
     </Card>
   );

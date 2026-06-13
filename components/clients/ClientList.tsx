@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Search, Plus, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button, Skeleton, EmptyState } from "@/components/ui";
@@ -74,16 +75,32 @@ export function ClientList({ selectedId, onSelect, onCreate }: ClientListProps) 
             action={!search && !type ? <Button onClick={onCreate}>Add Client</Button> : undefined}
           />
         ) : (
-          <div className="divide-y divide-hairline">
-            {clients.map((c) => (
-              <ClientListItem
-                key={c._id}
-                client={c}
-                active={c._id === selectedId}
-                onClick={() => onSelect(c._id)}
-              />
-            ))}
-          </div>
+          <motion.div
+            className="divide-y divide-hairline"
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.04, delayChildren: 0.02 } } }}
+          >
+            <AnimatePresence initial={false}>
+              {clients.map((c) => (
+                <motion.div
+                  key={c._id}
+                  variants={{
+                    hidden: { opacity: 0, x: -10 },
+                    show:   { opacity: 1, x: 0, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  exit={{ opacity: 0, transition: { duration: 0.12 } }}
+                  layout
+                >
+                  <ClientListItem
+                    client={c}
+                    active={c._id === selectedId}
+                    onClick={() => onSelect(c._id)}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         )}
       </div>
     </div>

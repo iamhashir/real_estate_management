@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Drawer, Input, SegmentedToggle, Combobox, Textarea, Button, useToast } from "@/components/ui";
 import { ChipToggleGroup, FormSection, useDraft } from "./formHelpers";
 import {
@@ -64,6 +64,7 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
 
   const [form, setForm, clearDraft] = useDraft<Draft>("draft:property", EMPTY, isOpen && !isEdit);
   const [step, setStep] = useState(0);
+  const [dir, setDir] = useState(1);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
 
@@ -97,8 +98,8 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
     return Object.keys(e).length === 0;
   };
 
-  const next = () => { if (validateStep1()) { setStep(1); setErrors({}); } };
-  const back = () => { setStep(0); setErrors({}); };
+  const next = () => { if (validateStep1()) { setDir(1); setStep(1); setErrors({}); } };
+  const back = () => { setDir(-1); setStep(0); setErrors({}); };
 
   const reset = () => { setForm(EMPTY); setStep(0); setErrors({}); clearDraft(); };
 
@@ -194,126 +195,145 @@ export function PropertyFormDrawer({ isOpen, onClose, onCreated, initialData }: 
         ))}
       </div>
 
-      <div className={cn(step === 0 ? "block" : "hidden", "space-y-6")}>
-        <FormSection title="Listing">
-          <SegmentedToggle
-            fullWidth
-            options={LISTING_TYPES.map((t) => ({ value: t.value, label: t.label }))}
-            value={form.listingType}
-            onChange={(v) => set("listingType", v)}
-          />
-          <SegmentedToggle
-            fullWidth
-            size="sm"
-            options={PROPERTY_TYPES.map((t) => ({ value: t.value, label: t.label }))}
-            value={form.type}
-            onChange={(v) => set("type", v)}
-          />
-          <Input
-            label="Listing name"
-            value={form.name}
-            error={errors.name}
-            onChange={(e) => set("name", e.target.value)}
-            onBlur={validateStep1}
-            hint="e.g. Marina Gate 2 — 2BR with full sea view"
-          />
-          <Input
-            label="Address"
-            value={form.address}
-            error={errors.address}
-            onChange={(e) => set("address", e.target.value)}
-            onBlur={validateStep1}
-          />
-          <div className="grid grid-cols-2 gap-3">
-            <Combobox
-              label="City"
-              value={form.city}
-              onChange={(v) => { set("city", v); set("area", ""); }}
-              options={CITIES.map((c) => ({ value: c, label: c }))}
-              error={errors.city}
-            />
-            <Combobox
-              label="Area"
-              value={form.area}
-              onChange={(v) => set("area", v)}
-              options={areaOptions}
-              hint={!form.city ? "Pick a city first" : undefined}
-            />
-          </div>
-        </FormSection>
-      </div>
+      <AnimatePresence mode="wait" initial={false} custom={dir}>
+        <motion.div
+          key={step}
+          custom={dir}
+          variants={{
+            enter: (d: number) => ({ opacity: 0, x: d > 0 ? 24 : -24 }),
+            center: { opacity: 1, x: 0 },
+            exit:  (d: number) => ({ opacity: 0, x: d > 0 ? -24 : 24 }),
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-6"
+        >
+          {step === 0 && (
+            <FormSection title="Listing">
+              <SegmentedToggle
+                fullWidth
+                options={LISTING_TYPES.map((t) => ({ value: t.value, label: t.label }))}
+                value={form.listingType}
+                onChange={(v) => set("listingType", v)}
+              />
+              <SegmentedToggle
+                fullWidth
+                size="sm"
+                options={PROPERTY_TYPES.map((t) => ({ value: t.value, label: t.label }))}
+                value={form.type}
+                onChange={(v) => set("type", v)}
+              />
+              <Input
+                label="Listing name"
+                value={form.name}
+                error={errors.name}
+                onChange={(e) => set("name", e.target.value)}
+                onBlur={validateStep1}
+                hint="e.g. Marina Gate 2 — 2BR with full sea view"
+              />
+              <Input
+                label="Address"
+                value={form.address}
+                error={errors.address}
+                onChange={(e) => set("address", e.target.value)}
+                onBlur={validateStep1}
+              />
+              <div className="grid grid-cols-2 gap-3">
+                <Combobox
+                  label="City"
+                  value={form.city}
+                  onChange={(v) => { set("city", v); set("area", ""); }}
+                  options={CITIES.map((c) => ({ value: c, label: c }))}
+                  error={errors.city}
+                />
+                <Combobox
+                  label="Area"
+                  value={form.area}
+                  onChange={(v) => set("area", v)}
+                  options={areaOptions}
+                  hint={!form.city ? "Pick a city first" : undefined}
+                />
+              </div>
+            </FormSection>
+          )}
 
-      <div className={cn(step === 1 ? "block" : "hidden", "space-y-6")}>
-        <FormSection title="Pricing">
-          <Input
-            label={`Price (AED${form.listingType === "rent" ? " / year" : ""})`}
-            type="number"
-            inputMode="numeric"
-            value={form.price}
-            error={errors.price}
-            onChange={(e) => set("price", e.target.value)}
-            onBlur={validateStep2}
-          />
-          <div className="grid grid-cols-2 gap-3">
-            <Input
-              label="Size (sqm)"
-              type="number"
-              inputMode="numeric"
-              value={form.size}
-              error={errors.size}
-              onChange={(e) => set("size", e.target.value)}
-              onBlur={validateStep2}
-            />
-            <Input
-              label="Floor"
-              type="number"
-              inputMode="numeric"
-              value={form.floor}
-              onChange={(e) => set("floor", e.target.value)}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <Input
-              label="Bedrooms"
-              type="number"
-              inputMode="numeric"
-              value={form.bedrooms}
-              onChange={(e) => set("bedrooms", e.target.value)}
-            />
-            <Input
-              label="Bathrooms"
-              type="number"
-              inputMode="numeric"
-              value={form.bathrooms}
-              onChange={(e) => set("bathrooms", e.target.value)}
-            />
-          </div>
-        </FormSection>
+          {step === 1 && (
+            <>
+              <FormSection title="Pricing">
+                <Input
+                  label={`Price (AED${form.listingType === "rent" ? " / year" : ""})`}
+                  type="number"
+                  inputMode="numeric"
+                  value={form.price}
+                  error={errors.price}
+                  onChange={(e) => set("price", e.target.value)}
+                  onBlur={validateStep2}
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <Input
+                    label="Size (sqm)"
+                    type="number"
+                    inputMode="numeric"
+                    value={form.size}
+                    error={errors.size}
+                    onChange={(e) => set("size", e.target.value)}
+                    onBlur={validateStep2}
+                  />
+                  <Input
+                    label="Floor"
+                    type="number"
+                    inputMode="numeric"
+                    value={form.floor}
+                    onChange={(e) => set("floor", e.target.value)}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <Input
+                    label="Bedrooms"
+                    type="number"
+                    inputMode="numeric"
+                    value={form.bedrooms}
+                    onChange={(e) => set("bedrooms", e.target.value)}
+                  />
+                  <Input
+                    label="Bathrooms"
+                    type="number"
+                    inputMode="numeric"
+                    value={form.bathrooms}
+                    onChange={(e) => set("bathrooms", e.target.value)}
+                  />
+                </div>
+              </FormSection>
 
-        <FormSection title="Features">
-          <ChipToggleGroup
-            label="Amenities"
-            options={PROPERTY_FEATURES}
-            selected={form.features}
-            onToggle={(v) =>
-              set("features",
-                form.features.includes(v)
-                  ? form.features.filter((f) => f !== v)
-                  : [...form.features, v]
-              )
-            }
-          />
-        </FormSection>
+              <FormSection title="Features">
+                <ChipToggleGroup
+                  label="Amenities"
+                  options={PROPERTY_FEATURES}
+                  selected={form.features}
+                  onToggle={(v) =>
+                    set("features",
+                      form.features.includes(v)
+                        ? form.features.filter((f) => f !== v)
+                        : [...form.features, v]
+                    )
+                  }
+                />
+              </FormSection>
 
-        <FormSection title="Description">
-          <Textarea
-            label="Describe the property"
-            value={form.description}
-            rows={4}
-            onChange={(e) => set("description", e.target.value)}
-          />
-        </FormSection>
-      </div>
+              <FormSection title="Description">
+                <Textarea
+                  label="Describe the property"
+                  value={form.description}
+                  rows={4}
+                  onChange={(e) => set("description", e.target.value)}
+                />
+              </FormSection>
+            </>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </Drawer>
   );
 }
