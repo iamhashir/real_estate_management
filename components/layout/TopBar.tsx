@@ -57,13 +57,15 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
     <header
       className={cn(
         "h-14 shrink-0 sticky top-0 z-20",
-        "backdrop-blur-md border-b",
+        "backdrop-blur-2xl border-b",
         "flex items-center gap-3 px-4 md:px-6"
       )}
       style={{
         background:        "var(--glass-bar-top)",
-        borderBottomColor: "var(--glass-edge-soft)",
-        boxShadow:         "var(--shadow-bar-bottom)",
+        backdropFilter:    "blur(28px) saturate(1.8)",
+        WebkitBackdropFilter: "blur(28px) saturate(1.8)",
+        borderBottomColor: "var(--bar-border)",
+        boxShadow:         "var(--shadow-bar-bottom), inset 0 1px 0 rgba(255,255,255,0.85)",
       }}
     >
       {/* Search + floating panel */}
@@ -90,8 +92,8 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
             "outline-none transition-all focus:shadow-glow focus-visible:ring-1 focus-visible:ring-aqua-400/40"
           )}
           style={{
-            background: "var(--wash-warm)",
-            border:     "1px solid var(--hairline-strong)",
+            background: "rgba(255,255,255,0.68)",
+            border:     "1px solid var(--bar-border)",
             color:      "var(--color-ink-900)",
           }}
         />
@@ -104,9 +106,10 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
           tabIndex={-1}
           className={cn(
             "hidden md:flex items-center absolute right-2 top-1/2 -translate-y-1/2",
-            "text-xs px-1.5 py-0.5 rounded border border-hairline bg-white/60 text-ink-600",
+            "text-xs px-1.5 py-0.5 rounded border bg-white/80 text-ink-700 font-medium",
             "hover:bg-white hover:text-ink-900 transition-colors touch-manipulation"
           )}
+          style={{ borderColor: "var(--bar-border)" }}
         >
           ⌘K
         </button>
@@ -129,10 +132,16 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
           onClick={() => setMenuOpen((o) => !o)}
           className={cn(
             "h-9 w-9 flex items-center justify-center rounded-md transition-all",
-            "text-stone-500 hover:bg-stone-100",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400/40",
-            "touch-manipulation"
+            "touch-manipulation border"
           )}
+          style={{
+            background: "rgba(255,255,255,0.72)",
+            borderColor: "var(--bar-border)",
+            color: "var(--color-ink-700)",
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.95)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.72)"; }}
           aria-label="Quick add menu"
         >
           <Plus size={16} />
@@ -140,12 +149,13 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
 
         {menuOpen && (
           <div
-            className="absolute right-0 top-full mt-2 w-52 z-50 rounded-md overflow-hidden py-1"
+            className="absolute right-0 top-full mt-2 w-52 z-50 rounded-xl overflow-hidden py-1"
             style={{
-              background:    "var(--glass-menu)",
-              border:        "1px solid var(--glass-edge-soft)",
-              boxShadow:     "var(--shadow-menu)",
-              backdropFilter: "blur(16px)",
+              background:           "var(--glass-menu)",
+              border:               "1px solid var(--bar-border)",
+              boxShadow:            "var(--shadow-menu), inset 0 1px 0 rgba(255,255,255,0.90)",
+              backdropFilter:       "blur(28px) saturate(1.8)",
+              WebkitBackdropFilter: "blur(28px) saturate(1.8)",
             }}
             role="menu"
           >
@@ -158,8 +168,8 @@ export function TopBar({ onQuickAdd, search, onSearchChange, onOpenPalette }: To
                   "flex items-center gap-3 w-full px-3.5 py-2.5 text-sm transition-colors text-left min-h-[44px]",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-aqua-400"
                 )}
-                style={{ color: "var(--color-ink-900)" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "var(--wash-warm-faint)")}
+                style={{ color: "var(--color-ink-800, var(--color-ink-900))" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.65)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "")}
               >
                 <Icon size={16} className="text-aqua-500 shrink-0" />

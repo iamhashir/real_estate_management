@@ -24,14 +24,16 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
     <nav
       className={cn(
         "md:hidden fixed bottom-0 inset-x-0 z-30",
-        "h-16 backdrop-blur-md border-t",
+        "h-16 border-t",
         "flex items-stretch justify-around px-1",
         "pb-[env(safe-area-inset-bottom)]"
       )}
       style={{
-        background:    "var(--glass-bar-bottom)",
-        borderTopColor:"var(--glass-edge-soft)",
-        boxShadow:     "var(--shadow-bar-top)",
+        background:           "var(--glass-bar-bottom)",
+        backdropFilter:       "blur(28px) saturate(1.8)",
+        WebkitBackdropFilter: "blur(28px) saturate(1.8)",
+        borderTopColor:       "var(--bar-border)",
+        boxShadow:            "var(--shadow-bar-top), inset 0 1px 0 rgba(255,255,255,0.80)",
       }}
       aria-label="Primary"
     >
@@ -42,17 +44,21 @@ export function BottomTabBar({ onQuickAdd }: BottomTabBarProps) {
             key={href}
             href={href}
             className={cn(
-              "flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px]",
+              "flex-1 flex flex-col items-center justify-center gap-1 min-h-[44px] relative",
               "text-[12px] font-medium transition-colors rounded-md",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aqua-400",
-              active
-                ? "hover:bg-black/[0.03]"
-                : "hover:bg-black/[0.03]"
+              "hover:bg-black/[0.03]"
             )}
-            style={{ color: active ? "var(--color-sea-600)" : "var(--color-ink-500)" }}
+            style={{ color: active ? "var(--color-brass-700)" : "var(--color-ink-500)" }}
           >
-            <Icon size={20} style={{ color: active ? "var(--color-sea-600)" : "var(--color-ink-500)" }} />
-            {label}
+            {active && (
+              <span
+                className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"
+                style={{ background: "var(--nav-active-bar)" }}
+              />
+            )}
+            <Icon size={20} style={{ color: active ? "var(--color-brass-600)" : "var(--color-ink-500)" }} />
+            <span style={{ color: active ? "var(--color-brass-700)" : "var(--color-ink-500)" }}>{label}</span>
           </Link>
         );
       })}

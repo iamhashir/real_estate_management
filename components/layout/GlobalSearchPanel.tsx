@@ -26,8 +26,8 @@ function SectionHeader({
   return (
     <div className="flex items-center gap-2 px-3 pt-3 pb-1.5">
       <Icon size={12} className="text-ink-500" />
-      <span className="text-[11px] font-semibold text-ink-600 uppercase tracking-wider">{title}</span>
-      <span className="ml-auto text-[11px] text-ink-300">{count}</span>
+      <span className="text-[11px] font-semibold text-metric-label uppercase tracking-wider">{title}</span>
+      <span className="ml-auto text-[11px] text-ink-400 font-medium">{count}</span>
     </div>
   );
 }
@@ -50,7 +50,7 @@ function ResultRow({
       onClick={onClick}
       className={cn(
         "flex items-center gap-3 w-full px-3 py-2 text-left",
-        "hover:bg-aqua-100 active:bg-aqua-100 transition-colors rounded-md group",
+        "hover:bg-white/70 active:bg-white/80 transition-colors rounded-lg group",
         "touch-manipulation min-h-[44px]"
       )}
     >
@@ -107,9 +107,16 @@ export function GlobalSearchPanel({ query, onClose }: Props) {
       transition={{ duration: 0.14, ease: "easeOut" }}
       className={cn(
         "absolute top-full left-0 right-0 mt-2 z-50",
-        "bg-surface-card border border-hairline rounded-xl shadow-float",
+        "rounded-xl",
         "max-h-[440px] overflow-y-auto overscroll-contain"
       )}
+      style={{
+        background:           "var(--glass-menu)",
+        backdropFilter:       "blur(28px) saturate(1.8)",
+        WebkitBackdropFilter: "blur(28px) saturate(1.8)",
+        border:               "1px solid var(--bar-border)",
+        boxShadow:            "var(--shadow-menu), inset 0 1px 0 rgba(255,255,255,0.90)",
+      }}
       onMouseDown={(e) => e.preventDefault()}
     >
       <div className="py-1.5">

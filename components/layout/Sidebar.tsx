@@ -42,9 +42,9 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       )}
       style={{
         background:           "var(--surface-rail)",
-        backdropFilter:       "blur(22px) saturate(1.5)",
-        WebkitBackdropFilter: "blur(22px) saturate(1.5)",
-        borderRight:          "1px solid var(--glass-edge)",
+        backdropFilter:       "blur(28px) saturate(1.8)",
+        WebkitBackdropFilter: "blur(28px) saturate(1.8)",
+        borderRight:          "1px solid var(--bar-border)",
         boxShadow:            "var(--rail-shadow)",
       }}
       aria-label="Main navigation"
@@ -55,7 +55,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           "h-14 flex items-center shrink-0",
           collapsed ? "justify-center px-3" : "gap-2.5 px-3 lg:px-5",
         )}
-        style={{ borderBottom: "1px solid var(--hairline-warm)" }}
+        style={{ borderBottom: "1px solid var(--bar-border)" }}
       >
         <span
           className="grid place-items-center w-9 h-9 rounded-md shrink-0"
@@ -155,7 +155,7 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       {/* Agent identity */}
       <div
         className="p-2 lg:p-3 shrink-0"
-        style={{ borderTop: "1px solid var(--hairline-warm)" }}
+        style={{ borderTop: "1px solid var(--bar-border)" }}
       >
         <div
           className={cn(
@@ -208,9 +208,9 @@ export function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           )}
           style={{
             background: "var(--toggle-surface)",
-            border:     "1px solid var(--glass-edge)",
+            border:     "1px solid var(--bar-border)",
             boxShadow:  "var(--toggle-shadow)",
-            color:      "var(--color-ink-600)",
+            color:      "var(--color-ink-700)",
           }}
           onMouseEnter={e => {
             (e.currentTarget as HTMLButtonElement).style.background = "var(--color-surface-base)";
