@@ -30,7 +30,7 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
   return (
     <div className="glass-cream relative overflow-hidden rounded-xl">
       {/* Animated skyline — draws itself along the bottom edge */}
-      <div className="pointer-events-none absolute bottom-0 right-0 w-full lg:w-3/5 opacity-[0.16] lg:opacity-25">
+      <div className="pointer-events-none absolute bottom-0 right-0 w-full lg:w-3/5 opacity-[0.13] lg:opacity-[0.20]">
         <Skyline className="w-full h-auto" />
       </div>
 
@@ -89,14 +89,14 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
           >
             {/* Primary metric: Portfolio */}
             <div className="flex flex-col lg:items-end group">
-              <p className="text-ink-600 text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
+              <p className="text-metric-label text-xs lg:text-sm font-bold uppercase tracking-[0.1em] mb-3">
                 Portfolio Value
               </p>
               {isLoading ? (
                 <Skeleton className="h-12 lg:h-14 w-48 bg-black/10 rounded-sm" />
               ) : (
                 <motion.p
-                  className="font-display font-800 text-3xl lg:text-4xl text-ink-900 tracking-tight leading-none"
+                  className="font-display font-800 text-3xl lg:text-4xl text-metric-ink tracking-tight leading-none"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -109,19 +109,19 @@ export function HeroBand({ portfolioValue, pipelineValue, commissionThisMonth, i
             {/* Secondary metrics */}
             <div className="grid grid-cols-2 lg:flex lg:flex-col lg:gap-6 gap-4">
               <div className="lg:text-right">
-                <p className="text-ink-600 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-metric-label text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   In Pipeline
                 </p>
                 {isLoading ? (
                   <Skeleton className="h-8 w-28 bg-black/10 rounded-sm lg:ml-auto" />
                 ) : (
-                  <p className="font-display font-700 text-xl lg:text-2xl text-ink-900">
+                  <p className="font-display font-700 text-xl lg:text-2xl text-metric-ink">
                     <AnimatedNumber value={pipelineValue} currency />
                   </p>
                 )}
               </div>
               <div className="lg:text-right">
-                <p className="text-ink-600 text-xs font-bold uppercase tracking-[0.08em] mb-2">
+                <p className="text-metric-label text-xs font-bold uppercase tracking-[0.08em] mb-2">
                   Commission MTD
                 </p>
                 {isLoading ? (

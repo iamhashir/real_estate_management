@@ -104,7 +104,7 @@ export function StatCard({
         background:           "var(--surface-stat)",
         backdropFilter:       "blur(20px) saturate(1.5)",
         WebkitBackdropFilter: "blur(20px) saturate(1.5)",
-        border:               "1px solid var(--glass-edge)",
+        border:               "1px solid var(--color-stat-border)",
         boxShadow:            "var(--stat-shadow)",
       }}
       variants={cardVariants}
@@ -153,7 +153,7 @@ export function StatCard({
             )}
             <p
               className="text-[10px] font-bold uppercase leading-none truncate tracking-[0.14em]"
-              style={{ color: "var(--text-label)" }}
+              style={{ color: "var(--color-metric-label)" }}
             >
               {label}
             </p>
@@ -181,7 +181,7 @@ export function StatCard({
             "font-display font-bold leading-none tracking-tight",
             currency ? "text-xl sm:text-2xl" : "text-2xl sm:text-3xl",
           )}
-          style={{ color: "var(--color-ink-900)" }}
+          style={{ color: "var(--color-metric-ink)" }}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
