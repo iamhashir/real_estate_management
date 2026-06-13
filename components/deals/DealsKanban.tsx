@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import {
   DndContext,
   DragOverlay,
@@ -103,12 +104,11 @@ function DraggableCard({
   });
 
   return (
-    <div
+    <motion.div
       ref={setNodeRef}
       {...listeners}
       {...attributes}
       onClick={() => {
-        // A click that follows a real drag should not open the drawer
         if (isDragging || dragHappenedRef.current) return;
         onOpen(deal._id);
       }}
@@ -121,9 +121,11 @@ function DraggableCard({
         isDragging && "opacity-40"
       )}
       aria-label={`${deal.propertyName} — drag to change stage, press Enter to open`}
+      whileHover={isDragging ? undefined : { y: -2 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
     >
       <KanbanCard deal={deal} />
-    </div>
+    </motion.div>
   );
 }
 
@@ -182,14 +184,28 @@ function KanbanColumn({
             Drop deals here
           </div>
         ) : (
-          deals.map((deal) => (
-            <DraggableCard
-              key={deal._id}
-              deal={deal}
-              onOpen={onOpenDeal}
-              dragHappenedRef={dragHappenedRef}
-            />
-          ))
+          <motion.div
+            className="space-y-2"
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.055, delayChildren: 0.04 } } }}
+          >
+            {deals.map((deal) => (
+              <motion.div
+                key={deal._id}
+                variants={{
+                  hidden: { opacity: 0, y: 8 },
+                  show:   { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+                }}
+              >
+                <DraggableCard
+                  deal={deal}
+                  onOpen={onOpenDeal}
+                  dragHappenedRef={dragHappenedRef}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
         )}
       </div>
     </section>

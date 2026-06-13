@@ -32,7 +32,7 @@ export function PropertyCard({
           alt={property.name}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           onError={(e) => { e.currentTarget.style.opacity = "0"; }}
         />
         {/* legibility scrim */}

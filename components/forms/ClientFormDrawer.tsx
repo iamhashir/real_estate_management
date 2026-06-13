@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Drawer, Input, SegmentedToggle, Combobox, RangeSlider, Textarea, Button, useToast } from "@/components/ui";
 import { ChipToggleGroup, FormSection, compactAED, useDraft } from "./formHelpers";
 import {
@@ -166,7 +167,13 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
         </div>
       }
     >
-      <div className="space-y-6">
+      <motion.div
+        className="space-y-6"
+        initial="hidden"
+        animate="show"
+        variants={{ show: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } } }}
+      >
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } } }}>
         <FormSection title="Profile">
           <SegmentedToggle
             fullWidth
@@ -211,7 +218,9 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
             options={NATIONALITIES.map((n) => ({ value: n, label: n }))}
           />
         </FormSection>
+        </motion.div>
 
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } } }}>
         <FormSection title="Preferences">
           <RangeSlider
             label="Budget (AED)"
@@ -239,27 +248,34 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
             />
             {form.preferredLocations.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                {form.preferredLocations.map((loc) => (
-                  <span
-                    key={loc}
-                    className="inline-flex items-center gap-1 pl-3 pr-1.5 py-1 rounded-full text-sm bg-aqua-100 text-sea-800 border border-aqua-300"
-                  >
-                    {loc}
-                    <button
-                      type="button"
-                      onClick={() => toggleIn("preferredLocations", loc)}
-                      className="text-sea-700/60 hover:text-sea-800 p-0.5"
-                      aria-label={`Remove ${loc}`}
+                <AnimatePresence initial={false}>
+                  {form.preferredLocations.map((loc) => (
+                    <motion.span
+                      key={loc}
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      animate={{ opacity: 1, scale: 1, transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] } }}
+                      exit={{ opacity: 0, scale: 0.85, transition: { duration: 0.15 } }}
+                      className="inline-flex items-center gap-1 pl-3 pr-1.5 py-1 rounded-full text-sm bg-aqua-100 text-sea-800 border border-aqua-300"
                     >
-                      <X size={12} />
-                    </button>
-                  </span>
-                ))}
+                      {loc}
+                      <button
+                        type="button"
+                        onClick={() => toggleIn("preferredLocations", loc)}
+                        className="text-sea-700/60 hover:text-sea-800 p-0.5"
+                        aria-label={`Remove ${loc}`}
+                      >
+                        <X size={12} />
+                      </button>
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
               </div>
             )}
           </div>
         </FormSection>
+        </motion.div>
 
+        <motion.div variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } } }}>
         <FormSection title="Notes">
           <Textarea
             label="Anything worth remembering"
@@ -268,7 +284,8 @@ export function ClientFormDrawer({ isOpen, onClose, onCreated, initialData }: Cl
             onChange={(e) => set("notes", e.target.value)}
           />
         </FormSection>
-      </div>
+        </motion.div>
+      </motion.div>
     </Drawer>
   );
 }
