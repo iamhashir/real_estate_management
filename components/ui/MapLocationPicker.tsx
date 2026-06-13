@@ -1,5 +1,6 @@
 "use client";
 
+import { MapPin } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface MapLocationPickerProps {
@@ -16,8 +17,9 @@ export function MapLocationPicker({
   height = "h-64",
 }: MapLocationPickerProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<any>(null);
+  const map    = useRef<any>(null);
   const marker = useRef<any>(null);
+  const L      = useRef<any>(null);  // cached Leaflet module
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -28,29 +30,32 @@ export function MapLocationPicker({
     if (!isClient || !mapContainer.current) return;
 
     const initMap = async () => {
-      const L = (await import("leaflet")).default;
+      const leaflet = (await import("leaflet")).default;
       await import("leaflet/dist/leaflet.css");
+      L.current = leaflet;
 
       const defaultLat = latitude || 25.2048;
       const defaultLng = longitude || 55.2708;
 
       if (!map.current && mapContainer.current) {
-        map.current = L.map(mapContainer.current).setView([defaultLat, defaultLng], 13);
+        map.current = leaflet.map(mapContainer.current, {
+          scrollWheelZoom: false,
+        }).setView([defaultLat, defaultLng], 13);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        leaflet.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
           maxZoom: 19,
         }).addTo(map.current);
 
         map.current.on("click", (e: any) => {
           const { lat, lng } = e.latlng;
-          updateMarker(lat, lng);
+          placeMarker(lat, lng);
           onLocationChange(lat, lng);
         });
       }
 
       if (latitude !== undefined && longitude !== undefined) {
-        updateMarker(latitude, longitude);
+        placeMarker(latitude, longitude);
       }
     };
 
@@ -63,17 +68,15 @@ export function MapLocationPicker({
     };
   }, [isClient, latitude, longitude, onLocationChange]);
 
-  const updateMarker = (lat: number, lng: number) => {
-    if (!map.current) return;
-
-    const L = require("leaflet");
+  const placeMarker = (lat: number, lng: number) => {
+    if (!map.current || !L.current) return;
 
     if (marker.current) {
       map.current.removeLayer(marker.current);
     }
 
-    marker.current = L.marker([lat, lng], {
-      icon: L.icon({
+    marker.current = L.current.marker([lat, lng], {
+      icon: L.current.icon({
         iconUrl: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSI0MSI+PHBhdGggZmlsbD0iIzJFNUI2MCIgZD0iTTEyLjUgMGM2LjkwMyAwIDEyLjUgNS41OTcgMTIuNSAxMi41IDAgMTIuNS0xMi41IDI4LjUtMTIuNSAyOC41cy0xMi41LTE2LTEyLjUtMjguNUMwIDUuNTk3IDUuNTk3IDAgMTIuNSAweiIvPjxjaXJjbGUgY3g9IjEyLjUiIGN5PSIxMiIgcj0iNC41IiBmaWxsPSIjZmZmIi8+PC9zdmc+",
         iconSize: [25, 41],
         iconAnchor: [12, 41],
@@ -96,10 +99,11 @@ export function MapLocationPicker({
         ref={mapContainer}
         className={`${height} rounded-md border border-hairline overflow-hidden cursor-pointer hover:border-sea-300 transition-colors`}
       />
-      <p className="text-xs text-ink-600">Click on the map to pinpoint the exact location</p>
+      <p className="text-xs text-ink-500">Tap anywhere on the map to drop a pin</p>
       {latitude && longitude && (
-        <p className="text-xs text-ink-700 bg-surface-card px-3 py-2 rounded-md font-mono">
-          📍 {latitude.toFixed(4)}, {longitude.toFixed(4)}
+        <p className="flex items-center gap-1.5 text-xs text-ink-700 bg-surface-card px-3 py-2 rounded-md font-mono">
+          <MapPin size={11} className="text-sea-700 shrink-0" />
+          {latitude.toFixed(4)}, {longitude.toFixed(4)}
         </p>
       )}
     </div>

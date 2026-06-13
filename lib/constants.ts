@@ -107,12 +107,21 @@ export const ENTITY_TYPES = [
 
 // ─── Locations ────────────────────────────────────────────────────────────────
 
-export const CITIES = [
-  "Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah",
-  "Fujairah", "Umm Al Quwain",
+export const COUNTRIES = [
+  { value: "ae", label: "UAE" },
+  { value: "lb", label: "Lebanon" },
 ] as const;
 
+export const CITIES_BY_COUNTRY: Record<string, string[]> = {
+  ae: ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
+  lb: ["Beirut", "Jounieh", "Tripoli", "Sidon", "Tyre", "Byblos", "Baalbek"],
+};
+
+// Flat list of all cities across all countries — used by ClientFormDrawer, search, etc.
+export const CITIES = Object.values(CITIES_BY_COUNTRY).flat();
+
 export const AREAS_BY_CITY: Record<string, string[]> = {
+  // ── UAE ──────────────────────────────────────────────────────────────────
   Dubai: [
     "Downtown Dubai", "Dubai Marina", "Palm Jumeirah", "Business Bay",
     "Jumeirah", "Dubai Hills Estate", "Arabian Ranches", "JBR",
@@ -123,11 +132,24 @@ export const AREAS_BY_CITY: Record<string, string[]> = {
     "Corniche", "Al Reem Island", "Yas Island", "Saadiyat Island",
     "Al Khalidiyah", "Tourist Club Area", "Khalifa City",
   ],
-  Sharjah: ["Al Majaz", "Al Qasba", "Al Khan", "Al Nahda"],
-  Ajman: ["Al Nuaimiyah", "Al Rashidiya", "Al Jurf"],
+  Sharjah:          ["Al Majaz", "Al Qasba", "Al Khan", "Al Nahda"],
+  Ajman:            ["Al Nuaimiyah", "Al Rashidiya", "Al Jurf"],
   "Ras Al Khaimah": ["Al Hamra Village", "Mina Al Arab", "Al Nakheel"],
-  Fujairah: ["Fujairah City", "Dibba"],
-  "Umm Al Quwain": ["UAQ City"],
+  Fujairah:         ["Fujairah City", "Dibba"],
+  "Umm Al Quwain":  ["UAQ City"],
+
+  // ── Lebanon ───────────────────────────────────────────────────────────────
+  Beirut: [
+    "Hamra", "Achrafieh", "Gemmayzeh", "Mar Mikhael", "Verdun",
+    "Raouché", "Solidere", "Badaro", "Sassine", "Basta",
+    "Ras Beirut", "Ain Mreisseh", "Manara",
+  ],
+  Jounieh:  ["Kaslik", "Zouk Mosbeh", "Zouk Mikael", "Maameltein"],
+  Tripoli:  ["El Mina", "Bab El Tabbaneh", "Azmi", "Tall Square"],
+  Sidon:    ["Old City", "Saida Coast", "Ghazieh", "Abra"],
+  Tyre:     ["Sur", "Abbasiye", "Rachidieh"],
+  Byblos:   ["Jbeil", "Amchit", "Fidar"],
+  Baalbek:  ["Baalbek City", "Ras El Ain"],
 };
 
 // ─── UI / Pagination ──────────────────────────────────────────────────────────
@@ -173,4 +195,5 @@ export type DealType          = typeof DEAL_TYPES[number]["value"];
 export type AgentRole         = typeof AGENT_ROLES[number]["value"];
 export type ActivityType      = typeof ACTIVITY_TYPES[number]["value"];
 export type EntityType        = typeof ENTITY_TYPES[number]["value"];
-export type City              = typeof CITIES[number];
+export type Country           = typeof COUNTRIES[number]["value"];
+export type City              = string;

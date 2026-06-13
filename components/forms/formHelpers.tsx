@@ -129,7 +129,8 @@ export function FormSection({ title, children }: { title: string; children: Reac
 // ─── Draft autosave to localStorage ─────────────────────────────────────────────
 
 export function useDraft<T extends object>(key: string, initial: T, enabled: boolean) {
-  const [state, setState] = useState<T>(initial);
+  const [state, setState]     = useState<T>(initial);
+  const [hasDraft, setHasDraft] = useState(false);
   const loaded = useRef(false);
 
   // Restore once when the form opens
@@ -138,7 +139,13 @@ export function useDraft<T extends object>(key: string, initial: T, enabled: boo
     loaded.current = true;
     try {
       const raw = localStorage.getItem(key);
-      if (raw) setState({ ...initial, ...JSON.parse(raw) });
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const merged = { ...initial, ...parsed };
+        setState(merged);
+        // Only flag as a real draft if something meaningful was filled in
+        setHasDraft(JSON.stringify(merged) !== JSON.stringify(initial));
+      }
     } catch {
       /* ignore corrupt drafts */
     }
@@ -157,7 +164,8 @@ export function useDraft<T extends object>(key: string, initial: T, enabled: boo
   const clearDraft = () => {
     try { localStorage.removeItem(key); } catch { /* noop */ }
     loaded.current = false;
+    setHasDraft(false);
   };
 
-  return [state, setState, clearDraft] as const;
+  return [state, setState, clearDraft, hasDraft] as const;
 }

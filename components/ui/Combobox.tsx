@@ -26,6 +26,7 @@ interface ComboboxProps {
   hint?:        string;
   loading?:     boolean;
   clearable?:   boolean;
+  disabled?:    boolean;
   className?:   string;
 }
 
@@ -41,6 +42,7 @@ export function Combobox({
   hint,
   loading     = false,
   clearable   = true,
+  disabled    = false,
   className,
 }: ComboboxProps) {
   const id          = useId();
@@ -114,14 +116,17 @@ export function Combobox({
     <div className={cn("relative", className)}>
       <div
         className={cn(
-          "relative flex items-center rounded-md border transition-all duration-150 bg-surface-card cursor-pointer",
+          "relative flex items-center rounded-md border transition-all duration-150 bg-surface-card",
+          disabled
+            ? "opacity-50 cursor-not-allowed"
+            : "cursor-pointer",
           error
             ? "border-danger/60 shadow-[0_0_0_2px_var(--ring-danger)]"
             : open || focused
               ? "border-aqua-400 shadow-glow"
               : "border-hairline hover:border-ink-200"
         )}
-        onClick={() => { setOpen(true); inputRef.current?.focus(); }}
+        onClick={() => { if (disabled) return; setOpen(true); inputRef.current?.focus(); }}
       >
         <Search size={14} className="absolute left-3 text-ink-400 pointer-events-none" />
 
